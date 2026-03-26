@@ -1,34 +1,63 @@
 aid: umami
 name: Umami
 description: >-
-  Umami is an open source, privacy-first web analytics platform as an alternative to Google Analytics.
+  Umami is an open source, privacy-first web analytics platform that provides
+  website traffic insights without cookies or personal data collection, serving
+  as a simple and fast alternative to Google Analytics.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - API Analysis
   - Web Analytics
+  - Privacy
+  - Open Source
+  - Website Analytics
+  - Cookieless Tracking
 url: >-
   https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml
 created: '2026-03-26'
 modified: '2026-03-26'
 specificationVersion: '0.19'
 apis:
-  - aid: umami:umami
-    name: Umami
+  - aid: umami:umami-api
+    name: Umami API
     description: >-
-      Umami is an open source, privacy-first web analytics platform as an alternative to Google Analytics.
+      The Umami API provides programmatic access to website analytics data
+      including pageviews, sessions, events, and metrics, allowing developers
+      to collect tracking data and retrieve analytics reports.
     humanURL: https://umami.is
-    tags:
-      - API Analysis
-      - Web Analytics
     properties:
       - type: Documentation
         url: https://umami.is/docs
+      - type: GettingStarted
+        url: https://umami.is/docs/getting-started
+      - type: APIDocumentation
+        url: https://umami.is/docs/api
       - type: GitHubOrg
         url: https://github.com/umami-software/umami
+    tags:
+      - Web Analytics
+      - Privacy
+      - Open Source
+      - Tracking API
 common:
   - type: Website
     url: https://umami.is
+  - type: Documentation
+    url: https://umami.is/docs
+  - type: Blog
+    url: https://umami.is/blog
+  - type: Pricing
+    url: https://umami.is/pricing
+  - type: GitHub
+    url: https://github.com/umami-software/umami
+  - type: Login
+    url: https://cloud.umami.is
+  - type: Signup
+    url: https://cloud.umami.is
+  - type: SelfHosting
+    url: https://umami.is/docs/install
+  - type: Support
+    url: https://umami.is/docs/support
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
