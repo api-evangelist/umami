@@ -1,0 +1,34 @@
+aid: umami
+name: Umami
+description: >-
+  Umami is an open source, privacy-first web analytics platform as an alternative to Google Analytics.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - API Analysis
+  - Web Analytics
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml
+created: '2026-03-26'
+modified: '2026-03-26'
+specificationVersion: '0.19'
+apis:
+  - aid: umami:umami
+    name: Umami
+    description: >-
+      Umami is an open source, privacy-first web analytics platform as an alternative to Google Analytics.
+    humanURL: https://umami.is
+    tags:
+      - API Analysis
+      - Web Analytics
+    properties:
+      - type: Documentation
+        url: https://umami.is/docs
+      - type: GitHubOrg
+        url: https://github.com/umami-software/umami
+common:
+  - type: Website
+    url: https://umami.is
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
