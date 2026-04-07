@@ -7,11 +7,11 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Web Analytics
-  - Privacy
-  - Open Source
-  - Website Analytics
   - Cookieless Tracking
+  - Open Source
+  - Privacy
+  - Web Analytics
+  - Website Analytics
 url: >-
   https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml
 created: '2026-03-26'
@@ -35,10 +35,10 @@ apis:
       - type: GitHubOrg
         url: https://github.com/umami-software/umami
     tags:
-      - Web Analytics
-      - Privacy
       - Open Source
+      - Privacy
       - Tracking API
+      - Web Analytics
 common:
   - type: Website
     url: https://umami.is
