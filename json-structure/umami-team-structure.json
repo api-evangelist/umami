@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-team-structure.json",
+  "title": "Team",
+  "description": "Umami team for collaborative website management",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Team identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Team name"
+    },
+    "accessCode": {
+      "type": "string",
+      "description": "Access code for joining the team"
+    },
+    "logoUrl": {
+      "type": "string",
+      "description": "Team logo URL"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "ref": "TeamMember"
+      },
+      "description": "Team members"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation timestamp"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update timestamp"
+    },
+    "deletedAt": {
+      "type": "string",
+      "description": "Deletion timestamp"
+    }
+  }
+}

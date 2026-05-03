@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-login-response-structure.json",
+  "title": "LoginResponse",
+  "description": "Successful login response with token and user info",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "JWT bearer token for API authentication"
+    },
+    "user": {
+      "type": "object",
+      "ref": "User",
+      "description": ""
+    }
+  }
+}

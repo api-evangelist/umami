@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-user-structure.json",
+  "title": "User",
+  "description": "Umami user account",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "User identifier"
+    },
+    "username": {
+      "type": "string",
+      "description": "Username"
+    },
+    "role": {
+      "type": "string",
+      "description": "User role"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Account creation timestamp"
+    },
+    "isAdmin": {
+      "type": "boolean",
+      "description": "Whether the user has admin privileges"
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Teams the user belongs to"
+    }
+  }
+}

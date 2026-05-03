@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-login-request-schema.json",
+  "title": "LoginRequest",
+  "description": "Login credentials for authentication",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Umami username",
+      "examples": [
+        "admin"
+      ]
+    },
+    "password": {
+      "type": "string",
+      "description": "Umami password",
+      "examples": [
+        "umami"
+      ]
+    }
+  },
+  "required": [
+    "username",
+    "password"
+  ]
+}

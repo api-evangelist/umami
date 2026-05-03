@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-website-stats-schema.json",
+  "title": "WebsiteStats",
+  "description": "Summarized website analytics statistics",
+  "type": "object",
+  "properties": {
+    "pageviews": {
+      "type": "object",
+      "description": "Pageview count and change"
+    },
+    "visitors": {
+      "type": "object",
+      "description": "Unique visitor count and change"
+    },
+    "visits": {
+      "type": "object",
+      "description": "Visit count and change"
+    },
+    "bounces": {
+      "type": "object",
+      "description": "Bounce count and change"
+    },
+    "totaltime": {
+      "type": "object",
+      "description": "Total time on site in seconds and change"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-pageview-data-structure.json",
+  "title": "PageviewData",
+  "description": "Time series pageview and session data",
+  "type": "object",
+  "properties": {
+    "pageviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "ref": "Metric"
+      },
+      "description": "Pageview data points"
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "ref": "Metric"
+      },
+      "description": "Session data points"
+    }
+  }
+}

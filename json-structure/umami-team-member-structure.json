@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-team-member-structure.json",
+  "title": "TeamMember",
+  "description": "Team membership record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Membership identifier"
+    },
+    "teamId": {
+      "type": "string",
+      "description": "Team identifier"
+    },
+    "userId": {
+      "type": "string",
+      "description": "User identifier"
+    },
+    "role": {
+      "type": "string",
+      "description": "Member role within the team"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Membership creation timestamp"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update timestamp"
+    }
+  }
+}

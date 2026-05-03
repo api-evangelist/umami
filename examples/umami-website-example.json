@@ -1,0 +1,12 @@
+{
+  "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "name": "My Website",
+  "domain": "example.com",
+  "shareId": null,
+  "resetAt": null,
+  "userId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "teamId": null,
+  "createdAt": "2026-01-15T10:00:00.000Z",
+  "updatedAt": "2026-01-15T10:00:00.000Z",
+  "deletedAt": null
+}

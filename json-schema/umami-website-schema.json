@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-website-schema.json",
+  "title": "Website",
+  "description": "Umami website tracking configuration",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Website identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name for the website in Umami",
+      "examples": [
+        "My Website"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "description": "Website domain",
+      "examples": [
+        "example.com"
+      ]
+    },
+    "shareId": {
+      "type": "string",
+      "description": "Public share identifier for shared analytics views",
+      "examples": [
+        null
+      ]
+    },
+    "resetAt": {
+      "type": "string",
+      "description": "Timestamp of last data reset",
+      "format": "date-time",
+      "examples": [
+        null
+      ]
+    },
+    "userId": {
+      "type": "string",
+      "description": "Owner user identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "teamId": {
+      "type": "string",
+      "description": "Team identifier if team-owned",
+      "format": "uuid",
+      "examples": [
+        null
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    },
+    "deletedAt": {
+      "type": "string",
+      "description": "Deletion timestamp",
+      "format": "date-time",
+      "examples": [
+        null
+      ]
+    }
+  }
+}

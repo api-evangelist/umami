@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-metric-schema.json",
+  "title": "Metric",
+  "description": "Analytics metric data point",
+  "type": "object",
+  "properties": {
+    "x": {
+      "type": "string",
+      "description": "Dimension value (timestamp, URL, browser name, etc.)",
+      "examples": [
+        "/home"
+      ]
+    },
+    "y": {
+      "type": "integer",
+      "description": "Metric value (count)",
+      "examples": [
+        450
+      ]
+    }
+  }
+}

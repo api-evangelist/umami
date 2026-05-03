@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-website-list-structure.json",
+  "title": "WebsiteList",
+  "description": "Paginated list of websites",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "ref": "Website"
+      },
+      "description": "Website records"
+    },
+    "count": {
+      "type": "integer",
+      "description": "Total number of records"
+    },
+    "page": {
+      "type": "integer",
+      "description": "Current page number"
+    },
+    "pageSize": {
+      "type": "integer",
+      "description": "Records per page"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-team-request-structure.json",
+  "title": "TeamRequest",
+  "description": "Request body for creating or updating a team",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Team name"
+    },
+    "accessCode": {
+      "type": "string",
+      "description": "Custom access code"
+    }
+  }
+}

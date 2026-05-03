@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-user-request-schema.json",
+  "title": "UserRequest",
+  "description": "Request body for creating or updating a user",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Username",
+      "examples": [
+        "newuser"
+      ]
+    },
+    "password": {
+      "type": "string",
+      "description": "Password",
+      "examples": [
+        "securepassword"
+      ]
+    },
+    "role": {
+      "type": "string",
+      "description": "User role",
+      "enum": [
+        "admin",
+        "user",
+        "view-only"
+      ],
+      "examples": [
+        "user"
+      ]
+    }
+  },
+  "required": [
+    "username",
+    "password"
+  ]
+}

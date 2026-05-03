@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-active-visitors-schema.json",
+  "title": "ActiveVisitors",
+  "description": "Count of currently active visitors",
+  "type": "object",
+  "properties": {
+    "visitors": {
+      "type": "integer",
+      "description": "Number of active visitors in the last 5 minutes",
+      "examples": [
+        42
+      ]
+    }
+  }
+}

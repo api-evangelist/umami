@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-login-response-schema.json",
+  "title": "LoginResponse",
+  "description": "Successful login response with token and user info",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "JWT bearer token for API authentication",
+      "examples": [
+        "eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A"
+      ]
+    },
+    "user": {
+      "$ref": "#/$defs/User"
+    }
+  }
+}

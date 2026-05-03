@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-session-schema.json",
+  "title": "Session",
+  "description": "Visitor session record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Session identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "websiteId": {
+      "type": "string",
+      "description": "Website identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "browser": {
+      "type": "string",
+      "description": "Browser name",
+      "examples": [
+        "Chrome"
+      ]
+    },
+    "os": {
+      "type": "string",
+      "description": "Operating system",
+      "examples": [
+        "Windows"
+      ]
+    },
+    "device": {
+      "type": "string",
+      "description": "Device type",
+      "examples": [
+        "desktop"
+      ]
+    },
+    "screen": {
+      "type": "string",
+      "description": "Screen resolution",
+      "examples": [
+        "1920x1080"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "description": "Browser language",
+      "examples": [
+        "en-US"
+      ]
+    },
+    "country": {
+      "type": "string",
+      "description": "Country code",
+      "examples": [
+        "US"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Session start timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    }
+  }
+}

@@ -1,0 +1,379 @@
+vocabulary: "1.0.0"
+
+info:
+  label: "Umami Analytics API Vocabulary"
+  description: "Shared vocabulary for the Umami web analytics API."
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+operational:
+  apis:
+    - id: umami-api
+      label: "Umami Analytics API"
+      description: "Privacy-first web analytics API for tracking and reporting."
+      baseUri: https://api.umami.is
+      authentication: bearer
+
+  resources:
+    - id: websites
+      label: "Websites"
+      description: "Tracked website configurations"
+      path: /api/websites
+    - id: website-stats
+      label: "Website Stats"
+      description: "Summarized analytics statistics for a website"
+      path: /api/websites/{websiteId}/stats
+    - id: website-pageviews
+      label: "Website Pageviews"
+      description: "Pageview time series data for a website"
+      path: /api/websites/{websiteId}/pageviews
+    - id: website-metrics
+      label: "Website Metrics"
+      description: "Metrics broken down by dimension for a website"
+      path: /api/websites/{websiteId}/metrics
+    - id: active-visitors
+      label: "Active Visitors"
+      description: "Real-time count of active visitors"
+      path: /api/websites/{websiteId}/active
+    - id: sessions
+      label: "Sessions"
+      description: "Visitor session records"
+      path: /api/websites/{websiteId}/sessions
+    - id: events
+      label: "Events"
+      description: "Custom event tracking records"
+      path: /api/websites/{websiteId}/events/series
+    - id: users
+      label: "Users"
+      description: "Umami user accounts"
+      path: /api/users
+    - id: teams
+      label: "Teams"
+      description: "Collaborative team groups"
+      path: /api/teams
+
+  actions:
+    - id: list-websites
+      label: "List Websites"
+      description: "Retrieve all tracked websites"
+      method: GET
+      resource: websites
+    - id: create-website
+      label: "Create Website"
+      description: "Add a new website for tracking"
+      method: POST
+      resource: websites
+    - id: get-website
+      label: "Get Website"
+      description: "Retrieve a specific website by ID"
+      method: GET
+      resource: websites
+    - id: delete-website
+      label: "Delete Website"
+      description: "Remove a website from tracking"
+      method: DELETE
+      resource: websites
+    - id: get-website-stats
+      label: "Get Website Stats"
+      description: "Retrieve summarized analytics statistics"
+      method: GET
+      resource: website-stats
+    - id: get-website-pageviews
+      label: "Get Website Pageviews"
+      description: "Retrieve pageview time series data"
+      method: GET
+      resource: website-pageviews
+    - id: get-website-metrics
+      label: "Get Website Metrics"
+      description: "Retrieve metrics by dimension"
+      method: GET
+      resource: website-metrics
+    - id: get-active-visitors
+      label: "Get Active Visitors"
+      description: "Retrieve current active visitor count"
+      method: GET
+      resource: active-visitors
+    - id: list-sessions
+      label: "List Sessions"
+      description: "Retrieve visitor session records"
+      method: GET
+      resource: sessions
+    - id: get-session-stats
+      label: "Get Session Stats"
+      description: "Retrieve summarized session statistics"
+      method: GET
+      resource: sessions
+    - id: get-event-series
+      label: "Get Event Series"
+      description: "Retrieve custom event data"
+      method: GET
+      resource: events
+    - id: create-user
+      label: "Create User"
+      description: "Create a new user account"
+      method: POST
+      resource: users
+    - id: get-user
+      label: "Get User"
+      description: "Retrieve a user by ID"
+      method: GET
+      resource: users
+    - id: delete-user
+      label: "Delete User"
+      description: "Remove a user account"
+      method: DELETE
+      resource: users
+    - id: list-teams
+      label: "List Teams"
+      description: "Retrieve all teams"
+      method: GET
+      resource: teams
+    - id: create-team
+      label: "Create Team"
+      description: "Create a new team"
+      method: POST
+      resource: teams
+    - id: join-team
+      label: "Join Team"
+      description: "Join a team using an access code"
+      method: POST
+      resource: teams
+
+  schemas:
+    Website:
+      description: "Umami website tracking configuration"
+      properties:
+        - id
+        - name
+        - domain
+        - shareId
+        - resetAt
+        - userId
+        - teamId
+        - createdAt
+        - updatedAt
+        - deletedAt
+    WebsiteStats:
+      description: "Summarized website analytics statistics"
+      properties:
+        - pageviews
+        - visitors
+        - visits
+        - bounces
+        - totaltime
+    Metric:
+      description: "Analytics metric data point with dimension value and count"
+      properties:
+        - x
+        - y
+    Session:
+      description: "Visitor session record"
+      properties:
+        - id
+        - websiteId
+        - browser
+        - os
+        - device
+        - screen
+        - language
+        - country
+        - createdAt
+    User:
+      description: "Umami user account"
+      properties:
+        - id
+        - username
+        - role
+        - createdAt
+        - isAdmin
+    Team:
+      description: "Team for collaborative website management"
+      properties:
+        - id
+        - name
+        - accessCode
+        - logoUrl
+        - members
+        - createdAt
+        - updatedAt
+
+  parameters:
+    pagination:
+      - name: page
+        description: "Page number for pagination"
+        in: query
+        type: integer
+      - name: pageSize
+        description: "Number of results per page"
+        in: query
+        type: integer
+    timeRange:
+      - name: startAt
+        description: "Start timestamp in milliseconds"
+        in: query
+        type: integer
+        required: true
+      - name: endAt
+        description: "End timestamp in milliseconds"
+        in: query
+        type: integer
+        required: true
+      - name: unit
+        description: "Time bucket unit: minute, hour, day, month, year"
+        in: query
+        type: string
+      - name: timezone
+        description: "IANA timezone name"
+        in: query
+        type: string
+    filters:
+      - name: search
+        description: "Filter by name or domain text"
+        in: query
+        type: string
+      - name: type
+        description: "Metric dimension type (url, browser, os, device, country, etc.)"
+        in: query
+        type: string
+    identifiers:
+      - name: websiteId
+        description: "Website identifier (UUID)"
+        in: path
+        type: string
+        format: uuid
+        required: true
+      - name: sessionId
+        description: "Session identifier"
+        in: path
+        type: string
+        format: uuid
+        required: true
+      - name: userId
+        description: "User identifier (UUID)"
+        in: path
+        type: string
+        format: uuid
+        required: true
+      - name: teamId
+        description: "Team identifier (UUID)"
+        in: path
+        type: string
+        format: uuid
+        required: true
+
+  enums:
+    userRole:
+      - admin
+      - user
+      - view-only
+    teamRole:
+      - team-owner
+      - team-manager
+      - team-member
+      - team-view-only
+    timeUnit:
+      - minute
+      - hour
+      - day
+      - month
+      - year
+    metricType:
+      - url
+      - title
+      - referrer
+      - browser
+      - os
+      - device
+      - screen
+      - country
+      - language
+      - event
+    deviceType:
+      - desktop
+      - mobile
+      - tablet
+
+  authentication:
+    - id: bearer-auth
+      label: "Bearer Token Authentication"
+      description: "JWT token obtained from POST /api/auth/login or Umami Cloud API key"
+      type: bearer
+      apis:
+        - umami-api
+
+capability:
+  workflows:
+    - id: web-analytics
+      label: "Web Analytics"
+      description: "Track website performance, visitor behavior, and real-time analytics"
+      file: capabilities/web-analytics.yaml
+
+  personas:
+    - id: marketing-analyst
+      label: "Marketing Analyst"
+      description: "Analyzes website traffic, referrers, and campaign performance"
+      workflows:
+        - web-analytics
+    - id: web-developer
+      label: "Web Developer"
+      description: "Monitors site performance, integrates tracking, and manages websites"
+      workflows:
+        - web-analytics
+    - id: site-owner
+      label: "Site Owner"
+      description: "Reviews overall analytics and manages website configuration"
+      workflows:
+        - web-analytics
+    - id: data-analyst
+      label: "Data Analyst"
+      description: "Exports and analyzes raw session and event data for BI reporting"
+      workflows:
+        - web-analytics
+
+  domains:
+    - id: website-management
+      label: "Website Management"
+      description: "Managing tracked websites, their configuration, and team access"
+      resources:
+        - websites
+        - teams
+    - id: analytics-reporting
+      label: "Analytics Reporting"
+      description: "Accessing and analyzing website statistics, metrics, and pageviews"
+      resources:
+        - website-stats
+        - website-pageviews
+        - website-metrics
+    - id: visitor-tracking
+      label: "Visitor Tracking"
+      description: "Session data, active visitors, and behavioral tracking"
+      resources:
+        - sessions
+        - active-visitors
+    - id: event-tracking
+      label: "Event Tracking"
+      description: "Custom event collection and analysis"
+      resources:
+        - events
+    - id: user-administration
+      label: "User Administration"
+      description: "User account management (self-hosted admin only)"
+      resources:
+        - users
+
+crossReference:
+  - term: "pageview"
+    umamiApi: "pageviews (in stats, pageviews endpoint)"
+    schemaOrg: "https://schema.org/WebPage"
+    description: "A single view of a tracked web page"
+  - term: "session"
+    umamiApi: "Session"
+    schemaOrg: "https://schema.org/UserInteraction"
+    description: "A visitor's browsing session including browser, OS, device, and location"
+  - term: "event"
+    umamiApi: "events/series endpoint"
+    schemaOrg: "https://schema.org/Event"
+    description: "Custom tracked event fired by the Umami tracking script"
+  - term: "metric"
+    umamiApi: "Metric (x/y data point)"
+    description: "A single analytics data point with a dimension value (x) and count (y)"

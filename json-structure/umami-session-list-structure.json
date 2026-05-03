@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-session-list-structure.json",
+  "title": "SessionList",
+  "description": "Paginated list of sessions",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "ref": "Session"
+      },
+      "description": "Session records"
+    },
+    "count": {
+      "type": "integer",
+      "description": "Total number of records"
+    },
+    "page": {
+      "type": "integer",
+      "description": "Current page number"
+    },
+    "pageSize": {
+      "type": "integer",
+      "description": "Records per page"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "pageviews": {
+    "value": 1500,
+    "change": 150
+  },
+  "visitors": {
+    "value": 800,
+    "change": 80
+  },
+  "visits": {
+    "value": 1000,
+    "change": 100
+  },
+  "bounces": {
+    "value": 400,
+    "change": -20
+  },
+  "totaltime": {
+    "value": 72000,
+    "change": 7200
+  }
+}

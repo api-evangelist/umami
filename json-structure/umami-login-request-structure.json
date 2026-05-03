@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-login-request-structure.json",
+  "title": "LoginRequest",
+  "description": "Login credentials for authentication",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Umami username"
+    },
+    "password": {
+      "type": "string",
+      "description": "Umami password"
+    }
+  }
+}

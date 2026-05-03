@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-session-stats-schema.json",
+  "title": "SessionStats",
+  "description": "Summarized session statistics",
+  "type": "object",
+  "properties": {
+    "pageviews": {
+      "type": "integer",
+      "description": "Total pageviews",
+      "examples": [
+        1500
+      ]
+    },
+    "visitors": {
+      "type": "integer",
+      "description": "Unique visitors",
+      "examples": [
+        800
+      ]
+    },
+    "visits": {
+      "type": "integer",
+      "description": "Total visits",
+      "examples": [
+        1000
+      ]
+    },
+    "countries": {
+      "type": "integer",
+      "description": "Number of countries",
+      "examples": [
+        25
+      ]
+    },
+    "events": {
+      "type": "integer",
+      "description": "Custom event count",
+      "examples": [
+        200
+      ]
+    }
+  }
+}

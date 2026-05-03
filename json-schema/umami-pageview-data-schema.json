@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-pageview-data-schema.json",
+  "title": "PageviewData",
+  "description": "Time series pageview and session data",
+  "type": "object",
+  "properties": {
+    "pageviews": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Metric"
+      }
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Metric"
+      }
+    }
+  }
+}

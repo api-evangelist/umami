@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-ok-response-schema.json",
+  "title": "OkResponse",
+  "description": "Simple success confirmation",
+  "type": "object",
+  "properties": {
+    "ok": {
+      "type": "boolean",
+      "description": "Indicates successful operation",
+      "examples": [
+        true
+      ]
+    }
+  }
+}

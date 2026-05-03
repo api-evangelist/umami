@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-active-visitors-structure.json",
+  "title": "ActiveVisitors",
+  "description": "Count of currently active visitors",
+  "type": "object",
+  "properties": {
+    "visitors": {
+      "type": "integer",
+      "description": "Number of active visitors in the last 5 minutes"
+    }
+  }
+}

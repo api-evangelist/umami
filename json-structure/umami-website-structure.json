@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-website-structure.json",
+  "title": "Website",
+  "description": "Umami website tracking configuration",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Website identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name for the website in Umami"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Website domain"
+    },
+    "shareId": {
+      "type": "string",
+      "description": "Public share identifier for shared analytics views"
+    },
+    "resetAt": {
+      "type": "string",
+      "description": "Timestamp of last data reset"
+    },
+    "userId": {
+      "type": "string",
+      "description": "Owner user identifier"
+    },
+    "teamId": {
+      "type": "string",
+      "description": "Team identifier if team-owned"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation timestamp"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update timestamp"
+    },
+    "deletedAt": {
+      "type": "string",
+      "description": "Deletion timestamp"
+    }
+  }
+}

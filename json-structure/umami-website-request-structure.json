@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-website-request-structure.json",
+  "title": "WebsiteRequest",
+  "description": "Request body for creating or updating a website",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name for the website"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Website domain"
+    },
+    "shareId": {
+      "type": "string",
+      "description": "Custom share identifier"
+    },
+    "teamId": {
+      "type": "string",
+      "description": "Team identifier for team ownership"
+    }
+  }
+}

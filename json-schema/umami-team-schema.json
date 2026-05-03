@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-team-schema.json",
+  "title": "Team",
+  "description": "Umami team for collaborative website management",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Team identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "Team name",
+      "examples": [
+        "Analytics Team"
+      ]
+    },
+    "accessCode": {
+      "type": "string",
+      "description": "Access code for joining the team",
+      "examples": [
+        "XYZ789"
+      ]
+    },
+    "logoUrl": {
+      "type": "string",
+      "description": "Team logo URL",
+      "examples": [
+        null
+      ]
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TeamMember"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Creation timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    },
+    "deletedAt": {
+      "type": "string",
+      "description": "Deletion timestamp",
+      "format": "date-time",
+      "examples": [
+        null
+      ]
+    }
+  }
+}

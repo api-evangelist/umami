@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-user-schema.json",
+  "title": "User",
+  "description": "Umami user account",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "User identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "username": {
+      "type": "string",
+      "description": "Username",
+      "examples": [
+        "admin"
+      ]
+    },
+    "role": {
+      "type": "string",
+      "description": "User role",
+      "enum": [
+        "admin",
+        "user",
+        "view-only"
+      ],
+      "examples": [
+        "admin"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Account creation timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    },
+    "isAdmin": {
+      "type": "boolean",
+      "description": "Whether the user has admin privileges",
+      "examples": [
+        true
+      ]
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Teams the user belongs to"
+    }
+  }
+}

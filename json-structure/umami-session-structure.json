@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-session-structure.json",
+  "title": "Session",
+  "description": "Visitor session record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Session identifier"
+    },
+    "websiteId": {
+      "type": "string",
+      "description": "Website identifier"
+    },
+    "browser": {
+      "type": "string",
+      "description": "Browser name"
+    },
+    "os": {
+      "type": "string",
+      "description": "Operating system"
+    },
+    "device": {
+      "type": "string",
+      "description": "Device type"
+    },
+    "screen": {
+      "type": "string",
+      "description": "Screen resolution"
+    },
+    "language": {
+      "type": "string",
+      "description": "Browser language"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country code"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Session start timestamp"
+    }
+  }
+}

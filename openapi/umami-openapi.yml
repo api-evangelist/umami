@@ -1,0 +1,1719 @@
+openapi: 3.0.3
+info:
+  title: Umami Analytics API
+  description: The Umami Analytics API provides programmatic access to website analytics
+    data including pageviews, sessions, events, and metrics. Umami is an open source,
+    privacy-first web analytics platform that collects data without cookies or personal
+    data storage. The API supports website management, session tracking, real-time
+    visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted
+    instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key
+    authentication.
+  version: '1.0'
+  contact:
+    name: Umami Support
+    url: https://umami.is/docs/support
+  termsOfService: https://umami.is/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.umami.is
+  description: Umami Cloud API
+- url: http://localhost:3000
+  description: Self-hosted Umami instance
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+  description: Login and token verification
+- name: Websites
+  description: Website management and configuration
+- name: Website Statistics
+  description: Analytics metrics, pageviews, and statistics
+- name: Sessions
+  description: Visitor session data
+- name: Events
+  description: Custom event tracking
+- name: Users
+  description: User account management
+- name: Teams
+  description: Team and access management
+paths:
+  /api/auth/login:
+    post:
+      operationId: login
+      summary: Umami Login
+      description: Obtain a JWT bearer token for API authentication on self-hosted
+        instances.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        description: Login credentials
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              loginRequestExample:
+                summary: Default login request
+                x-microcks-default: true
+                value:
+                  username: admin
+                  password: umami
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                login200Example:
+                  summary: Default login 200 response
+                  x-microcks-default: true
+                  value:
+                    token: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
+                    user:
+                      id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      username: admin
+                      role: admin
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                      isAdmin: true
+        '401':
+          description: Invalid credentials
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/auth/verify:
+    post:
+      operationId: verifyToken
+      summary: Umami Verify Token
+      description: Validate that a JWT bearer token is still active and retrieve current
+        user info.
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: Token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                verifyToken200Example:
+                  summary: Default verifyToken 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    username: admin
+                    role: admin
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    isAdmin: true
+                    teams: []
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites:
+    get:
+      operationId: listWebsites
+      summary: Umami List Websites
+      description: Retrieve all websites accessible to the authenticated user.
+      tags:
+      - Websites
+      parameters:
+      - name: includeTeams
+        in: query
+        schema:
+          type: boolean
+        description: Include team-owned websites
+        example: false
+      - name: search
+        in: query
+        schema:
+          type: string
+        description: Filter websites by name or domain
+        example: mysite
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: Number of results per page
+        example: 20
+      responses:
+        '200':
+          description: List of websites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteList'
+              examples:
+                listWebsites200Example:
+                  summary: Default listWebsites 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      name: My Website
+                      domain: example.com
+                      shareId: null
+                      resetAt: null
+                      userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                      updatedAt: '2026-01-15T10:00:00.000Z'
+                      deletedAt: null
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createWebsite
+      summary: Umami Create Website
+      description: Add a new website to Umami for tracking.
+      tags:
+      - Websites
+      requestBody:
+        required: true
+        description: Website configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebsiteRequest'
+            examples:
+              createWebsiteRequestExample:
+                summary: Default createWebsite request
+                x-microcks-default: true
+                value:
+                  name: My Website
+                  domain: example.com
+      responses:
+        '201':
+          description: Website created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+              examples:
+                createWebsite201Example:
+                  summary: Default createWebsite 201 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: My Website
+                    domain: example.com
+                    shareId: null
+                    resetAt: null
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}:
+    get:
+      operationId: getWebsite
+      summary: Umami Get Website
+      description: Retrieve a specific website by its ID.
+      tags:
+      - Websites
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Website details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+              examples:
+                getWebsite200Example:
+                  summary: Default getWebsite 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: My Website
+                    domain: example.com
+                    shareId: null
+                    resetAt: null
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '404':
+          description: Website not found
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: updateWebsite
+      summary: Umami Update Website
+      description: Modify settings for an existing website.
+      tags:
+      - Websites
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      requestBody:
+        required: true
+        description: Updated website configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebsiteRequest'
+            examples:
+              updateWebsiteRequestExample:
+                summary: Default updateWebsite request
+                x-microcks-default: true
+                value:
+                  name: Updated Website Name
+                  domain: example.com
+      responses:
+        '200':
+          description: Website updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+              examples:
+                updateWebsite200Example:
+                  summary: Default updateWebsite 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: Updated Website Name
+                    domain: example.com
+                    shareId: null
+                    resetAt: null
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-16T10:00:00.000Z'
+                    deletedAt: null
+        '401':
+          description: Unauthorized
+        '404':
+          description: Website not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteWebsite
+      summary: Umami Delete Website
+      description: Remove a website and all associated data from Umami.
+      tags:
+      - Websites
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Website deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkResponse'
+              examples:
+                deleteWebsite200Example:
+                  summary: Default deleteWebsite 200 response
+                  x-microcks-default: true
+                  value:
+                    ok: true
+        '401':
+          description: Unauthorized
+        '404':
+          description: Website not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/stats:
+    get:
+      operationId: getWebsiteStats
+      summary: Umami Website Stats
+      description: Retrieve summarized statistics for a website within a given time
+        range.
+      tags:
+      - Website Statistics
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      responses:
+        '200':
+          description: Website statistics summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteStats'
+              examples:
+                getWebsiteStats200Example:
+                  summary: Default getWebsiteStats 200 response
+                  x-microcks-default: true
+                  value:
+                    pageviews:
+                      value: 1500
+                      change: 150
+                    visitors:
+                      value: 800
+                      change: 80
+                    visits:
+                      value: 1000
+                      change: 100
+                    bounces:
+                      value: 400
+                      change: -20
+                    totaltime:
+                      value: 72000
+                      change: 7200
+        '401':
+          description: Unauthorized
+        '404':
+          description: Website not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/pageviews:
+    get:
+      operationId: getWebsitePageviews
+      summary: Umami Website Pageviews
+      description: Retrieve pageview data bucketed by time unit within a given date
+        range.
+      tags:
+      - Website Statistics
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      - name: unit
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - minute
+          - hour
+          - day
+          - month
+          - year
+        description: Time bucket unit
+        example: day
+      - name: timezone
+        in: query
+        required: true
+        schema:
+          type: string
+        description: IANA timezone name
+        example: America/New_York
+      responses:
+        '200':
+          description: Pageview time series data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageviewData'
+              examples:
+                getWebsitePageviews200Example:
+                  summary: Default getWebsitePageviews 200 response
+                  x-microcks-default: true
+                  value:
+                    pageviews:
+                    - x: '2026-01-15 00:00:00'
+                      y: 245
+                    sessions:
+                    - x: '2026-01-15 00:00:00'
+                      y: 180
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/metrics:
+    get:
+      operationId: getWebsiteMetrics
+      summary: Umami Website Metrics
+      description: Retrieve metrics for a website broken down by a specific dimension.
+      tags:
+      - Website Statistics
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - url
+          - title
+          - referrer
+          - browser
+          - os
+          - device
+          - screen
+          - country
+          - language
+          - event
+        description: Metric dimension to retrieve
+        example: url
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 500
+        description: Maximum number of results
+        example: 20
+      responses:
+        '200':
+          description: Metrics data by dimension
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Metric'
+              examples:
+                getWebsiteMetrics200Example:
+                  summary: Default getWebsiteMetrics 200 response
+                  x-microcks-default: true
+                  value:
+                  - x: /home
+                    y: 450
+                  - x: /blog
+                    y: 220
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/active:
+    get:
+      operationId: getActiveVisitors
+      summary: Umami Active Visitors
+      description: Retrieve the number of currently active visitors on a website.
+      tags:
+      - Website Statistics
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Active visitor count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActiveVisitors'
+              examples:
+                getActiveVisitors200Example:
+                  summary: Default getActiveVisitors 200 response
+                  x-microcks-default: true
+                  value:
+                    visitors: 42
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/sessions:
+    get:
+      operationId: listSessions
+      summary: Umami List Sessions
+      description: Retrieve session details for a website within a given time range.
+      tags:
+      - Sessions
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 20
+        description: Results per page
+        example: 20
+      responses:
+        '200':
+          description: Session list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionList'
+              examples:
+                listSessions200Example:
+                  summary: Default listSessions 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      websiteId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      browser: Chrome
+                      os: Windows
+                      device: desktop
+                      screen: 1920x1080
+                      language: en-US
+                      country: US
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/sessions/stats:
+    get:
+      operationId: getSessionStats
+      summary: Umami Session Stats
+      description: Retrieve summarized session statistics for a website.
+      tags:
+      - Sessions
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      responses:
+        '200':
+          description: Session statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStats'
+              examples:
+                getSessionStats200Example:
+                  summary: Default getSessionStats 200 response
+                  x-microcks-default: true
+                  value:
+                    pageviews: 1500
+                    visitors: 800
+                    visits: 1000
+                    countries: 25
+                    events: 200
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/events/series:
+    get:
+      operationId: getEventSeries
+      summary: Umami Event Series
+      description: Retrieve custom events within a given time range for a website.
+      tags:
+      - Events
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      - name: unit
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - minute
+          - hour
+          - day
+          - month
+          - year
+        description: Time bucket unit
+        example: day
+      - name: timezone
+        in: query
+        required: true
+        schema:
+          type: string
+        description: IANA timezone name
+        example: America/New_York
+      responses:
+        '200':
+          description: Event time series data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Metric'
+              examples:
+                getEventSeries200Example:
+                  summary: Default getEventSeries 200 response
+                  x-microcks-default: true
+                  value:
+                  - x: '2026-01-15 00:00:00'
+                    y: 45
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/users:
+    post:
+      operationId: createUser
+      summary: Umami Create User
+      description: Create a new user account. Only available for admin users on self-hosted
+        instances.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        description: New user details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+            examples:
+              createUserRequestExample:
+                summary: Default createUser request
+                x-microcks-default: true
+                value:
+                  username: newuser
+                  password: securepassword
+                  role: user
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                createUser201Example:
+                  summary: Default createUser 201 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    username: newuser
+                    role: user
+                    createdAt: '2026-01-15T10:00:00.000Z'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/users/{userId}:
+    get:
+      operationId: getUser
+      summary: Umami Get User
+      description: Retrieve a user account by ID. Only available for admin users on
+        self-hosted instances.
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: User identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                getUser200Example:
+                  summary: Default getUser 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    username: admin
+                    role: admin
+                    createdAt: '2026-01-15T10:00:00.000Z'
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteUser
+      summary: Umami Delete User
+      description: Remove a user account. Only available for admin users on self-hosted
+        instances.
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: User identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkResponse'
+              examples:
+                deleteUser200Example:
+                  summary: Default deleteUser 200 response
+                  x-microcks-default: true
+                  value:
+                    ok: true
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/teams:
+    get:
+      operationId: listTeams
+      summary: Umami List Teams
+      description: Retrieve all teams accessible to the authenticated user.
+      tags:
+      - Teams
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: Results per page
+        example: 20
+      responses:
+        '200':
+          description: List of teams
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamList'
+              examples:
+                listTeams200Example:
+                  summary: Default listTeams 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      name: My Team
+                      accessCode: ABC123
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                      updatedAt: '2026-01-15T10:00:00.000Z'
+                      deletedAt: null
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createTeam
+      summary: Umami Create Team
+      description: Create a new team for collaborative website management.
+      tags:
+      - Teams
+      requestBody:
+        required: true
+        description: Team configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamRequest'
+            examples:
+              createTeamRequestExample:
+                summary: Default createTeam request
+                x-microcks-default: true
+                value:
+                  name: Analytics Team
+      responses:
+        '201':
+          description: Team created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+              examples:
+                createTeam201Example:
+                  summary: Default createTeam 201 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: Analytics Team
+                    accessCode: XYZ789
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/teams/join:
+    post:
+      operationId: joinTeam
+      summary: Umami Join Team
+      description: Join an existing team using an access code.
+      tags:
+      - Teams
+      requestBody:
+        required: true
+        description: Team access code
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - accessCode
+              properties:
+                accessCode:
+                  type: string
+                  description: Team access code
+                  example: ABC123
+            examples:
+              joinTeamRequestExample:
+                summary: Default joinTeam request
+                x-microcks-default: true
+                value:
+                  accessCode: ABC123
+      responses:
+        '200':
+          description: Successfully joined team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+              examples:
+                joinTeam200Example:
+                  summary: Default joinTeam 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    teamId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    role: team-member
+                    createdAt: '2026-01-15T10:00:00.000Z'
+        '400':
+          description: Invalid access code
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/teams/{teamId}:
+    get:
+      operationId: getTeam
+      summary: Umami Get Team
+      description: Retrieve details for a specific team including members.
+      tags:
+      - Teams
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Team identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Team details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+              examples:
+                getTeam200Example:
+                  summary: Default getTeam 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: Analytics Team
+                    accessCode: XYZ789
+                    members: []
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '401':
+          description: Unauthorized
+        '404':
+          description: Team not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteTeam
+      summary: Umami Delete Team
+      description: Remove a team and all associated memberships.
+      tags:
+      - Teams
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Team identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Team deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkResponse'
+              examples:
+                deleteTeam200Example:
+                  summary: Default deleteTeam 200 response
+                  x-microcks-default: true
+                  value:
+                    ok: true
+        '401':
+          description: Unauthorized
+        '404':
+          description: Team not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/teams/{teamId}/websites:
+    get:
+      operationId: listTeamWebsites
+      summary: Umami Team Websites
+      description: Retrieve all websites belonging to a specific team.
+      tags:
+      - Teams
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Team identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: search
+        in: query
+        schema:
+          type: string
+        description: Filter by name or domain
+        example: mysite
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: Results per page
+        example: 20
+      responses:
+        '200':
+          description: Team websites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteList'
+              examples:
+                listTeamWebsites200Example:
+                  summary: Default listTeamWebsites 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      name: Team Website
+                      domain: teamsite.com
+                      shareId: null
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+        '404':
+          description: Team not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from POST /api/auth/login or Umami Cloud API
+        key
+  schemas:
+    LoginRequest:
+      type: object
+      description: Login credentials for authentication
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Umami username
+          example: admin
+        password:
+          type: string
+          description: Umami password
+          example: umami
+    LoginResponse:
+      type: object
+      description: Successful login response with token and user info
+      properties:
+        token:
+          type: string
+          description: JWT bearer token for API authentication
+          example: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
+        user:
+          $ref: '#/components/schemas/User'
+    User:
+      type: object
+      description: Umami user account
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: User identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        username:
+          type: string
+          description: Username
+          example: admin
+        role:
+          type: string
+          description: User role
+          example: admin
+          enum:
+          - admin
+          - user
+          - view-only
+        createdAt:
+          type: string
+          format: date-time
+          description: Account creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        isAdmin:
+          type: boolean
+          description: Whether the user has admin privileges
+          example: true
+        teams:
+          type: array
+          description: Teams the user belongs to
+          items:
+            type: object
+    UserRequest:
+      type: object
+      description: Request body for creating or updating a user
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Username
+          example: newuser
+        password:
+          type: string
+          description: Password
+          example: securepassword
+        role:
+          type: string
+          description: User role
+          example: user
+          enum:
+          - admin
+          - user
+          - view-only
+    Website:
+      type: object
+      description: Umami website tracking configuration
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Website identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        name:
+          type: string
+          description: Display name for the website in Umami
+          example: My Website
+        domain:
+          type: string
+          description: Website domain
+          example: example.com
+        shareId:
+          type: string
+          nullable: true
+          description: Public share identifier for shared analytics views
+          example: null
+        resetAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of last data reset
+          example: null
+        userId:
+          type: string
+          format: uuid
+          description: Owner user identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        teamId:
+          type: string
+          format: uuid
+          nullable: true
+          description: Team identifier if team-owned
+          example: null
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Deletion timestamp
+          example: null
+    WebsiteRequest:
+      type: object
+      description: Request body for creating or updating a website
+      required:
+      - name
+      - domain
+      properties:
+        name:
+          type: string
+          description: Display name for the website
+          example: My Website
+        domain:
+          type: string
+          description: Website domain
+          example: example.com
+        shareId:
+          type: string
+          nullable: true
+          description: Custom share identifier
+          example: null
+        teamId:
+          type: string
+          format: uuid
+          nullable: true
+          description: Team identifier for team ownership
+          example: null
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    WebsiteStats:
+      type: object
+      description: Summarized website analytics statistics
+      properties:
+        pageviews:
+          type: object
+          description: Pageview count and change
+          properties:
+            value:
+              type: integer
+              description: Total pageviews
+              example: 1500
+            change:
+              type: integer
+              description: Change from previous period
+              example: 150
+        visitors:
+          type: object
+          description: Unique visitor count and change
+          properties:
+            value:
+              type: integer
+              description: Unique visitors
+              example: 800
+            change:
+              type: integer
+              description: Change from previous period
+              example: 80
+        visits:
+          type: object
+          description: Visit count and change
+          properties:
+            value:
+              type: integer
+              description: Total visits
+              example: 1000
+            change:
+              type: integer
+              description: Change from previous period
+              example: 100
+        bounces:
+          type: object
+          description: Bounce count and change
+          properties:
+            value:
+              type: integer
+              description: Bounce count
+              example: 400
+            change:
+              type: integer
+              description: Change from previous period
+              example: -20
+        totaltime:
+          type: object
+          description: Total time on site in seconds and change
+          properties:
+            value:
+              type: integer
+              description: Total time in seconds
+              example: 72000
+            change:
+              type: integer
+              description: Change from previous period
+              example: 7200
+    PageviewData:
+      type: object
+      description: Time series pageview and session data
+      properties:
+        pageviews:
+          type: array
+          description: Pageview data points
+          items:
+            $ref: '#/components/schemas/Metric'
+        sessions:
+          type: array
+          description: Session data points
+          items:
+            $ref: '#/components/schemas/Metric'
+    Metric:
+      type: object
+      description: Analytics metric data point
+      properties:
+        x:
+          type: string
+          description: Dimension value (timestamp, URL, browser name, etc.)
+          example: /home
+        y:
+          type: integer
+          description: Metric value (count)
+          example: 450
+    ActiveVisitors:
+      type: object
+      description: Count of currently active visitors
+      properties:
+        visitors:
+          type: integer
+          description: Number of active visitors in the last 5 minutes
+          example: 42
+    Session:
+      type: object
+      description: Visitor session record
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Session identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        websiteId:
+          type: string
+          format: uuid
+          description: Website identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        browser:
+          type: string
+          description: Browser name
+          example: Chrome
+        os:
+          type: string
+          description: Operating system
+          example: Windows
+        device:
+          type: string
+          description: Device type
+          example: desktop
+        screen:
+          type: string
+          description: Screen resolution
+          example: 1920x1080
+        language:
+          type: string
+          description: Browser language
+          example: en-US
+        country:
+          type: string
+          description: Country code
+          example: US
+        createdAt:
+          type: string
+          format: date-time
+          description: Session start timestamp
+          example: '2026-01-15T10:00:00.000Z'
+    SessionList:
+      type: object
+      description: Paginated list of sessions
+      properties:
+        data:
+          type: array
+          description: Session records
+          items:
+            $ref: '#/components/schemas/Session'
+        count:
+          type: integer
+          description: Total number of records
+          example: 100
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    SessionStats:
+      type: object
+      description: Summarized session statistics
+      properties:
+        pageviews:
+          type: integer
+          description: Total pageviews
+          example: 1500
+        visitors:
+          type: integer
+          description: Unique visitors
+          example: 800
+        visits:
+          type: integer
+          description: Total visits
+          example: 1000
+        countries:
+          type: integer
+          description: Number of countries
+          example: 25
+        events:
+          type: integer
+          description: Custom event count
+          example: 200
+    Team:
+      type: object
+      description: Umami team for collaborative website management
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Team identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Access code for joining the team
+          example: XYZ789
+        logoUrl:
+          type: string
+          nullable: true
+          description: Team logo URL
+          example: null
+        members:
+          type: array
+          description: Team members
+          items:
+            $ref: '#/components/schemas/TeamMember'
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Deletion timestamp
+          example: null
+    TeamRequest:
+      type: object
+      description: Request body for creating or updating a team
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Custom access code
+          example: MYCODE123
+    TeamMember:
+      type: object
+      description: Team membership record
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Membership identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        teamId:
+          type: string
+          format: uuid
+          description: Team identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        userId:
+          type: string
+          format: uuid
+          description: User identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        role:
+          type: string
+          description: Member role within the team
+          example: team-member
+          enum:
+          - team-owner
+          - team-manager
+          - team-member
+          - team-view-only
+        createdAt:
+          type: string
+          format: date-time
+          description: Membership creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+    TeamList:
+      type: object
+      description: Paginated list of teams
+      properties:
+        data:
+          type: array
+          description: Team records
+          items:
+            $ref: '#/components/schemas/Team'
+        count:
+          type: integer
+          description: Total number of records
+          example: 3
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    OkResponse:
+      type: object
+      description: Simple success confirmation
+      properties:
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true

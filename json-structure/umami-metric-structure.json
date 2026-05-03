@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-metric-structure.json",
+  "title": "Metric",
+  "description": "Analytics metric data point",
+  "type": "object",
+  "properties": {
+    "x": {
+      "type": "string",
+      "description": "Dimension value (timestamp, URL, browser name, etc.)"
+    },
+    "y": {
+      "type": "integer",
+      "description": "Metric value (count)"
+    }
+  }
+}

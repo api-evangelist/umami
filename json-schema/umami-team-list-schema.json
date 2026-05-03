@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-team-list-schema.json",
+  "title": "TeamList",
+  "description": "Paginated list of teams",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Team"
+      }
+    },
+    "count": {
+      "type": "integer",
+      "description": "Total number of records",
+      "examples": [
+        3
+      ]
+    },
+    "page": {
+      "type": "integer",
+      "description": "Current page number",
+      "examples": [
+        1
+      ]
+    },
+    "pageSize": {
+      "type": "integer",
+      "description": "Records per page",
+      "examples": [
+        20
+      ]
+    }
+  }
+}

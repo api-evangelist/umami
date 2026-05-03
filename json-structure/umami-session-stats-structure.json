@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-structure/umami-session-stats-structure.json",
+  "title": "SessionStats",
+  "description": "Summarized session statistics",
+  "type": "object",
+  "properties": {
+    "pageviews": {
+      "type": "integer",
+      "description": "Total pageviews"
+    },
+    "visitors": {
+      "type": "integer",
+      "description": "Unique visitors"
+    },
+    "visits": {
+      "type": "integer",
+      "description": "Total visits"
+    },
+    "countries": {
+      "type": "integer",
+      "description": "Number of countries"
+    },
+    "events": {
+      "type": "integer",
+      "description": "Custom event count"
+    }
+  }
+}

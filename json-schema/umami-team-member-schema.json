@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/json-schema/umami-team-member-schema.json",
+  "title": "TeamMember",
+  "description": "Team membership record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Membership identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "teamId": {
+      "type": "string",
+      "description": "Team identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "userId": {
+      "type": "string",
+      "description": "User identifier",
+      "format": "uuid",
+      "examples": [
+        "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ]
+    },
+    "role": {
+      "type": "string",
+      "description": "Member role within the team",
+      "enum": [
+        "team-owner",
+        "team-manager",
+        "team-member",
+        "team-view-only"
+      ],
+      "examples": [
+        "team-member"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Membership creation timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Last update timestamp",
+      "format": "date-time",
+      "examples": [
+        "2026-01-15T10:00:00.000Z"
+      ]
+    }
+  }
+}
