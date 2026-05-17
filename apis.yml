@@ -134,7 +134,7 @@ common:
     url: https://github.com/umami-software/umami
   - type: Login
     url: https://cloud.umami.is
-  - type: Signup
+  - type: SignUp
     url: https://cloud.umami.is
   - type: SelfHosting
     url: https://umami.is/docs/install
