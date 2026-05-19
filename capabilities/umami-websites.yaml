@@ -1,0 +1,251 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Umami Analytics API — Websites
+  description: 'Umami Analytics API — Websites. 5 operations. Lead operation: Umami List Websites. Self-contained Naftiko
+    capability covering one Umami business surface.'
+  tags:
+  - Umami
+  - Websites
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UMAMI_API_KEY: UMAMI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: umami-websites
+    baseUri: https://api.umami.is
+    description: Umami Analytics API — Websites business capability. Self-contained, no shared references.
+    resources:
+    - name: api-websites
+      path: /api/websites
+      operations:
+      - name: listwebsites
+        method: GET
+        description: Umami List Websites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: includeTeams
+          in: query
+          type: boolean
+          description: Include team-owned websites
+        - name: search
+          in: query
+          type: string
+          description: Filter websites by name or domain
+        - name: page
+          in: query
+          type: integer
+          description: Page number for pagination
+        - name: pageSize
+          in: query
+          type: integer
+          description: Number of results per page
+      - name: createwebsite
+        method: POST
+        description: Umami Create Website
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-websites-websiteId
+      path: /api/websites/{websiteId}
+      operations:
+      - name: getwebsite
+        method: GET
+        description: Umami Get Website
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: websiteId
+          in: path
+          type: string
+          description: Website identifier
+          required: true
+      - name: updatewebsite
+        method: POST
+        description: Umami Update Website
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: websiteId
+          in: path
+          type: string
+          description: Website identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletewebsite
+        method: DELETE
+        description: Umami Delete Website
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: websiteId
+          in: path
+          type: string
+          description: Website identifier
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UMAMI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: umami-websites-rest
+    port: 8080
+    description: REST adapter for Umami Analytics API — Websites. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/websites
+      name: api-websites
+      description: REST surface for api-websites.
+      operations:
+      - method: GET
+        name: listwebsites
+        description: Umami List Websites
+        call: umami-websites.listwebsites
+        with:
+          includeTeams: rest.includeTeams
+          search: rest.search
+          page: rest.page
+          pageSize: rest.pageSize
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createwebsite
+        description: Umami Create Website
+        call: umami-websites.createwebsite
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/websites/{websiteid}
+      name: api-websites-websiteid
+      description: REST surface for api-websites-websiteId.
+      operations:
+      - method: GET
+        name: getwebsite
+        description: Umami Get Website
+        call: umami-websites.getwebsite
+        with:
+          websiteId: rest.websiteId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: updatewebsite
+        description: Umami Update Website
+        call: umami-websites.updatewebsite
+        with:
+          websiteId: rest.websiteId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletewebsite
+        description: Umami Delete Website
+        call: umami-websites.deletewebsite
+        with:
+          websiteId: rest.websiteId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: umami-websites-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Umami Analytics API — Websites. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: umami-list-websites
+      description: Umami List Websites
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: umami-websites.listwebsites
+      with:
+        includeTeams: tools.includeTeams
+        search: tools.search
+        page: tools.page
+        pageSize: tools.pageSize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-create-website
+      description: Umami Create Website
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: umami-websites.createwebsite
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-get-website
+      description: Umami Get Website
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: umami-websites.getwebsite
+      with:
+        websiteId: tools.websiteId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-update-website
+      description: Umami Update Website
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: umami-websites.updatewebsite
+      with:
+        websiteId: tools.websiteId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-delete-website
+      description: Umami Delete Website
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: umami-websites.deletewebsite
+      with:
+        websiteId: tools.websiteId
+      outputParameters:
+      - type: object
+        mapping: $.

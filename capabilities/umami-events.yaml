@@ -1,0 +1,108 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Umami Analytics API — Events
+  description: 'Umami Analytics API — Events. 1 operations. Lead operation: Umami Event Series. Self-contained Naftiko capability
+    covering one Umami business surface.'
+  tags:
+  - Umami
+  - Events
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UMAMI_API_KEY: UMAMI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: umami-events
+    baseUri: https://api.umami.is
+    description: Umami Analytics API — Events business capability. Self-contained, no shared references.
+    resources:
+    - name: api-websites-websiteId-events-series
+      path: /api/websites/{websiteId}/events/series
+      operations:
+      - name: geteventseries
+        method: GET
+        description: Umami Event Series
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: websiteId
+          in: path
+          type: string
+          description: Website identifier
+          required: true
+        - name: startAt
+          in: query
+          type: integer
+          description: Start timestamp in milliseconds
+          required: true
+        - name: endAt
+          in: query
+          type: integer
+          description: End timestamp in milliseconds
+          required: true
+        - name: unit
+          in: query
+          type: string
+          description: Time bucket unit
+          required: true
+        - name: timezone
+          in: query
+          type: string
+          description: IANA timezone name
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UMAMI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: umami-events-rest
+    port: 8080
+    description: REST adapter for Umami Analytics API — Events. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/websites/{websiteid}/events/series
+      name: api-websites-websiteid-events-series
+      description: REST surface for api-websites-websiteId-events-series.
+      operations:
+      - method: GET
+        name: geteventseries
+        description: Umami Event Series
+        call: umami-events.geteventseries
+        with:
+          websiteId: rest.websiteId
+          startAt: rest.startAt
+          endAt: rest.endAt
+          unit: rest.unit
+          timezone: rest.timezone
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: umami-events-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Umami Analytics API — Events. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: umami-event-series
+      description: Umami Event Series
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: umami-events.geteventseries
+      with:
+        websiteId: tools.websiteId
+        startAt: tools.startAt
+        endAt: tools.endAt
+        unit: tools.unit
+        timezone: tools.timezone
+      outputParameters:
+      - type: object
+        mapping: $.

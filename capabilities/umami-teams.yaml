@@ -1,0 +1,299 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Umami Analytics API — Teams
+  description: 'Umami Analytics API — Teams. 6 operations. Lead operation: Umami List Teams. Self-contained Naftiko capability
+    covering one Umami business surface.'
+  tags:
+  - Umami
+  - Teams
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UMAMI_API_KEY: UMAMI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: umami-teams
+    baseUri: https://api.umami.is
+    description: Umami Analytics API — Teams business capability. Self-contained, no shared references.
+    resources:
+    - name: api-teams
+      path: /api/teams
+      operations:
+      - name: listteams
+        method: GET
+        description: Umami List Teams
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+          description: Page number
+        - name: pageSize
+          in: query
+          type: integer
+          description: Results per page
+      - name: createteam
+        method: POST
+        description: Umami Create Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-teams-join
+      path: /api/teams/join
+      operations:
+      - name: jointeam
+        method: POST
+        description: Umami Join Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-teams-teamId
+      path: /api/teams/{teamId}
+      operations:
+      - name: getteam
+        method: GET
+        description: Umami Get Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: path
+          type: string
+          description: Team identifier
+          required: true
+      - name: deleteteam
+        method: DELETE
+        description: Umami Delete Team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: path
+          type: string
+          description: Team identifier
+          required: true
+    - name: api-teams-teamId-websites
+      path: /api/teams/{teamId}/websites
+      operations:
+      - name: listteamwebsites
+        method: GET
+        description: Umami Team Websites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: path
+          type: string
+          description: Team identifier
+          required: true
+        - name: search
+          in: query
+          type: string
+          description: Filter by name or domain
+        - name: page
+          in: query
+          type: integer
+          description: Page number
+        - name: pageSize
+          in: query
+          type: integer
+          description: Results per page
+    authentication:
+      type: bearer
+      token: '{{env.UMAMI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: umami-teams-rest
+    port: 8080
+    description: REST adapter for Umami Analytics API — Teams. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/teams
+      name: api-teams
+      description: REST surface for api-teams.
+      operations:
+      - method: GET
+        name: listteams
+        description: Umami List Teams
+        call: umami-teams.listteams
+        with:
+          page: rest.page
+          pageSize: rest.pageSize
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createteam
+        description: Umami Create Team
+        call: umami-teams.createteam
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/teams/join
+      name: api-teams-join
+      description: REST surface for api-teams-join.
+      operations:
+      - method: POST
+        name: jointeam
+        description: Umami Join Team
+        call: umami-teams.jointeam
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/teams/{teamid}
+      name: api-teams-teamid
+      description: REST surface for api-teams-teamId.
+      operations:
+      - method: GET
+        name: getteam
+        description: Umami Get Team
+        call: umami-teams.getteam
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteteam
+        description: Umami Delete Team
+        call: umami-teams.deleteteam
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/teams/{teamid}/websites
+      name: api-teams-teamid-websites
+      description: REST surface for api-teams-teamId-websites.
+      operations:
+      - method: GET
+        name: listteamwebsites
+        description: Umami Team Websites
+        call: umami-teams.listteamwebsites
+        with:
+          teamId: rest.teamId
+          search: rest.search
+          page: rest.page
+          pageSize: rest.pageSize
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: umami-teams-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Umami Analytics API — Teams. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: umami-list-teams
+      description: Umami List Teams
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: umami-teams.listteams
+      with:
+        page: tools.page
+        pageSize: tools.pageSize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-create-team
+      description: Umami Create Team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: umami-teams.createteam
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-join-team
+      description: Umami Join Team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: umami-teams.jointeam
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-get-team
+      description: Umami Get Team
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: umami-teams.getteam
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-delete-team
+      description: Umami Delete Team
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: umami-teams.deleteteam
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-team-websites
+      description: Umami Team Websites
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: umami-teams.listteamwebsites
+      with:
+        teamId: tools.teamId
+        search: tools.search
+        page: tools.page
+        pageSize: tools.pageSize
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,157 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Umami Analytics API — Users
+  description: 'Umami Analytics API — Users. 3 operations. Lead operation: Umami Create User. Self-contained Naftiko capability
+    covering one Umami business surface.'
+  tags:
+  - Umami
+  - Users
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UMAMI_API_KEY: UMAMI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: umami-users
+    baseUri: https://api.umami.is
+    description: Umami Analytics API — Users business capability. Self-contained, no shared references.
+    resources:
+    - name: api-users
+      path: /api/users
+      operations:
+      - name: createuser
+        method: POST
+        description: Umami Create User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-users-userId
+      path: /api/users/{userId}
+      operations:
+      - name: getuser
+        method: GET
+        description: Umami Get User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: User identifier
+          required: true
+      - name: deleteuser
+        method: DELETE
+        description: Umami Delete User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: User identifier
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UMAMI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: umami-users-rest
+    port: 8080
+    description: REST adapter for Umami Analytics API — Users. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/users
+      name: api-users
+      description: REST surface for api-users.
+      operations:
+      - method: POST
+        name: createuser
+        description: Umami Create User
+        call: umami-users.createuser
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/users/{userid}
+      name: api-users-userid
+      description: REST surface for api-users-userId.
+      operations:
+      - method: GET
+        name: getuser
+        description: Umami Get User
+        call: umami-users.getuser
+        with:
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteuser
+        description: Umami Delete User
+        call: umami-users.deleteuser
+        with:
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: umami-users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Umami Analytics API — Users. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: umami-create-user
+      description: Umami Create User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: umami-users.createuser
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-get-user
+      description: Umami Get User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: umami-users.getuser
+      with:
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: umami-delete-user
+      description: Umami Delete User
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: umami-users.deleteuser
+      with:
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.
