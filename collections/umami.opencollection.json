@@ -1,0 +1,647 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/auth/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain a JWT bearer token for API authentication on self-hosted instances."
+        },
+        {
+          "info": {
+            "name": "Umami Verify Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/auth/verify"
+          },
+          "docs": "Validate that a JWT bearer token is still active and retrieve current user info."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Websites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami List Websites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites",
+            "params": [
+              {
+                "name": "includeTeams",
+                "value": "false",
+                "type": "query",
+                "description": "Include team-owned websites"
+              },
+              {
+                "name": "search",
+                "value": "mysite",
+                "type": "query",
+                "description": "Filter websites by name or domain"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Number of results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve all websites accessible to the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Umami Create Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/websites",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new website to Umami for tracking."
+        },
+        {
+          "info": {
+            "name": "Umami Get Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific website by its ID."
+        },
+        {
+          "info": {
+            "name": "Umami Update Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/websites/:websiteId",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify settings for an existing website."
+        },
+        {
+          "info": {
+            "name": "Umami Delete Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.umami.is/api/websites/:websiteId",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ]
+          },
+          "docs": "Remove a website and all associated data from Umami."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Website Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Website Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/stats",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              }
+            ]
+          },
+          "docs": "Retrieve summarized statistics for a website within a given time range."
+        },
+        {
+          "info": {
+            "name": "Umami Website Pageviews",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/pageviews",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "unit",
+                "value": "day",
+                "type": "query",
+                "description": "Time bucket unit"
+              },
+              {
+                "name": "timezone",
+                "value": "America/New_York",
+                "type": "query",
+                "description": "IANA timezone name"
+              }
+            ]
+          },
+          "docs": "Retrieve pageview data bucketed by time unit within a given date range."
+        },
+        {
+          "info": {
+            "name": "Umami Website Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/metrics",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "type",
+                "value": "url",
+                "type": "query",
+                "description": "Metric dimension to retrieve"
+              },
+              {
+                "name": "limit",
+                "value": "20",
+                "type": "query",
+                "description": "Maximum number of results"
+              }
+            ]
+          },
+          "docs": "Retrieve metrics for a website broken down by a specific dimension."
+        },
+        {
+          "info": {
+            "name": "Umami Active Visitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/active",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the number of currently active visitors on a website."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami List Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/sessions",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve session details for a website within a given time range."
+        },
+        {
+          "info": {
+            "name": "Umami Session Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/sessions/stats",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              }
+            ]
+          },
+          "docs": "Retrieve summarized session statistics for a website."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Event Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/events/series",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "unit",
+                "value": "day",
+                "type": "query",
+                "description": "Time bucket unit"
+              },
+              {
+                "name": "timezone",
+                "value": "America/New_York",
+                "type": "query",
+                "description": "IANA timezone name"
+              }
+            ]
+          },
+          "docs": "Retrieve custom events within a given time range for a website."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user account. Only available for admin users on self-hosted instances."
+        },
+        {
+          "info": {
+            "name": "Umami Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "User identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a user account by ID. Only available for admin users on self-hosted instances."
+        },
+        {
+          "info": {
+            "name": "Umami Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.umami.is/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "User identifier"
+              }
+            ]
+          },
+          "docs": "Remove a user account. Only available for admin users on self-hosted instances."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami List Teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/teams",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve all teams accessible to the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Umami Create Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/teams",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new team for collaborative website management."
+        },
+        {
+          "info": {
+            "name": "Umami Join Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/teams/join",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Join an existing team using an access code."
+        },
+        {
+          "info": {
+            "name": "Umami Get Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/teams/:teamId",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Team identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a specific team including members."
+        },
+        {
+          "info": {
+            "name": "Umami Delete Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.umami.is/api/teams/:teamId",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Team identifier"
+              }
+            ]
+          },
+          "docs": "Remove a team and all associated memberships."
+        },
+        {
+          "info": {
+            "name": "Umami Team Websites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/teams/:teamId/websites",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Team identifier"
+              },
+              {
+                "name": "search",
+                "value": "mysite",
+                "type": "query",
+                "description": "Filter by name or domain"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve all websites belonging to a specific team."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
