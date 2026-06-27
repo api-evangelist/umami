@@ -100,23 +100,23 @@ apis:
         url: json-structure/umami-team-member-structure.json
       - type: JSONLDContext
         url: json-ld/umami-context.jsonld
-      - type: Example
+      - type: Examples
         url: examples/umami-website-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-website-stats-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-pageview-data-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-metric-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-session-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-session-stats-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-user-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-team-example.json
-      - type: Example
+      - type: Examples
         url: examples/umami-active-visitors-example.json
 common:
   - type: LinkedIn
@@ -133,7 +133,7 @@ common:
     url: https://github.com/umami-software/umami
   - type: Login
     url: https://cloud.umami.is
-  - type: SignUp
+  - type: Signup
     url: https://cloud.umami.is
   - type: SelfHosting
     url: https://umami.is/docs/install
