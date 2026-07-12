@@ -119,6 +119,10 @@ apis:
       - type: Examples
         url: examples/umami-active-visitors-example.json
 common:
+  - type: DomainSecurity
+    url: security/umami-domain-security.yml
+  - type: Authentication
+    url: authentication/umami-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/umami-software
   - type: Website

@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/umami-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: JWT token obtained from POST /api/auth/login or Umami Cloud API key
+  sources:
+  - openapi/umami-openapi.yml
