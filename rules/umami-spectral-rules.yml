@@ -1,7 +1,24 @@
+# umami — Spectral ruleset (strengthened)
+# Plain Spectral. Existing hand-authored rules preserved; measured rules added
+# from this provider's own OpenAPI conventions by strengthen_ruleset.py,
+# then self-validated against the spec.
+#
+# Provenance:
+#   - servers-https-only: 50% of servers already https (warn)
+#   - servers-expected-domain: 1/1 servers on umami.is
+#   - path-params-casing: camel @ 100% (n=15)
+#   - query-params-casing: camel @ 59% (n=29)
+#   - operationid-casing: camel @ 96% (n=23)
+#   - schema-names-casing: pascal @ 100% (n=19)
+#   - schema-properties-casing: snake @ 68% (n=80)
+#   - security: global (root) — NOT emitting operation-security-required
+#   - operation-documents-401: 100% adherence
+#   - pagination params observed: ['limit', 'page', 'pageSize']
+#   - merge: kept 31 existing, added 6 measured, upgraded 0
+#   - added: servers-https-only, servers-expected-domain, path-params-casing, query-params-casing, schema-names-casing, schema-properties-casing
+extends:
+  - spectral:oas
 rules:
-  # ============================================================
-  # INFO / METADATA
-  # ============================================================
   info-title-umami-prefix:
     description: API title must start with "Umami"
     severity: error
@@ -9,8 +26,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^Umami"
-
+        match: ^Umami
   info-description-required:
     description: API info must have a description with at least 50 characters
     severity: error
@@ -19,24 +35,18 @@ rules:
       function: length
       functionOptions:
         min: 50
-
   info-version-required:
     description: API info must include a version
     severity: error
     given: $.info.version
     then:
       function: truthy
-
   info-contact-url:
     description: API contact should include URL pointing to umami.is
     severity: warn
     given: $.info.contact.url
     then:
       function: truthy
-
-  # ============================================================
-  # OPENAPI VERSION
-  # ============================================================
   openapi-version-3:
     description: OpenAPI version must be 3.0.x
     severity: error
@@ -44,11 +54,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^3\\.0\\."
-
-  # ============================================================
-  # SERVERS
-  # ============================================================
+        match: ^3\.0\.
   servers-required:
     description: At least one server must be defined
     severity: error
@@ -57,7 +63,6 @@ rules:
       function: length
       functionOptions:
         min: 1
-
   servers-umami-domain:
     description: Server URL should use umami.is domain or localhost for self-hosted
     severity: info
@@ -65,11 +70,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "(umami\\.is|localhost)"
-
-  # ============================================================
-  # PATHS — NAMING CONVENTIONS
-  # ============================================================
+        match: (umami\.is|localhost)
   paths-api-prefix:
     description: All paths should start with /api/
     severity: info
@@ -77,8 +78,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^/api/"
-
+        match: ^/api/
   paths-no-trailing-slash:
     description: Paths must not have a trailing slash
     severity: warn
@@ -86,8 +86,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        notMatch: "\\/$"
-
+        notMatch: \/$
   paths-kebab-case:
     description: Path segments should use kebab-case
     severity: info
@@ -95,11 +94,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        notMatch: "_[a-z]"
-
-  # ============================================================
-  # OPERATIONS
-  # ============================================================
+        notMatch: _[a-z]
   operation-operationId-required:
     description: Every operation must have an operationId
     severity: error
@@ -107,7 +102,6 @@ rules:
     then:
       field: operationId
       function: truthy
-
   operation-summary-required:
     description: Every operation must have a summary
     severity: error
@@ -115,7 +109,6 @@ rules:
     then:
       field: summary
       function: truthy
-
   operation-summary-umami-prefix:
     description: Operation summary must start with "Umami"
     severity: warn
@@ -123,8 +116,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^Umami"
-
+        match: ^Umami
   operation-description-required:
     description: Every operation must have a description
     severity: warn
@@ -132,7 +124,6 @@ rules:
     then:
       field: description
       function: truthy
-
   operation-tags-required:
     description: Every operation must have at least one tag
     severity: error
@@ -140,7 +131,6 @@ rules:
     then:
       field: tags
       function: truthy
-
   operation-operationId-camelCase:
     description: OperationId must use camelCase
     severity: warn
@@ -148,11 +138,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-zA-Z0-9]*$"
-
-  # ============================================================
-  # PARAMETERS
-  # ============================================================
+        match: ^[a-z][a-zA-Z0-9]*$
   parameter-description-required:
     description: Every parameter must have a description
     severity: warn
@@ -160,7 +146,6 @@ rules:
     then:
       field: description
       function: truthy
-
   parameter-camelCase:
     description: Query parameter names should use camelCase
     severity: info
@@ -168,8 +153,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-zA-Z0-9]*$"
-
+        match: ^[a-z][a-zA-Z0-9]*$
   parameter-timestamps-ms:
     description: Timestamp parameters should indicate millisecond precision in their names or descriptions
     severity: info
@@ -177,10 +161,6 @@ rules:
     then:
       field: description
       function: truthy
-
-  # ============================================================
-  # REQUEST BODIES
-  # ============================================================
   request-body-json:
     description: Request body should include application/json content type
     severity: warn
@@ -188,10 +168,6 @@ rules:
     then:
       field: application/json
       function: truthy
-
-  # ============================================================
-  # RESPONSES
-  # ============================================================
   response-success-required:
     description: Every operation must define at least one 2xx response
     severity: error
@@ -202,11 +178,14 @@ rules:
         schema:
           type: object
           anyOf:
-            - required: ['200']
-            - required: ['201']
-            - required: ['202']
-            - required: ['204']
-
+          - required:
+            - '200'
+          - required:
+            - '201'
+          - required:
+            - '202'
+          - required:
+            - '204'
   response-401-required:
     description: Operations should define a 401 Unauthorized response
     severity: warn
@@ -214,7 +193,6 @@ rules:
     then:
       field: '401'
       function: truthy
-
   response-description-required:
     description: Every response must have a description
     severity: error
@@ -222,10 +200,6 @@ rules:
     then:
       field: description
       function: truthy
-
-  # ============================================================
-  # SCHEMAS
-  # ============================================================
   schema-description-required:
     description: Top-level schemas should have descriptions
     severity: warn
@@ -233,7 +207,6 @@ rules:
     then:
       field: description
       function: truthy
-
   schema-property-type:
     description: Schema properties should have types defined
     severity: warn
@@ -241,7 +214,6 @@ rules:
     then:
       field: type
       function: truthy
-
   schema-uuid-format:
     description: ID fields should use format uuid
     severity: info
@@ -249,28 +221,19 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "uuid"
-
-  # ============================================================
-  # SECURITY
-  # ============================================================
+        match: uuid
   security-schemes-defined:
     description: Security schemes must be defined in components
     severity: error
     given: $.components.securitySchemes
     then:
       function: truthy
-
   security-global-required:
     description: Global security should be defined
     severity: warn
     given: $.security
     then:
       function: truthy
-
-  # ============================================================
-  # HTTP METHOD CONVENTIONS
-  # ============================================================
   get-no-request-body:
     description: GET operations must not have a request body
     severity: error
@@ -278,10 +241,6 @@ rules:
     then:
       field: requestBody
       function: falsy
-
-  # ============================================================
-  # ANALYTICS-SPECIFIC
-  # ============================================================
   analytics-timestamps-required:
     description: Analytics operations should accept startAt and endAt timestamp parameters
     severity: info
@@ -289,11 +248,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        notMatch: "^(start_at|end_at|start_time|end_time)$"
-
-  # ============================================================
-  # QUALITY
-  # ============================================================
+        notMatch: ^(start_at|end_at|start_time|end_time)$
   no-empty-descriptions:
     description: Descriptions must not be empty strings
     severity: error
@@ -301,4 +256,55 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: ".+"
+        match: .+
+  servers-https-only:
+    description: Server URLs must use HTTPS.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^https://
+  servers-expected-domain:
+    description: Server URLs should be on the umami.is domain.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: umami\.is
+  path-params-casing:
+    description: Path parameters should be camelCase (the dominant convention in this API).
+    severity: warn
+    given: $.paths[*].parameters[?(@.in=='path')].name
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+  query-params-casing:
+    description: Query parameters should be camelCase (the dominant convention in this API).
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete].parameters[?(@.in=='query')]
+    then:
+      field: name
+      function: casing
+      functionOptions:
+        type: camel
+  schema-names-casing:
+    description: Component schema names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+  schema-properties-casing:
+    description: Schema properties should be snake_case (the dominant convention in this API).
+    severity: info
+    given: $.components.schemas[*].properties
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: snake
