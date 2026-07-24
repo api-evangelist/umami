@@ -1,0 +1,213 @@
+openapi: 3.0.3
+info:
+  title: Umami Analytics Authentication Users API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  version: '1.0'
+  contact:
+    name: Umami Support
+    url: https://umami.is/docs/support
+  termsOfService: https://umami.is/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.umami.is
+  description: Umami Cloud API
+- url: http://localhost:3000
+  description: Self-hosted Umami instance
+security:
+- bearerAuth: []
+tags:
+- name: Users
+  description: User account management
+paths:
+  /api/users:
+    post:
+      operationId: createUser
+      summary: Umami Create User
+      description: Create a new user account. Only available for admin users on self-hosted instances.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        description: New user details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+            examples:
+              createUserRequestExample:
+                summary: Default createUser request
+                x-microcks-default: true
+                value:
+                  username: newuser
+                  password: securepassword
+                  role: user
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                createUser201Example:
+                  summary: Default createUser 201 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    username: newuser
+                    role: user
+                    createdAt: '2026-01-15T10:00:00.000Z'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/users/{userId}:
+    get:
+      operationId: getUser
+      summary: Umami Get User
+      description: Retrieve a user account by ID. Only available for admin users on self-hosted instances.
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: User identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                getUser200Example:
+                  summary: Default getUser 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    username: admin
+                    role: admin
+                    createdAt: '2026-01-15T10:00:00.000Z'
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteUser
+      summary: Umami Delete User
+      description: Remove a user account. Only available for admin users on self-hosted instances.
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: User identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkResponse'
+              examples:
+                deleteUser200Example:
+                  summary: Default deleteUser 200 response
+                  x-microcks-default: true
+                  value:
+                    ok: true
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    OkResponse:
+      type: object
+      description: Simple success confirmation
+      properties:
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true
+    User:
+      type: object
+      description: Umami user account
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: User identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        username:
+          type: string
+          description: Username
+          example: admin
+        role:
+          type: string
+          description: User role
+          example: admin
+          enum:
+          - admin
+          - user
+          - view-only
+        createdAt:
+          type: string
+          format: date-time
+          description: Account creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        isAdmin:
+          type: boolean
+          description: Whether the user has admin privileges
+          example: true
+        teams:
+          type: array
+          description: Teams the user belongs to
+          items:
+            type: object
+    UserRequest:
+      type: object
+      description: Request body for creating or updating a user
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Username
+          example: newuser
+        password:
+          type: string
+          description: Password
+          example: securepassword
+        role:
+          type: string
+          description: User role
+          example: user
+          enum:
+          - admin
+          - user
+          - view-only
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key

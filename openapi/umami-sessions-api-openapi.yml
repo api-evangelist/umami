@@ -1,0 +1,242 @@
+openapi: 3.0.3
+info:
+  title: Umami Analytics Authentication Sessions API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  version: '1.0'
+  contact:
+    name: Umami Support
+    url: https://umami.is/docs/support
+  termsOfService: https://umami.is/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.umami.is
+  description: Umami Cloud API
+- url: http://localhost:3000
+  description: Self-hosted Umami instance
+security:
+- bearerAuth: []
+tags:
+- name: Sessions
+  description: Visitor session data
+paths:
+  /api/websites/{websiteId}/sessions:
+    get:
+      operationId: listSessions
+      summary: Umami List Sessions
+      description: Retrieve session details for a website within a given time range.
+      tags:
+      - Sessions
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 20
+        description: Results per page
+        example: 20
+      responses:
+        '200':
+          description: Session list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionList'
+              examples:
+                listSessions200Example:
+                  summary: Default listSessions 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      websiteId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      browser: Chrome
+                      os: Windows
+                      device: desktop
+                      screen: 1920x1080
+                      language: en-US
+                      country: US
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}/sessions/stats:
+    get:
+      operationId: getSessionStats
+      summary: Umami Session Stats
+      description: Retrieve summarized session statistics for a website.
+      tags:
+      - Sessions
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      responses:
+        '200':
+          description: Session statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStats'
+              examples:
+                getSessionStats200Example:
+                  summary: Default getSessionStats 200 response
+                  x-microcks-default: true
+                  value:
+                    pageviews: 1500
+                    visitors: 800
+                    visits: 1000
+                    countries: 25
+                    events: 200
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    SessionList:
+      type: object
+      description: Paginated list of sessions
+      properties:
+        data:
+          type: array
+          description: Session records
+          items:
+            $ref: '#/components/schemas/Session'
+        count:
+          type: integer
+          description: Total number of records
+          example: 100
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    Session:
+      type: object
+      description: Visitor session record
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Session identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        websiteId:
+          type: string
+          format: uuid
+          description: Website identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        browser:
+          type: string
+          description: Browser name
+          example: Chrome
+        os:
+          type: string
+          description: Operating system
+          example: Windows
+        device:
+          type: string
+          description: Device type
+          example: desktop
+        screen:
+          type: string
+          description: Screen resolution
+          example: 1920x1080
+        language:
+          type: string
+          description: Browser language
+          example: en-US
+        country:
+          type: string
+          description: Country code
+          example: US
+        createdAt:
+          type: string
+          format: date-time
+          description: Session start timestamp
+          example: '2026-01-15T10:00:00.000Z'
+    SessionStats:
+      type: object
+      description: Summarized session statistics
+      properties:
+        pageviews:
+          type: integer
+          description: Total pageviews
+          example: 1500
+        visitors:
+          type: integer
+          description: Unique visitors
+          example: 800
+        visits:
+          type: integer
+          description: Total visits
+          example: 1000
+        countries:
+          type: integer
+          description: Number of countries
+          example: 25
+        events:
+          type: integer
+          description: Custom event count
+          example: 200
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key

@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: Umami Analytics Authentication Events API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  version: '1.0'
+  contact:
+    name: Umami Support
+    url: https://umami.is/docs/support
+  termsOfService: https://umami.is/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.umami.is
+  description: Umami Cloud API
+- url: http://localhost:3000
+  description: Self-hosted Umami instance
+security:
+- bearerAuth: []
+tags:
+- name: Events
+  description: Custom event tracking
+paths:
+  /api/websites/{websiteId}/events/series:
+    get:
+      operationId: getEventSeries
+      summary: Umami Event Series
+      description: Retrieve custom events within a given time range for a website.
+      tags:
+      - Events
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: startAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: Start timestamp in milliseconds
+        example: 1704067200000
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: End timestamp in milliseconds
+        example: 1704153600000
+      - name: unit
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - minute
+          - hour
+          - day
+          - month
+          - year
+        description: Time bucket unit
+        example: day
+      - name: timezone
+        in: query
+        required: true
+        schema:
+          type: string
+        description: IANA timezone name
+        example: America/New_York
+      responses:
+        '200':
+          description: Event time series data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Metric'
+              examples:
+                getEventSeries200Example:
+                  summary: Default getEventSeries 200 response
+                  x-microcks-default: true
+                  value:
+                  - x: '2026-01-15 00:00:00'
+                    y: 45
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Metric:
+      type: object
+      description: Analytics metric data point
+      properties:
+        x:
+          type: string
+          description: Dimension value (timestamp, URL, browser name, etc.)
+          example: /home
+        y:
+          type: integer
+          description: Metric value (count)
+          example: 450
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key

@@ -1,0 +1,511 @@
+openapi: 3.0.3
+info:
+  title: Umami Analytics Authentication Teams API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  version: '1.0'
+  contact:
+    name: Umami Support
+    url: https://umami.is/docs/support
+  termsOfService: https://umami.is/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.umami.is
+  description: Umami Cloud API
+- url: http://localhost:3000
+  description: Self-hosted Umami instance
+security:
+- bearerAuth: []
+tags:
+- name: Teams
+  description: Team and access management
+paths:
+  /api/teams:
+    get:
+      operationId: listTeams
+      summary: Umami List Teams
+      description: Retrieve all teams accessible to the authenticated user.
+      tags:
+      - Teams
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: Results per page
+        example: 20
+      responses:
+        '200':
+          description: List of teams
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamList'
+              examples:
+                listTeams200Example:
+                  summary: Default listTeams 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      name: My Team
+                      accessCode: ABC123
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                      updatedAt: '2026-01-15T10:00:00.000Z'
+                      deletedAt: null
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createTeam
+      summary: Umami Create Team
+      description: Create a new team for collaborative website management.
+      tags:
+      - Teams
+      requestBody:
+        required: true
+        description: Team configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamRequest'
+            examples:
+              createTeamRequestExample:
+                summary: Default createTeam request
+                x-microcks-default: true
+                value:
+                  name: Analytics Team
+      responses:
+        '201':
+          description: Team created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+              examples:
+                createTeam201Example:
+                  summary: Default createTeam 201 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: Analytics Team
+                    accessCode: XYZ789
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/teams/join:
+    post:
+      operationId: joinTeam
+      summary: Umami Join Team
+      description: Join an existing team using an access code.
+      tags:
+      - Teams
+      requestBody:
+        required: true
+        description: Team access code
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - accessCode
+              properties:
+                accessCode:
+                  type: string
+                  description: Team access code
+                  example: ABC123
+            examples:
+              joinTeamRequestExample:
+                summary: Default joinTeam request
+                x-microcks-default: true
+                value:
+                  accessCode: ABC123
+      responses:
+        '200':
+          description: Successfully joined team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+              examples:
+                joinTeam200Example:
+                  summary: Default joinTeam 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    teamId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    role: team-member
+                    createdAt: '2026-01-15T10:00:00.000Z'
+        '400':
+          description: Invalid access code
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/teams/{teamId}:
+    get:
+      operationId: getTeam
+      summary: Umami Get Team
+      description: Retrieve details for a specific team including members.
+      tags:
+      - Teams
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Team identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Team details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+              examples:
+                getTeam200Example:
+                  summary: Default getTeam 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: Analytics Team
+                    accessCode: XYZ789
+                    members: []
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '401':
+          description: Unauthorized
+        '404':
+          description: Team not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteTeam
+      summary: Umami Delete Team
+      description: Remove a team and all associated memberships.
+      tags:
+      - Teams
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Team identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Team deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkResponse'
+              examples:
+                deleteTeam200Example:
+                  summary: Default deleteTeam 200 response
+                  x-microcks-default: true
+                  value:
+                    ok: true
+        '401':
+          description: Unauthorized
+        '404':
+          description: Team not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/teams/{teamId}/websites:
+    get:
+      operationId: listTeamWebsites
+      summary: Umami Team Websites
+      description: Retrieve all websites belonging to a specific team.
+      tags:
+      - Teams
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Team identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - name: search
+        in: query
+        schema:
+          type: string
+        description: Filter by name or domain
+        example: mysite
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: Results per page
+        example: 20
+      responses:
+        '200':
+          description: Team websites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteList'
+              examples:
+                listTeamWebsites200Example:
+                  summary: Default listTeamWebsites 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      name: Team Website
+                      domain: teamsite.com
+                      shareId: null
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+        '404':
+          description: Team not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    OkResponse:
+      type: object
+      description: Simple success confirmation
+      properties:
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true
+    TeamRequest:
+      type: object
+      description: Request body for creating or updating a team
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Custom access code
+          example: MYCODE123
+    Website:
+      type: object
+      description: Umami website tracking configuration
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Website identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        name:
+          type: string
+          description: Display name for the website in Umami
+          example: My Website
+        domain:
+          type: string
+          description: Website domain
+          example: example.com
+        shareId:
+          type: string
+          nullable: true
+          description: Public share identifier for shared analytics views
+          example: null
+        resetAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of last data reset
+          example: null
+        userId:
+          type: string
+          format: uuid
+          description: Owner user identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        teamId:
+          type: string
+          format: uuid
+          nullable: true
+          description: Team identifier if team-owned
+          example: null
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Deletion timestamp
+          example: null
+    TeamList:
+      type: object
+      description: Paginated list of teams
+      properties:
+        data:
+          type: array
+          description: Team records
+          items:
+            $ref: '#/components/schemas/Team'
+        count:
+          type: integer
+          description: Total number of records
+          example: 3
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    Team:
+      type: object
+      description: Umami team for collaborative website management
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Team identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Access code for joining the team
+          example: XYZ789
+        logoUrl:
+          type: string
+          nullable: true
+          description: Team logo URL
+          example: null
+        members:
+          type: array
+          description: Team members
+          items:
+            $ref: '#/components/schemas/TeamMember'
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Deletion timestamp
+          example: null
+    TeamMember:
+      type: object
+      description: Team membership record
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Membership identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        teamId:
+          type: string
+          format: uuid
+          description: Team identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        userId:
+          type: string
+          format: uuid
+          description: User identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        role:
+          type: string
+          description: Member role within the team
+          example: team-member
+          enum:
+          - team-owner
+          - team-manager
+          - team-member
+          - team-view-only
+        createdAt:
+          type: string
+          format: date-time
+          description: Membership creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key

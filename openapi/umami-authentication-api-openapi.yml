@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: Umami Analytics Authentication API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  version: '1.0'
+  contact:
+    name: Umami Support
+    url: https://umami.is/docs/support
+  termsOfService: https://umami.is/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.umami.is
+  description: Umami Cloud API
+- url: http://localhost:3000
+  description: Self-hosted Umami instance
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+  description: Login and token verification
+paths:
+  /api/auth/login:
+    post:
+      operationId: login
+      summary: Umami Login
+      description: Obtain a JWT bearer token for API authentication on self-hosted instances.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        description: Login credentials
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              loginRequestExample:
+                summary: Default login request
+                x-microcks-default: true
+                value:
+                  username: admin
+                  password: umami
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                login200Example:
+                  summary: Default login 200 response
+                  x-microcks-default: true
+                  value:
+                    token: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
+                    user:
+                      id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      username: admin
+                      role: admin
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                      isAdmin: true
+        '401':
+          description: Invalid credentials
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/auth/verify:
+    post:
+      operationId: verifyToken
+      summary: Umami Verify Token
+      description: Validate that a JWT bearer token is still active and retrieve current user info.
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: Token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                verifyToken200Example:
+                  summary: Default verifyToken 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    username: admin
+                    role: admin
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    isAdmin: true
+                    teams: []
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    User:
+      type: object
+      description: Umami user account
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: User identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        username:
+          type: string
+          description: Username
+          example: admin
+        role:
+          type: string
+          description: User role
+          example: admin
+          enum:
+          - admin
+          - user
+          - view-only
+        createdAt:
+          type: string
+          format: date-time
+          description: Account creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        isAdmin:
+          type: boolean
+          description: Whether the user has admin privileges
+          example: true
+        teams:
+          type: array
+          description: Teams the user belongs to
+          items:
+            type: object
+    LoginRequest:
+      type: object
+      description: Login credentials for authentication
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Umami username
+          example: admin
+        password:
+          type: string
+          description: Umami password
+          example: umami
+    LoginResponse:
+      type: object
+      description: Successful login response with token and user info
+      properties:
+        token:
+          type: string
+          description: JWT bearer token for API authentication
+          example: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
+        user:
+          $ref: '#/components/schemas/User'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key

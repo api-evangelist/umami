@@ -1,0 +1,385 @@
+openapi: 3.0.3
+info:
+  title: Umami Analytics Authentication Websites API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  version: '1.0'
+  contact:
+    name: Umami Support
+    url: https://umami.is/docs/support
+  termsOfService: https://umami.is/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.umami.is
+  description: Umami Cloud API
+- url: http://localhost:3000
+  description: Self-hosted Umami instance
+security:
+- bearerAuth: []
+tags:
+- name: Websites
+  description: Website management and configuration
+paths:
+  /api/websites:
+    get:
+      operationId: listWebsites
+      summary: Umami List Websites
+      description: Retrieve all websites accessible to the authenticated user.
+      tags:
+      - Websites
+      parameters:
+      - name: includeTeams
+        in: query
+        schema:
+          type: boolean
+        description: Include team-owned websites
+        example: false
+      - name: search
+        in: query
+        schema:
+          type: string
+        description: Filter websites by name or domain
+        example: mysite
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+        example: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        description: Number of results per page
+        example: 20
+      responses:
+        '200':
+          description: List of websites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteList'
+              examples:
+                listWebsites200Example:
+                  summary: Default listWebsites 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      name: My Website
+                      domain: example.com
+                      shareId: null
+                      resetAt: null
+                      userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                      createdAt: '2026-01-15T10:00:00.000Z'
+                      updatedAt: '2026-01-15T10:00:00.000Z'
+                      deletedAt: null
+                    count: 1
+                    page: 1
+                    pageSize: 20
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createWebsite
+      summary: Umami Create Website
+      description: Add a new website to Umami for tracking.
+      tags:
+      - Websites
+      requestBody:
+        required: true
+        description: Website configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebsiteRequest'
+            examples:
+              createWebsiteRequestExample:
+                summary: Default createWebsite request
+                x-microcks-default: true
+                value:
+                  name: My Website
+                  domain: example.com
+      responses:
+        '201':
+          description: Website created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+              examples:
+                createWebsite201Example:
+                  summary: Default createWebsite 201 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: My Website
+                    domain: example.com
+                    shareId: null
+                    resetAt: null
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/websites/{websiteId}:
+    get:
+      operationId: getWebsite
+      summary: Umami Get Website
+      description: Retrieve a specific website by its ID.
+      tags:
+      - Websites
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Website details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+              examples:
+                getWebsite200Example:
+                  summary: Default getWebsite 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: My Website
+                    domain: example.com
+                    shareId: null
+                    resetAt: null
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-15T10:00:00.000Z'
+                    deletedAt: null
+        '404':
+          description: Website not found
+        '401':
+          description: Unauthorized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: updateWebsite
+      summary: Umami Update Website
+      description: Modify settings for an existing website.
+      tags:
+      - Websites
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      requestBody:
+        required: true
+        description: Updated website configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebsiteRequest'
+            examples:
+              updateWebsiteRequestExample:
+                summary: Default updateWebsite request
+                x-microcks-default: true
+                value:
+                  name: Updated Website Name
+                  domain: example.com
+      responses:
+        '200':
+          description: Website updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+              examples:
+                updateWebsite200Example:
+                  summary: Default updateWebsite 200 response
+                  x-microcks-default: true
+                  value:
+                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    name: Updated Website Name
+                    domain: example.com
+                    shareId: null
+                    resetAt: null
+                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                    createdAt: '2026-01-15T10:00:00.000Z'
+                    updatedAt: '2026-01-16T10:00:00.000Z'
+                    deletedAt: null
+        '401':
+          description: Unauthorized
+        '404':
+          description: Website not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteWebsite
+      summary: Umami Delete Website
+      description: Remove a website and all associated data from Umami.
+      tags:
+      - Websites
+      parameters:
+      - name: websiteId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Website identifier
+        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      responses:
+        '200':
+          description: Website deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkResponse'
+              examples:
+                deleteWebsite200Example:
+                  summary: Default deleteWebsite 200 response
+                  x-microcks-default: true
+                  value:
+                    ok: true
+        '401':
+          description: Unauthorized
+        '404':
+          description: Website not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    WebsiteRequest:
+      type: object
+      description: Request body for creating or updating a website
+      required:
+      - name
+      - domain
+      properties:
+        name:
+          type: string
+          description: Display name for the website
+          example: My Website
+        domain:
+          type: string
+          description: Website domain
+          example: example.com
+        shareId:
+          type: string
+          nullable: true
+          description: Custom share identifier
+          example: null
+        teamId:
+          type: string
+          format: uuid
+          nullable: true
+          description: Team identifier for team ownership
+          example: null
+    Website:
+      type: object
+      description: Umami website tracking configuration
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Website identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        name:
+          type: string
+          description: Display name for the website in Umami
+          example: My Website
+        domain:
+          type: string
+          description: Website domain
+          example: example.com
+        shareId:
+          type: string
+          nullable: true
+          description: Public share identifier for shared analytics views
+          example: null
+        resetAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of last data reset
+          example: null
+        userId:
+          type: string
+          format: uuid
+          description: Owner user identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        teamId:
+          type: string
+          format: uuid
+          nullable: true
+          description: Team identifier if team-owned
+          example: null
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Deletion timestamp
+          example: null
+    OkResponse:
+      type: object
+      description: Simple success confirmation
+      properties:
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key
