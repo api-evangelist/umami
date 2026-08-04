@@ -1,0 +1,997 @@
+{
+  "info": {
+    "_postman_id": "117c1682-7396-4aab-bba1-32167a5d2d38",
+    "name": "Umami Analytics Authentication Websites API",
+    "description": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:22:32.000Z",
+    "updatedAt": "2026-07-28T03:22:32.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-117c1682-7396-4aab-bba1-32167a5d2d38"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "websites",
+          "item": [
+            {
+              "name": "{websiteId}",
+              "item": [
+                {
+                  "name": "Umami Get Website",
+                  "id": "944b2837-bd22-47b4-a25e-523dd8264ca6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites/:websiteId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites",
+                        ":websiteId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "6947e340-0e4c-4109-b71f-0486da5c272b",
+                          "key": "websiteId",
+                          "value": "<uuid>",
+                          "description": "(Required) Website identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve a specific website by its ID."
+                  },
+                  "response": [
+                    {
+                      "id": "63c24561-cf1a-4ce1-92d1-87668e1114f8",
+                      "name": "Website details",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"resetAt\": \"<dateTime>\",\n  \"userId\": \"<uuid>\",\n  \"teamId\": \"<uuid>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"deletedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-63c24561-cf1a-4ce1-92d1-87668e1114f8"
+                    },
+                    {
+                      "id": "9f80c2c9-ff17-4658-825a-e179d74663aa",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-9f80c2c9-ff17-4658-825a-e179d74663aa"
+                    },
+                    {
+                      "id": "8e1dc0aa-385f-46a1-b2f2-f3f0b727c0b1",
+                      "name": "Website not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-8e1dc0aa-385f-46a1-b2f2-f3f0b727c0b1"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-944b2837-bd22-47b4-a25e-523dd8264ca6"
+                },
+                {
+                  "name": "Umami Update Website",
+                  "id": "984a6a69-635f-4e2c-b5f5-5716d0fd00c8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites/:websiteId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites",
+                        ":websiteId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1cc8a059-e12c-46a5-b107-4d66081882fc",
+                          "key": "websiteId",
+                          "value": "<uuid>",
+                          "description": "(Required) Website identifier"
+                        }
+                      ]
+                    },
+                    "description": "Modify settings for an existing website."
+                  },
+                  "response": [
+                    {
+                      "id": "1da6f48d-6c37-41f0-a722-81735109e607",
+                      "name": "Website updated",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"resetAt\": \"<dateTime>\",\n  \"userId\": \"<uuid>\",\n  \"teamId\": \"<uuid>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"deletedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-1da6f48d-6c37-41f0-a722-81735109e607"
+                    },
+                    {
+                      "id": "fc0507a8-2021-4cbf-a3db-696434822310",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-fc0507a8-2021-4cbf-a3db-696434822310"
+                    },
+                    {
+                      "id": "a962b5a8-d2db-49e1-b2d9-13585cf2c23e",
+                      "name": "Website not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-a962b5a8-d2db-49e1-b2d9-13585cf2c23e"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-984a6a69-635f-4e2c-b5f5-5716d0fd00c8"
+                },
+                {
+                  "name": "Umami Delete Website",
+                  "id": "52d223fd-f481-4e37-a3c6-885deb6795b2",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites/:websiteId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites",
+                        ":websiteId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "8e2628bc-18e8-4e39-b2a8-44279aace5ef",
+                          "key": "websiteId",
+                          "value": "<uuid>",
+                          "description": "(Required) Website identifier"
+                        }
+                      ]
+                    },
+                    "description": "Remove a website and all associated data from Umami."
+                  },
+                  "response": [
+                    {
+                      "id": "ceb4fa3a-dd7a-4650-ae5e-152aac2b9e13",
+                      "name": "Website deleted",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"ok\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-ceb4fa3a-dd7a-4650-ae5e-152aac2b9e13"
+                    },
+                    {
+                      "id": "ac226c10-f266-4ea2-bd9b-66e75cc02775",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-ac226c10-f266-4ea2-bd9b-66e75cc02775"
+                    },
+                    {
+                      "id": "9578d413-6445-4503-96ad-797cea22b1cc",
+                      "name": "Website not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "websiteId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:32.000Z",
+                      "updatedAt": "2026-07-28T03:22:32.000Z",
+                      "uid": "35240-9578d413-6445-4503-96ad-797cea22b1cc"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-52d223fd-f481-4e37-a3c6-885deb6795b2"
+                }
+              ],
+              "id": "bc689833-c8e8-4aea-9235-5616f83206a4",
+              "createdAt": "2026-07-28T03:22:32.000Z",
+              "updatedAt": "2026-07-28T03:22:32.000Z",
+              "uid": "35240-bc689833-c8e8-4aea-9235-5616f83206a4"
+            },
+            {
+              "name": "Umami List Websites",
+              "id": "573bbc08-28b8-48d7-b945-651623169aaa",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/websites?includeTeams=<boolean>&search=<string>&page=1&pageSize=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "websites"
+                  ],
+                  "query": [
+                    {
+                      "description": "Include team-owned websites",
+                      "key": "includeTeams",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filter websites by name or domain",
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Page number for pagination",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Number of results per page",
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "Retrieve all websites accessible to the authenticated user."
+              },
+              "response": [
+                {
+                  "id": "0cf0355f-e9c5-44cf-8377-ecefa736f92e",
+                  "name": "List of websites",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites?includeTeams=<boolean>&search=<string>&page=1&pageSize=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites"
+                      ],
+                      "query": [
+                        {
+                          "description": "Include team-owned websites",
+                          "key": "includeTeams",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filter websites by name or domain",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Page number for pagination",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Number of results per page",
+                          "key": "pageSize",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"shareId\": \"<string>\",\n      \"resetAt\": \"<dateTime>\",\n      \"userId\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"deletedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"shareId\": \"<string>\",\n      \"resetAt\": \"<dateTime>\",\n      \"userId\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"deletedAt\": \"<dateTime>\"\n    }\n  ],\n  \"count\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"pageSize\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-0cf0355f-e9c5-44cf-8377-ecefa736f92e"
+                },
+                {
+                  "id": "c5072669-6551-4fdd-aa44-090e8220b3f5",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites?includeTeams=<boolean>&search=<string>&page=1&pageSize=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites"
+                      ],
+                      "query": [
+                        {
+                          "description": "Include team-owned websites",
+                          "key": "includeTeams",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filter websites by name or domain",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Page number for pagination",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Number of results per page",
+                          "key": "pageSize",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-c5072669-6551-4fdd-aa44-090e8220b3f5"
+                }
+              ],
+              "createdAt": "2026-07-28T03:22:32.000Z",
+              "updatedAt": "2026-07-28T03:22:32.000Z",
+              "uid": "35240-573bbc08-28b8-48d7-b945-651623169aaa"
+            },
+            {
+              "name": "Umami Create Website",
+              "id": "1536030f-94c0-45c5-8355-fc7964f1531d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/websites",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "websites"
+                  ]
+                },
+                "description": "Add a new website to Umami for tracking."
+              },
+              "response": [
+                {
+                  "id": "05f8efd7-c056-4b4a-a6fa-15f37d54f7df",
+                  "name": "Website created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"resetAt\": \"<dateTime>\",\n  \"userId\": \"<uuid>\",\n  \"teamId\": \"<uuid>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"deletedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-05f8efd7-c056-4b4a-a6fa-15f37d54f7df"
+                },
+                {
+                  "id": "4e5b1a3a-a21b-4a63-94c9-3d55bba36a6b",
+                  "name": "Invalid request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-4e5b1a3a-a21b-4a63-94c9-3d55bba36a6b"
+                },
+                {
+                  "id": "b13305d7-de5b-4422-859f-33a82a72ced6",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"shareId\": \"<string>\",\n  \"teamId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/websites",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "websites"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:32.000Z",
+                  "updatedAt": "2026-07-28T03:22:32.000Z",
+                  "uid": "35240-b13305d7-de5b-4422-859f-33a82a72ced6"
+                }
+              ],
+              "createdAt": "2026-07-28T03:22:32.000Z",
+              "updatedAt": "2026-07-28T03:22:32.000Z",
+              "uid": "35240-1536030f-94c0-45c5-8355-fc7964f1531d"
+            }
+          ],
+          "id": "1b6a0936-2ce8-4971-b3f5-097cc4f6e599",
+          "createdAt": "2026-07-28T03:22:32.000Z",
+          "updatedAt": "2026-07-28T03:22:32.000Z",
+          "uid": "35240-1b6a0936-2ce8-4971-b3f5-097cc4f6e599"
+        }
+      ],
+      "id": "397750ca-bcda-4349-89cb-cbaf1f6924ce",
+      "createdAt": "2026-07-28T03:22:32.000Z",
+      "updatedAt": "2026-07-28T03:22:32.000Z",
+      "uid": "35240-397750ca-bcda-4349-89cb-cbaf1f6924ce"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.umami.is"
+    }
+  ]
+}

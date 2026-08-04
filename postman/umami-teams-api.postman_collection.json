@@ -1,0 +1,1204 @@
+{
+  "info": {
+    "_postman_id": "bf1dde3b-e33f-4150-a99e-db581a48a7f9",
+    "name": "Umami Analytics Authentication Teams API",
+    "description": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:22:28.000Z",
+    "updatedAt": "2026-07-28T03:22:29.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bf1dde3b-e33f-4150-a99e-db581a48a7f9"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "teams",
+          "item": [
+            {
+              "name": "join",
+              "item": [
+                {
+                  "name": "Umami Join Team",
+                  "id": "4079a8a1-57ac-4ade-b61a-773e7b8edf2b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"accessCode\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams/join",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams",
+                        "join"
+                      ]
+                    },
+                    "description": "Join an existing team using an access code."
+                  },
+                  "response": [
+                    {
+                      "id": "5d9d0c82-acc7-4097-a37e-cab45ac65120",
+                      "name": "Successfully joined team",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"accessCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/join",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            "join"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"teamId\": \"<uuid>\",\n  \"userId\": \"<uuid>\",\n  \"role\": \"team-member\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-5d9d0c82-acc7-4097-a37e-cab45ac65120"
+                    },
+                    {
+                      "id": "5f336a7f-f5a8-4f53-a05c-fe2709b675c7",
+                      "name": "Invalid access code",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"accessCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/join",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            "join"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-5f336a7f-f5a8-4f53-a05c-fe2709b675c7"
+                    },
+                    {
+                      "id": "27c5885f-1370-4fee-98ad-3ee6553e682b",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"accessCode\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/join",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            "join"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-27c5885f-1370-4fee-98ad-3ee6553e682b"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-4079a8a1-57ac-4ade-b61a-773e7b8edf2b"
+                }
+              ],
+              "id": "92a3b7f4-30ac-4081-ba34-2f3f2dfee523",
+              "createdAt": "2026-07-28T03:22:29.000Z",
+              "updatedAt": "2026-07-28T03:22:29.000Z",
+              "uid": "35240-92a3b7f4-30ac-4081-ba34-2f3f2dfee523"
+            },
+            {
+              "name": "{teamId}",
+              "item": [
+                {
+                  "name": "websites",
+                  "item": [
+                    {
+                      "name": "Umami Team Websites",
+                      "id": "319c129e-f2e0-449b-bbea-b633abcfdad4",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/:teamId/websites?search=<string>&page=1&pageSize=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            ":teamId",
+                            "websites"
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter by name or domain",
+                              "key": "search",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Page number",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Results per page",
+                              "key": "pageSize",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "6ae7ab06-c766-4c06-9acb-36e982dbef0a",
+                              "key": "teamId",
+                              "value": "<uuid>",
+                              "description": "(Required) Team identifier"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve all websites belonging to a specific team."
+                      },
+                      "response": [
+                        {
+                          "id": "ab20c4fd-837b-4cc7-8961-c2d936dfc713",
+                          "name": "Team websites",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/teams/:teamId/websites?search=<string>&page=1&pageSize=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "teams",
+                                ":teamId",
+                                "websites"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Filter by name or domain",
+                                  "key": "search",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Page number",
+                                  "key": "page",
+                                  "value": "1"
+                                },
+                                {
+                                  "description": "Results per page",
+                                  "key": "pageSize",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "teamId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"shareId\": \"<string>\",\n      \"resetAt\": \"<dateTime>\",\n      \"userId\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"deletedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"shareId\": \"<string>\",\n      \"resetAt\": \"<dateTime>\",\n      \"userId\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"deletedAt\": \"<dateTime>\"\n    }\n  ],\n  \"count\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"pageSize\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T03:22:29.000Z",
+                          "updatedAt": "2026-07-28T03:22:29.000Z",
+                          "uid": "35240-ab20c4fd-837b-4cc7-8961-c2d936dfc713"
+                        },
+                        {
+                          "id": "1478b248-9d0a-4674-ac1f-b41e4c33935c",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/teams/:teamId/websites?search=<string>&page=1&pageSize=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "teams",
+                                ":teamId",
+                                "websites"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Filter by name or domain",
+                                  "key": "search",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Page number",
+                                  "key": "page",
+                                  "value": "1"
+                                },
+                                {
+                                  "description": "Results per page",
+                                  "key": "pageSize",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "teamId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:22:29.000Z",
+                          "updatedAt": "2026-07-28T03:22:29.000Z",
+                          "uid": "35240-1478b248-9d0a-4674-ac1f-b41e4c33935c"
+                        },
+                        {
+                          "id": "feda1e8a-ede6-427d-993b-ab45c3cb7b30",
+                          "name": "Team not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/teams/:teamId/websites?search=<string>&page=1&pageSize=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "teams",
+                                ":teamId",
+                                "websites"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Filter by name or domain",
+                                  "key": "search",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Page number",
+                                  "key": "page",
+                                  "value": "1"
+                                },
+                                {
+                                  "description": "Results per page",
+                                  "key": "pageSize",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "teamId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:22:29.000Z",
+                          "updatedAt": "2026-07-28T03:22:29.000Z",
+                          "uid": "35240-feda1e8a-ede6-427d-993b-ab45c3cb7b30"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-319c129e-f2e0-449b-bbea-b633abcfdad4"
+                    }
+                  ],
+                  "id": "4868e577-2e44-4271-8e5a-a33e0d9edd13",
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-4868e577-2e44-4271-8e5a-a33e0d9edd13"
+                },
+                {
+                  "name": "Umami Get Team",
+                  "id": "3f3b57e6-0c3b-4d4a-a5c6-383f262ec107",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams/:teamId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams",
+                        ":teamId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "a875af00-3b3d-47ca-99c0-8b462243b95e",
+                          "key": "teamId",
+                          "value": "<uuid>",
+                          "description": "(Required) Team identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve details for a specific team including members."
+                  },
+                  "response": [
+                    {
+                      "id": "483ddea4-8a77-49fc-8f98-80ddf3953316",
+                      "name": "Team details",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/:teamId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            ":teamId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "teamId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"accessCode\": \"<string>\",\n  \"logoUrl\": \"<string>\",\n  \"members\": [\n    {\n      \"id\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"userId\": \"<uuid>\",\n      \"role\": \"team-manager\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"userId\": \"<uuid>\",\n      \"role\": \"team-member\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"deletedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-483ddea4-8a77-49fc-8f98-80ddf3953316"
+                    },
+                    {
+                      "id": "a535a03b-9e77-42a4-bc43-5b191e4830e1",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/:teamId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            ":teamId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "teamId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-a535a03b-9e77-42a4-bc43-5b191e4830e1"
+                    },
+                    {
+                      "id": "b843418c-1a6c-4dac-b72d-90166e4a3c9d",
+                      "name": "Team not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/:teamId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            ":teamId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "teamId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-b843418c-1a6c-4dac-b72d-90166e4a3c9d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-3f3b57e6-0c3b-4d4a-a5c6-383f262ec107"
+                },
+                {
+                  "name": "Umami Delete Team",
+                  "id": "45088cb7-d527-4a46-b138-bc292d7accc6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams/:teamId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams",
+                        ":teamId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "6d497e08-74f2-4501-b150-fbad61fccfaf",
+                          "key": "teamId",
+                          "value": "<uuid>",
+                          "description": "(Required) Team identifier"
+                        }
+                      ]
+                    },
+                    "description": "Remove a team and all associated memberships."
+                  },
+                  "response": [
+                    {
+                      "id": "62d80026-b611-41dc-ae01-33db65a0bcda",
+                      "name": "Team deleted",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/:teamId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            ":teamId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "teamId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"ok\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-62d80026-b611-41dc-ae01-33db65a0bcda"
+                    },
+                    {
+                      "id": "efa911d7-c4e8-4b18-9aa2-8472dd3fc332",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/:teamId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            ":teamId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "teamId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-efa911d7-c4e8-4b18-9aa2-8472dd3fc332"
+                    },
+                    {
+                      "id": "c3bed2dc-78e3-4dbf-9148-901acdaec817",
+                      "name": "Team not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/teams/:teamId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "teams",
+                            ":teamId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "teamId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:29.000Z",
+                      "updatedAt": "2026-07-28T03:22:29.000Z",
+                      "uid": "35240-c3bed2dc-78e3-4dbf-9148-901acdaec817"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-45088cb7-d527-4a46-b138-bc292d7accc6"
+                }
+              ],
+              "id": "c3bdc6d4-f765-4e8c-99ca-dac11fd6f0c3",
+              "createdAt": "2026-07-28T03:22:29.000Z",
+              "updatedAt": "2026-07-28T03:22:29.000Z",
+              "uid": "35240-c3bdc6d4-f765-4e8c-99ca-dac11fd6f0c3"
+            },
+            {
+              "name": "Umami List Teams",
+              "id": "bb3ee6a3-76de-40c1-9c98-752bac773b1b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/teams?page=1&pageSize=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams"
+                  ],
+                  "query": [
+                    {
+                      "description": "Page number",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Results per page",
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "Retrieve all teams accessible to the authenticated user."
+              },
+              "response": [
+                {
+                  "id": "1b574604-17d6-44c2-9c34-6f10b9a062af",
+                  "name": "List of teams",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams?page=1&pageSize=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams"
+                      ],
+                      "query": [
+                        {
+                          "description": "Page number",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Results per page",
+                          "key": "pageSize",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"accessCode\": \"<string>\",\n      \"logoUrl\": \"<string>\",\n      \"members\": [\n        {\n          \"id\": \"<uuid>\",\n          \"teamId\": \"<uuid>\",\n          \"userId\": \"<uuid>\",\n          \"role\": \"team-view-only\",\n          \"createdAt\": \"<dateTime>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"teamId\": \"<uuid>\",\n          \"userId\": \"<uuid>\",\n          \"role\": \"team-manager\",\n          \"createdAt\": \"<dateTime>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"deletedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"accessCode\": \"<string>\",\n      \"logoUrl\": \"<string>\",\n      \"members\": [\n        {\n          \"id\": \"<uuid>\",\n          \"teamId\": \"<uuid>\",\n          \"userId\": \"<uuid>\",\n          \"role\": \"team-view-only\",\n          \"createdAt\": \"<dateTime>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"teamId\": \"<uuid>\",\n          \"userId\": \"<uuid>\",\n          \"role\": \"team-member\",\n          \"createdAt\": \"<dateTime>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"deletedAt\": \"<dateTime>\"\n    }\n  ],\n  \"count\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"pageSize\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-1b574604-17d6-44c2-9c34-6f10b9a062af"
+                },
+                {
+                  "id": "e351501a-8de1-4e44-9c75-c1a0a5b3681b",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams?page=1&pageSize=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams"
+                      ],
+                      "query": [
+                        {
+                          "description": "Page number",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Results per page",
+                          "key": "pageSize",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-e351501a-8de1-4e44-9c75-c1a0a5b3681b"
+                }
+              ],
+              "createdAt": "2026-07-28T03:22:29.000Z",
+              "updatedAt": "2026-07-28T03:22:29.000Z",
+              "uid": "35240-bb3ee6a3-76de-40c1-9c98-752bac773b1b"
+            },
+            {
+              "name": "Umami Create Team",
+              "id": "da2be88c-0dcc-4337-b37d-ca40ae55cdb0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"accessCode\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/teams",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "teams"
+                  ]
+                },
+                "description": "Create a new team for collaborative website management."
+              },
+              "response": [
+                {
+                  "id": "6d6fe79f-325e-4532-8b53-bd712781ce9b",
+                  "name": "Team created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"accessCode\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"accessCode\": \"<string>\",\n  \"logoUrl\": \"<string>\",\n  \"members\": [\n    {\n      \"id\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"userId\": \"<uuid>\",\n      \"role\": \"team-manager\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"teamId\": \"<uuid>\",\n      \"userId\": \"<uuid>\",\n      \"role\": \"team-member\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"deletedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-6d6fe79f-325e-4532-8b53-bd712781ce9b"
+                },
+                {
+                  "id": "19b616d6-f013-447b-84b8-d9702dfc525b",
+                  "name": "Invalid request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"accessCode\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-19b616d6-f013-447b-84b8-d9702dfc525b"
+                },
+                {
+                  "id": "c07245f1-3d15-45ec-b6f0-e3e1b8e2efa8",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"accessCode\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/teams",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "teams"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:29.000Z",
+                  "updatedAt": "2026-07-28T03:22:29.000Z",
+                  "uid": "35240-c07245f1-3d15-45ec-b6f0-e3e1b8e2efa8"
+                }
+              ],
+              "createdAt": "2026-07-28T03:22:29.000Z",
+              "updatedAt": "2026-07-28T03:22:29.000Z",
+              "uid": "35240-da2be88c-0dcc-4337-b37d-ca40ae55cdb0"
+            }
+          ],
+          "id": "5402b137-a7c0-4a42-a6bf-38d3bb2236c3",
+          "createdAt": "2026-07-28T03:22:29.000Z",
+          "updatedAt": "2026-07-28T03:22:29.000Z",
+          "uid": "35240-5402b137-a7c0-4a42-a6bf-38d3bb2236c3"
+        }
+      ],
+      "id": "8782bec0-0c0a-4bbd-b4f3-67ddfa1712be",
+      "createdAt": "2026-07-28T03:22:29.000Z",
+      "updatedAt": "2026-07-28T03:22:29.000Z",
+      "uid": "35240-8782bec0-0c0a-4bbd-b4f3-67ddfa1712be"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.umami.is"
+    }
+  ]
+}

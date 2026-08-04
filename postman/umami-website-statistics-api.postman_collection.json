@@ -1,0 +1,846 @@
+{
+  "info": {
+    "_postman_id": "f2d1473f-5a9f-4c04-ad2e-c735f84106e5",
+    "name": "Umami Analytics Authentication Website Statistics API",
+    "description": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:22:31.000Z",
+    "updatedAt": "2026-07-28T03:22:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f2d1473f-5a9f-4c04-ad2e-c735f84106e5"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "websites",
+          "item": [
+            {
+              "name": "{websiteId}",
+              "item": [
+                {
+                  "name": "stats",
+                  "item": [
+                    {
+                      "name": "Umami Website Stats",
+                      "id": "c299bd46-f773-4a64-8a05-6178339d031f",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId/stats?startAt=<integer>&endAt=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId",
+                            "stats"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Start timestamp in milliseconds",
+                              "key": "startAt",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "(Required) End timestamp in milliseconds",
+                              "key": "endAt",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "c19e9e14-179a-4964-92f3-4491fe93f355",
+                              "key": "websiteId",
+                              "value": "<uuid>",
+                              "description": "(Required) Website identifier"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve summarized statistics for a website within a given time range."
+                      },
+                      "response": [
+                        {
+                          "id": "a1bb3a57-983c-4151-ab60-6e3d66128299",
+                          "name": "Website statistics summary",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/stats?startAt=<integer>&endAt=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "stats"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"pageviews\": {\n    \"value\": \"<integer>\",\n    \"change\": \"<integer>\"\n  },\n  \"visitors\": {\n    \"value\": \"<integer>\",\n    \"change\": \"<integer>\"\n  },\n  \"visits\": {\n    \"value\": \"<integer>\",\n    \"change\": \"<integer>\"\n  },\n  \"bounces\": {\n    \"value\": \"<integer>\",\n    \"change\": \"<integer>\"\n  },\n  \"totaltime\": {\n    \"value\": \"<integer>\",\n    \"change\": \"<integer>\"\n  }\n}",
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-a1bb3a57-983c-4151-ab60-6e3d66128299"
+                        },
+                        {
+                          "id": "c99c15aa-e14e-4e5e-8492-61b9490a5035",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/stats?startAt=<integer>&endAt=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "stats"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-c99c15aa-e14e-4e5e-8492-61b9490a5035"
+                        },
+                        {
+                          "id": "3b3b8d5d-285d-4a61-8844-34e226df4d1e",
+                          "name": "Website not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/stats?startAt=<integer>&endAt=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "stats"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-3b3b8d5d-285d-4a61-8844-34e226df4d1e"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:22:31.000Z",
+                      "updatedAt": "2026-07-28T03:22:31.000Z",
+                      "uid": "35240-c299bd46-f773-4a64-8a05-6178339d031f"
+                    }
+                  ],
+                  "id": "d4443e61-dedf-42f5-8233-660e82dcc695",
+                  "createdAt": "2026-07-28T03:22:31.000Z",
+                  "updatedAt": "2026-07-28T03:22:31.000Z",
+                  "uid": "35240-d4443e61-dedf-42f5-8233-660e82dcc695"
+                },
+                {
+                  "name": "pageviews",
+                  "item": [
+                    {
+                      "name": "Umami Website Pageviews",
+                      "id": "7899af7d-5059-4bfc-b177-bf463d8713d7",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId/pageviews?startAt=<integer>&endAt=<integer>&unit=day&timezone=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId",
+                            "pageviews"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Start timestamp in milliseconds",
+                              "key": "startAt",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "(Required) End timestamp in milliseconds",
+                              "key": "endAt",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "(Required) Time bucket unit",
+                              "key": "unit",
+                              "value": "day"
+                            },
+                            {
+                              "description": "(Required) IANA timezone name",
+                              "key": "timezone",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "646c1f36-5846-423a-900f-ffec19be90c9",
+                              "key": "websiteId",
+                              "value": "<uuid>",
+                              "description": "(Required) Website identifier"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve pageview data bucketed by time unit within a given date range."
+                      },
+                      "response": [
+                        {
+                          "id": "ac7fe780-0e87-4824-96a2-213b3995105e",
+                          "name": "Pageview time series data",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/pageviews?startAt=<integer>&endAt=<integer>&unit=day&timezone=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "pageviews"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) Time bucket unit",
+                                  "key": "unit",
+                                  "value": "day"
+                                },
+                                {
+                                  "description": "(Required) IANA timezone name",
+                                  "key": "timezone",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"pageviews\": [\n    {\n      \"x\": \"<string>\",\n      \"y\": \"<integer>\"\n    },\n    {\n      \"x\": \"<string>\",\n      \"y\": \"<integer>\"\n    }\n  ],\n  \"sessions\": [\n    {\n      \"x\": \"<string>\",\n      \"y\": \"<integer>\"\n    },\n    {\n      \"x\": \"<string>\",\n      \"y\": \"<integer>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-ac7fe780-0e87-4824-96a2-213b3995105e"
+                        },
+                        {
+                          "id": "cc5c0014-65b1-4734-99d1-9d3699424b0e",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/pageviews?startAt=<integer>&endAt=<integer>&unit=day&timezone=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "pageviews"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) Time bucket unit",
+                                  "key": "unit",
+                                  "value": "day"
+                                },
+                                {
+                                  "description": "(Required) IANA timezone name",
+                                  "key": "timezone",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-cc5c0014-65b1-4734-99d1-9d3699424b0e"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:22:31.000Z",
+                      "updatedAt": "2026-07-28T03:22:31.000Z",
+                      "uid": "35240-7899af7d-5059-4bfc-b177-bf463d8713d7"
+                    }
+                  ],
+                  "id": "27c65685-1bd6-431a-92cf-14d66da8dffe",
+                  "createdAt": "2026-07-28T03:22:31.000Z",
+                  "updatedAt": "2026-07-28T03:22:31.000Z",
+                  "uid": "35240-27c65685-1bd6-431a-92cf-14d66da8dffe"
+                },
+                {
+                  "name": "metrics",
+                  "item": [
+                    {
+                      "name": "Umami Website Metrics",
+                      "id": "98576abc-5443-4fb3-ba71-a57fff14d10f",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId/metrics?startAt=<integer>&endAt=<integer>&type=screen&limit=500",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId",
+                            "metrics"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Start timestamp in milliseconds",
+                              "key": "startAt",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "(Required) End timestamp in milliseconds",
+                              "key": "endAt",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "(Required) Metric dimension to retrieve",
+                              "key": "type",
+                              "value": "screen"
+                            },
+                            {
+                              "description": "Maximum number of results",
+                              "key": "limit",
+                              "value": "500"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "cd7f83d9-0ad4-42b1-8df2-e7a22bca0a6f",
+                              "key": "websiteId",
+                              "value": "<uuid>",
+                              "description": "(Required) Website identifier"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve metrics for a website broken down by a specific dimension."
+                      },
+                      "response": [
+                        {
+                          "id": "bcc30cd6-2dc5-4813-aa8d-7a449123ec4d",
+                          "name": "Metrics data by dimension",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/metrics?startAt=<integer>&endAt=<integer>&type=screen&limit=500",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "metrics"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) Metric dimension to retrieve",
+                                  "key": "type",
+                                  "value": "screen"
+                                },
+                                {
+                                  "description": "Maximum number of results",
+                                  "key": "limit",
+                                  "value": "500"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"x\": \"<string>\",\n    \"y\": \"<integer>\"\n  },\n  {\n    \"x\": \"<string>\",\n    \"y\": \"<integer>\"\n  }\n]",
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-bcc30cd6-2dc5-4813-aa8d-7a449123ec4d"
+                        },
+                        {
+                          "id": "74dae506-80f9-40f8-829d-a2c47d81bdd7",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/metrics?startAt=<integer>&endAt=<integer>&type=screen&limit=500",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "metrics"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) Metric dimension to retrieve",
+                                  "key": "type",
+                                  "value": "screen"
+                                },
+                                {
+                                  "description": "Maximum number of results",
+                                  "key": "limit",
+                                  "value": "500"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-74dae506-80f9-40f8-829d-a2c47d81bdd7"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:22:31.000Z",
+                      "updatedAt": "2026-07-28T03:22:31.000Z",
+                      "uid": "35240-98576abc-5443-4fb3-ba71-a57fff14d10f"
+                    }
+                  ],
+                  "id": "0fc7d33b-f757-408b-8385-55c08d90d5d2",
+                  "createdAt": "2026-07-28T03:22:31.000Z",
+                  "updatedAt": "2026-07-28T03:22:31.000Z",
+                  "uid": "35240-0fc7d33b-f757-408b-8385-55c08d90d5d2"
+                },
+                {
+                  "name": "active",
+                  "item": [
+                    {
+                      "name": "Umami Active Visitors",
+                      "id": "d2d8376c-ff22-4d9d-9d7c-681b4d2d34e7",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/websites/:websiteId/active",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "websites",
+                            ":websiteId",
+                            "active"
+                          ],
+                          "variable": [
+                            {
+                              "id": "c90fcec3-d25b-4d8b-96f0-937e0ed59d82",
+                              "key": "websiteId",
+                              "value": "<uuid>",
+                              "description": "(Required) Website identifier"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve the number of currently active visitors on a website."
+                      },
+                      "response": [
+                        {
+                          "id": "60a17afa-c813-44d0-8872-c6541927ca3f",
+                          "name": "Active visitor count",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/active",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "active"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"visitors\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-60a17afa-c813-44d0-8872-c6541927ca3f"
+                        },
+                        {
+                          "id": "25d11eb0-2b04-41cb-976c-f19e8307645e",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/active",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "active"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "websiteId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:22:31.000Z",
+                          "updatedAt": "2026-07-28T03:22:31.000Z",
+                          "uid": "35240-25d11eb0-2b04-41cb-976c-f19e8307645e"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:22:31.000Z",
+                      "updatedAt": "2026-07-28T03:22:31.000Z",
+                      "uid": "35240-d2d8376c-ff22-4d9d-9d7c-681b4d2d34e7"
+                    }
+                  ],
+                  "id": "3f940202-b860-4f46-ab90-be53cbebb363",
+                  "createdAt": "2026-07-28T03:22:31.000Z",
+                  "updatedAt": "2026-07-28T03:22:31.000Z",
+                  "uid": "35240-3f940202-b860-4f46-ab90-be53cbebb363"
+                }
+              ],
+              "id": "fef64a10-00a9-42c8-82b4-e5c131853642",
+              "createdAt": "2026-07-28T03:22:31.000Z",
+              "updatedAt": "2026-07-28T03:22:31.000Z",
+              "uid": "35240-fef64a10-00a9-42c8-82b4-e5c131853642"
+            }
+          ],
+          "id": "1e0deaa5-bbc8-47f5-ae10-6a6edc5dacd5",
+          "createdAt": "2026-07-28T03:22:31.000Z",
+          "updatedAt": "2026-07-28T03:22:31.000Z",
+          "uid": "35240-1e0deaa5-bbc8-47f5-ae10-6a6edc5dacd5"
+        }
+      ],
+      "id": "3ac49c1a-2958-4af4-b907-e3938f87eaf9",
+      "createdAt": "2026-07-28T03:22:31.000Z",
+      "updatedAt": "2026-07-28T03:22:31.000Z",
+      "uid": "35240-3ac49c1a-2958-4af4-b907-e3938f87eaf9"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.umami.is"
+    }
+  ]
+}

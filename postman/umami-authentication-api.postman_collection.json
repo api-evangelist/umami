@@ -1,0 +1,332 @@
+{
+  "info": {
+    "_postman_id": "a5014086-11cd-4bf7-ac10-fbb1cf369c84",
+    "name": "Umami Analytics Authentication API",
+    "description": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:22:25.000Z",
+    "updatedAt": "2026-07-28T03:22:25.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a5014086-11cd-4bf7-ac10-fbb1cf369c84"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "login",
+              "item": [
+                {
+                  "name": "Umami Login",
+                  "id": "d0e706fc-4a64-4437-8714-96d1c14311c6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/auth/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "auth",
+                        "login"
+                      ]
+                    },
+                    "description": "Obtain a JWT bearer token for API authentication on self-hosted instances."
+                  },
+                  "response": [
+                    {
+                      "id": "a878805e-0da7-4151-8745-f1269899bee4",
+                      "name": "Login successful",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/login",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "login"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"token\": \"<string>\",\n  \"user\": {\n    \"id\": \"<uuid>\",\n    \"username\": \"<string>\",\n    \"role\": \"user\",\n    \"createdAt\": \"<dateTime>\",\n    \"isAdmin\": \"<boolean>\"\n  }\n}",
+                      "createdAt": "2026-07-28T03:22:25.000Z",
+                      "updatedAt": "2026-07-28T03:22:25.000Z",
+                      "uid": "35240-a878805e-0da7-4151-8745-f1269899bee4"
+                    },
+                    {
+                      "id": "198ee796-8168-41b2-995b-33133af796a3",
+                      "name": "Invalid credentials",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/login",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "login"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:25.000Z",
+                      "updatedAt": "2026-07-28T03:22:25.000Z",
+                      "uid": "35240-198ee796-8168-41b2-995b-33133af796a3"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:25.000Z",
+                  "updatedAt": "2026-07-28T03:22:25.000Z",
+                  "uid": "35240-d0e706fc-4a64-4437-8714-96d1c14311c6"
+                }
+              ],
+              "id": "06216b51-4d5c-42d0-9f44-4ec21cd7d762",
+              "createdAt": "2026-07-28T03:22:25.000Z",
+              "updatedAt": "2026-07-28T03:22:25.000Z",
+              "uid": "35240-06216b51-4d5c-42d0-9f44-4ec21cd7d762"
+            },
+            {
+              "name": "verify",
+              "item": [
+                {
+                  "name": "Umami Verify Token",
+                  "id": "a4b30c9f-4c2e-418a-83f8-7508ea47abd3",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/auth/verify",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "auth",
+                        "verify"
+                      ]
+                    },
+                    "description": "Validate that a JWT bearer token is still active and retrieve current user info."
+                  },
+                  "response": [
+                    {
+                      "id": "ae9c3dc4-4e9d-4856-89ec-70bae1483192",
+                      "name": "Token is valid",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/verify",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "verify"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"username\": \"<string>\",\n  \"role\": \"view-only\",\n  \"createdAt\": \"<dateTime>\",\n  \"isAdmin\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T03:22:25.000Z",
+                      "updatedAt": "2026-07-28T03:22:25.000Z",
+                      "uid": "35240-ae9c3dc4-4e9d-4856-89ec-70bae1483192"
+                    },
+                    {
+                      "id": "bc8d0617-d3fc-4c53-a8e8-ac356e03a87e",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/verify",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "verify"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:25.000Z",
+                      "updatedAt": "2026-07-28T03:22:25.000Z",
+                      "uid": "35240-bc8d0617-d3fc-4c53-a8e8-ac356e03a87e"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:25.000Z",
+                  "updatedAt": "2026-07-28T03:22:25.000Z",
+                  "uid": "35240-a4b30c9f-4c2e-418a-83f8-7508ea47abd3"
+                }
+              ],
+              "id": "9b8734f9-6e62-462d-8d0f-3de42944c1b4",
+              "createdAt": "2026-07-28T03:22:25.000Z",
+              "updatedAt": "2026-07-28T03:22:25.000Z",
+              "uid": "35240-9b8734f9-6e62-462d-8d0f-3de42944c1b4"
+            }
+          ],
+          "id": "216c2b6f-f017-4317-bd14-7f089f350cdf",
+          "createdAt": "2026-07-28T03:22:25.000Z",
+          "updatedAt": "2026-07-28T03:22:25.000Z",
+          "uid": "35240-216c2b6f-f017-4317-bd14-7f089f350cdf"
+        }
+      ],
+      "id": "d802682f-0a64-4545-81ce-e030bc7a623d",
+      "createdAt": "2026-07-28T03:22:25.000Z",
+      "updatedAt": "2026-07-28T03:22:25.000Z",
+      "uid": "35240-d802682f-0a64-4545-81ce-e030bc7a623d"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.umami.is"
+    }
+  ]
+}

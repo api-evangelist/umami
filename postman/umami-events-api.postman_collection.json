@@ -1,0 +1,277 @@
+{
+  "info": {
+    "_postman_id": "baf7c34f-b33b-4ded-b90a-57a8e3176218",
+    "name": "Umami Analytics Authentication Events API",
+    "description": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:22:26.000Z",
+    "updatedAt": "2026-07-28T03:22:26.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-baf7c34f-b33b-4ded-b90a-57a8e3176218"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "websites",
+          "item": [
+            {
+              "name": "{websiteId}",
+              "item": [
+                {
+                  "name": "events",
+                  "item": [
+                    {
+                      "name": "series",
+                      "item": [
+                        {
+                          "name": "Umami Event Series",
+                          "id": "a5bb091e-ffc8-48be-8921-d3eea64bab9e",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/websites/:websiteId/events/series?startAt=<integer>&endAt=<integer>&unit=month&timezone=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "websites",
+                                ":websiteId",
+                                "events",
+                                "series"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Start timestamp in milliseconds",
+                                  "key": "startAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) End timestamp in milliseconds",
+                                  "key": "endAt",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "(Required) Time bucket unit",
+                                  "key": "unit",
+                                  "value": "month"
+                                },
+                                {
+                                  "description": "(Required) IANA timezone name",
+                                  "key": "timezone",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "83e659ef-f8cc-4f1a-9eeb-9d80105f4d37",
+                                  "key": "websiteId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) Website identifier"
+                                }
+                              ]
+                            },
+                            "description": "Retrieve custom events within a given time range for a website."
+                          },
+                          "response": [
+                            {
+                              "id": "a311875f-ee0f-4f1a-8134-33f77cb77da7",
+                              "name": "Event time series data",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/websites/:websiteId/events/series?startAt=<integer>&endAt=<integer>&unit=month&timezone=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "websites",
+                                    ":websiteId",
+                                    "events",
+                                    "series"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Start timestamp in milliseconds",
+                                      "key": "startAt",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "(Required) End timestamp in milliseconds",
+                                      "key": "endAt",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "(Required) Time bucket unit",
+                                      "key": "unit",
+                                      "value": "month"
+                                    },
+                                    {
+                                      "description": "(Required) IANA timezone name",
+                                      "key": "timezone",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "websiteId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "[\n  {\n    \"x\": \"<string>\",\n    \"y\": \"<integer>\"\n  },\n  {\n    \"x\": \"<string>\",\n    \"y\": \"<integer>\"\n  }\n]",
+                              "createdAt": "2026-07-28T03:22:26.000Z",
+                              "updatedAt": "2026-07-28T03:22:26.000Z",
+                              "uid": "35240-a311875f-ee0f-4f1a-8134-33f77cb77da7"
+                            },
+                            {
+                              "id": "a494f750-1d72-400d-950a-7158ac30e36e",
+                              "name": "Unauthorized",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/websites/:websiteId/events/series?startAt=<integer>&endAt=<integer>&unit=month&timezone=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "websites",
+                                    ":websiteId",
+                                    "events",
+                                    "series"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Start timestamp in milliseconds",
+                                      "key": "startAt",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "(Required) End timestamp in milliseconds",
+                                      "key": "endAt",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "(Required) Time bucket unit",
+                                      "key": "unit",
+                                      "value": "month"
+                                    },
+                                    {
+                                      "description": "(Required) IANA timezone name",
+                                      "key": "timezone",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "websiteId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T03:22:26.000Z",
+                              "updatedAt": "2026-07-28T03:22:26.000Z",
+                              "uid": "35240-a494f750-1d72-400d-950a-7158ac30e36e"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T03:22:26.000Z",
+                          "updatedAt": "2026-07-28T03:22:26.000Z",
+                          "uid": "35240-a5bb091e-ffc8-48be-8921-d3eea64bab9e"
+                        }
+                      ],
+                      "id": "5adad51b-d713-4e36-8a1d-5ce6c5c30aba",
+                      "createdAt": "2026-07-28T03:22:26.000Z",
+                      "updatedAt": "2026-07-28T03:22:26.000Z",
+                      "uid": "35240-5adad51b-d713-4e36-8a1d-5ce6c5c30aba"
+                    }
+                  ],
+                  "id": "bd395918-53d8-4b9d-8c25-efc3183dfdff",
+                  "createdAt": "2026-07-28T03:22:26.000Z",
+                  "updatedAt": "2026-07-28T03:22:26.000Z",
+                  "uid": "35240-bd395918-53d8-4b9d-8c25-efc3183dfdff"
+                }
+              ],
+              "id": "0c0b615b-9b07-48df-b7b9-95976aeb7bea",
+              "createdAt": "2026-07-28T03:22:26.000Z",
+              "updatedAt": "2026-07-28T03:22:26.000Z",
+              "uid": "35240-0c0b615b-9b07-48df-b7b9-95976aeb7bea"
+            }
+          ],
+          "id": "cf6e1bc6-541f-450b-b713-6131810c5607",
+          "createdAt": "2026-07-28T03:22:26.000Z",
+          "updatedAt": "2026-07-28T03:22:26.000Z",
+          "uid": "35240-cf6e1bc6-541f-450b-b713-6131810c5607"
+        }
+      ],
+      "id": "3f40c31f-440b-4637-8345-21e4f4b18ef1",
+      "createdAt": "2026-07-28T03:22:26.000Z",
+      "updatedAt": "2026-07-28T03:22:26.000Z",
+      "uid": "35240-3f40c31f-440b-4637-8345-21e4f4b18ef1"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.umami.is"
+    }
+  ]
+}

@@ -1,0 +1,596 @@
+{
+  "info": {
+    "_postman_id": "4ba03f60-30cf-4089-9990-9567ad961606",
+    "name": "Umami Analytics Authentication Users API",
+    "description": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:22:29.000Z",
+    "updatedAt": "2026-07-28T03:22:30.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4ba03f60-30cf-4089-9990-9567ad961606"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "users",
+          "item": [
+            {
+              "name": "{userId}",
+              "item": [
+                {
+                  "name": "Umami Get User",
+                  "id": "40713777-a37f-431c-a93f-9c86c781d67d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/users/:userId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "users",
+                        ":userId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "02ce7eeb-a276-42ff-ae27-17ed6add58fa",
+                          "key": "userId",
+                          "value": "<uuid>",
+                          "description": "(Required) User identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve a user account by ID. Only available for admin users on self-hosted instances."
+                  },
+                  "response": [
+                    {
+                      "id": "0d886bee-a854-448f-968b-de855c11fd15",
+                      "name": "User details",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/:userId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            ":userId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "userId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"username\": \"<string>\",\n  \"role\": \"admin\",\n  \"createdAt\": \"<dateTime>\",\n  \"isAdmin\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T03:22:30.000Z",
+                      "updatedAt": "2026-07-28T03:22:30.000Z",
+                      "uid": "35240-0d886bee-a854-448f-968b-de855c11fd15"
+                    },
+                    {
+                      "id": "d91ca845-2a32-45e0-be8d-c0e308b54012",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/:userId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            ":userId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "userId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:30.000Z",
+                      "updatedAt": "2026-07-28T03:22:30.000Z",
+                      "uid": "35240-d91ca845-2a32-45e0-be8d-c0e308b54012"
+                    },
+                    {
+                      "id": "f4a7ae2b-ccad-488c-a51e-d50fca976bdb",
+                      "name": "User not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/:userId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            ":userId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "userId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:30.000Z",
+                      "updatedAt": "2026-07-28T03:22:30.000Z",
+                      "uid": "35240-f4a7ae2b-ccad-488c-a51e-d50fca976bdb"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:30.000Z",
+                  "updatedAt": "2026-07-28T03:22:30.000Z",
+                  "uid": "35240-40713777-a37f-431c-a93f-9c86c781d67d"
+                },
+                {
+                  "name": "Umami Delete User",
+                  "id": "c3b2a10d-1b8f-41dc-8bcd-7f24e2bfa6c7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/users/:userId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "users",
+                        ":userId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "a3e9a688-9273-47ca-be00-8bdffb7e5a61",
+                          "key": "userId",
+                          "value": "<uuid>",
+                          "description": "(Required) User identifier"
+                        }
+                      ]
+                    },
+                    "description": "Remove a user account. Only available for admin users on self-hosted instances."
+                  },
+                  "response": [
+                    {
+                      "id": "87f7efb4-43eb-4f9a-bb4d-6c5c8dc0ef25",
+                      "name": "User deleted",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/:userId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            ":userId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "userId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"ok\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T03:22:30.000Z",
+                      "updatedAt": "2026-07-28T03:22:30.000Z",
+                      "uid": "35240-87f7efb4-43eb-4f9a-bb4d-6c5c8dc0ef25"
+                    },
+                    {
+                      "id": "aeeada22-9124-444d-9fb3-3df1432928cd",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/:userId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            ":userId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "userId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:30.000Z",
+                      "updatedAt": "2026-07-28T03:22:30.000Z",
+                      "uid": "35240-aeeada22-9124-444d-9fb3-3df1432928cd"
+                    },
+                    {
+                      "id": "15346ee0-2e7f-4686-b555-aa26e2b57f0b",
+                      "name": "User not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/:userId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            ":userId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "userId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:22:30.000Z",
+                      "updatedAt": "2026-07-28T03:22:30.000Z",
+                      "uid": "35240-15346ee0-2e7f-4686-b555-aa26e2b57f0b"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:22:30.000Z",
+                  "updatedAt": "2026-07-28T03:22:30.000Z",
+                  "uid": "35240-c3b2a10d-1b8f-41dc-8bcd-7f24e2bfa6c7"
+                }
+              ],
+              "id": "f2442dec-7926-4660-9598-06816b1b8201",
+              "createdAt": "2026-07-28T03:22:30.000Z",
+              "updatedAt": "2026-07-28T03:22:30.000Z",
+              "uid": "35240-f2442dec-7926-4660-9598-06816b1b8201"
+            },
+            {
+              "name": "Umami Create User",
+              "id": "5de9d9a6-f80b-4c69-bc1b-d0291df3121d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"role\": \"user\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                },
+                "description": "Create a new user account. Only available for admin users on self-hosted instances."
+              },
+              "response": [
+                {
+                  "id": "0fac55a5-e667-4048-8982-34ccab96612a",
+                  "name": "User created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"role\": \"user\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "users"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"username\": \"<string>\",\n  \"role\": \"admin\",\n  \"createdAt\": \"<dateTime>\",\n  \"isAdmin\": \"<boolean>\"\n}",
+                  "createdAt": "2026-07-28T03:22:30.000Z",
+                  "updatedAt": "2026-07-28T03:22:30.000Z",
+                  "uid": "35240-0fac55a5-e667-4048-8982-34ccab96612a"
+                },
+                {
+                  "id": "5f66277c-d0ef-4435-a3e4-550b8a6ebe4d",
+                  "name": "Invalid request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"role\": \"user\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "users"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:30.000Z",
+                  "updatedAt": "2026-07-28T03:22:30.000Z",
+                  "uid": "35240-5f66277c-d0ef-4435-a3e4-550b8a6ebe4d"
+                },
+                {
+                  "id": "792b5c0e-05ed-4528-bb72-56e975f0ea96",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"role\": \"user\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "users"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:22:30.000Z",
+                  "updatedAt": "2026-07-28T03:22:30.000Z",
+                  "uid": "35240-792b5c0e-05ed-4528-bb72-56e975f0ea96"
+                }
+              ],
+              "createdAt": "2026-07-28T03:22:30.000Z",
+              "updatedAt": "2026-07-28T03:22:30.000Z",
+              "uid": "35240-5de9d9a6-f80b-4c69-bc1b-d0291df3121d"
+            }
+          ],
+          "id": "9ab05e7d-c377-40d7-8225-4aad67dda56c",
+          "createdAt": "2026-07-28T03:22:30.000Z",
+          "updatedAt": "2026-07-28T03:22:30.000Z",
+          "uid": "35240-9ab05e7d-c377-40d7-8225-4aad67dda56c"
+        }
+      ],
+      "id": "99ebc57c-6123-485c-8908-1e1e1fcc047b",
+      "createdAt": "2026-07-28T03:22:30.000Z",
+      "updatedAt": "2026-07-28T03:22:30.000Z",
+      "uid": "35240-99ebc57c-6123-485c-8908-1e1e1fcc047b"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.umami.is"
+    }
+  ]
+}

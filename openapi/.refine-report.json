@@ -1,0 +1,26 @@
+{
+  "provider": "umami",
+  "sources": [
+    "umami-authentication-api-openapi.yml",
+    "umami-events-api-openapi.yml",
+    "umami-sessions-api-openapi.yml",
+    "umami-teams-api-openapi.yml",
+    "umami-users-api-openapi.yml",
+    "umami-website-statistics-api-openapi.yml",
+    "umami-websites-api-openapi.yml"
+  ],
+  "outputs": [
+    "umami-authentication-api-openapi.yml",
+    "umami-events-api-openapi.yml",
+    "umami-sessions-api-openapi.yml",
+    "umami-teams-api-openapi.yml",
+    "umami-users-api-openapi.yml",
+    "umami-website-statistics-api-openapi.yml",
+    "umami-websites-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
