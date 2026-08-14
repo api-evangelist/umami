@@ -9,16 +9,29 @@ type: Index
 accessModel:
   pricing: freemium
   onboarding: self-serve
-  trial: false
+  trial: true
+  trial_days: 14
   try_now: true
   public: false
-  label: Freemium · Self-serve signup
+  api_free_tier: false
+  api_entry_plan: Pro
+  api_entry_price: '20.00'
+  api_entry_currency: USD
+  label: Freemium product, paid API · Self-serve signup · 14-day trial
+  note: >-
+    The PRODUCT has a free forever tier (Hobby, 100K events/month) and the
+    self-hosted application is free under MIT. The API does NOT: API access
+    begins at the Pro plan, $20/month. Verified on https://umami.is/pricing
+    2026-08-13 — the feature-comparison table marks "API access" as absent on
+    Hobby and present from Pro. Anyone evaluating Umami as an API cannot do so
+    without paying.
   confidence: high
   source:
-  - plans
-  - authentication
-  generated: '2026-07-22'
-  method: derived
+  - https://umami.is/pricing
+  - plans/umami-plans-pricing.yml
+  - authentication/umami-authentication.yml
+  generated: '2026-08-13'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/umami.png
 tags:
   - Cookieless Tracking
@@ -26,27 +39,40 @@ tags:
   - Privacy
   - Web Analytics
   - Website Analytics
+  - Product Analytics
+  - Event Tracking
+  - Self-Hosted
+  - GDPR
+  - Session Replay
+  - Heatmaps
+  - Marketing Attribution
 url: https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml
 created: '2026-03-26'
-modified: '2026-05-19'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: umami:umami-authentication-api
   name: Umami Authentication API
   description: Login and token verification
   humanURL: https://umami.is
-  baseURL: https://api.umami.is
+  baseURL: https://api.umami.is/v1
   tags:
   - Authentication
   properties:
   - type: OpenAPI
     url: openapi/umami-authentication-api-openapi.yml
+  - type: Overlay
+    url: overlays/umami-authentication-api-overlay.yaml
+  - type: Postman
+    url: postman/umami-authentication-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-authentication-api.opencollection.json
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: GettingStarted
-    url: https://umami.is/docs/getting-started
+    url: https://docs.umami.is/docs/collect-data
   - type: APIDocumentation
-    url: https://umami.is/docs/api
+    url: https://docs.umami.is/docs/api
   - type: GitHubOrg
     url: https://github.com/umami-software/umami
   - type: JSONSchema
@@ -129,18 +155,24 @@ apis:
   name: Umami Events API
   description: Custom event tracking
   humanURL: https://umami.is
-  baseURL: https://api.umami.is
+  baseURL: https://api.umami.is/v1
   tags:
   - Events
   properties:
   - type: OpenAPI
     url: openapi/umami-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/umami-events-api-overlay.yaml
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: GettingStarted
-    url: https://umami.is/docs/getting-started
+    url: https://docs.umami.is/docs/collect-data
   - type: APIDocumentation
-    url: https://umami.is/docs/api
+    url: https://docs.umami.is/docs/api
   - type: GitHubOrg
     url: https://github.com/umami-software/umami
   - type: JSONSchema
@@ -223,18 +255,24 @@ apis:
   name: Umami Sessions API
   description: Visitor session data
   humanURL: https://umami.is
-  baseURL: https://api.umami.is
+  baseURL: https://api.umami.is/v1
   tags:
   - Sessions
   properties:
   - type: OpenAPI
     url: openapi/umami-sessions-api-openapi.yml
+  - type: Overlay
+    url: overlays/umami-sessions-api-overlay.yaml
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: GettingStarted
-    url: https://umami.is/docs/getting-started
+    url: https://docs.umami.is/docs/collect-data
   - type: APIDocumentation
-    url: https://umami.is/docs/api
+    url: https://docs.umami.is/docs/api
   - type: GitHubOrg
     url: https://github.com/umami-software/umami
   - type: JSONSchema
@@ -317,18 +355,24 @@ apis:
   name: Umami Teams API
   description: Team and access management
   humanURL: https://umami.is
-  baseURL: https://api.umami.is
+  baseURL: https://api.umami.is/v1
   tags:
   - Teams
   properties:
   - type: OpenAPI
     url: openapi/umami-teams-api-openapi.yml
+  - type: Overlay
+    url: overlays/umami-teams-api-overlay.yaml
+  - type: Postman
+    url: postman/umami-teams-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-teams-api.opencollection.json
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: GettingStarted
-    url: https://umami.is/docs/getting-started
+    url: https://docs.umami.is/docs/collect-data
   - type: APIDocumentation
-    url: https://umami.is/docs/api
+    url: https://docs.umami.is/docs/api
   - type: GitHubOrg
     url: https://github.com/umami-software/umami
   - type: JSONSchema
@@ -411,18 +455,24 @@ apis:
   name: Umami Users API
   description: User account management
   humanURL: https://umami.is
-  baseURL: https://api.umami.is
+  baseURL: https://api.umami.is/v1
   tags:
   - Users
   properties:
   - type: OpenAPI
     url: openapi/umami-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/umami-users-api-overlay.yaml
+  - type: Postman
+    url: postman/umami-users-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-users-api.opencollection.json
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: GettingStarted
-    url: https://umami.is/docs/getting-started
+    url: https://docs.umami.is/docs/collect-data
   - type: APIDocumentation
-    url: https://umami.is/docs/api
+    url: https://docs.umami.is/docs/api
   - type: GitHubOrg
     url: https://github.com/umami-software/umami
   - type: JSONSchema
@@ -505,18 +555,24 @@ apis:
   name: Umami Website Statistics API
   description: Analytics metrics, pageviews, and statistics
   humanURL: https://umami.is
-  baseURL: https://api.umami.is
+  baseURL: https://api.umami.is/v1
   tags:
   - Website Statistics
   properties:
   - type: OpenAPI
     url: openapi/umami-website-statistics-api-openapi.yml
+  - type: Overlay
+    url: overlays/umami-website-statistics-api-overlay.yaml
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: GettingStarted
-    url: https://umami.is/docs/getting-started
+    url: https://docs.umami.is/docs/collect-data
   - type: APIDocumentation
-    url: https://umami.is/docs/api
+    url: https://docs.umami.is/docs/api
   - type: GitHubOrg
     url: https://github.com/umami-software/umami
   - type: JSONSchema
@@ -599,18 +655,24 @@ apis:
   name: Umami Websites API
   description: Website management and configuration
   humanURL: https://umami.is
-  baseURL: https://api.umami.is
+  baseURL: https://api.umami.is/v1
   tags:
   - Websites
   properties:
   - type: OpenAPI
     url: openapi/umami-websites-api-openapi.yml
+  - type: Overlay
+    url: overlays/umami-websites-api-overlay.yaml
+  - type: Postman
+    url: postman/umami-websites-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-websites-api.opencollection.json
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: GettingStarted
-    url: https://umami.is/docs/getting-started
+    url: https://docs.umami.is/docs/collect-data
   - type: APIDocumentation
-    url: https://umami.is/docs/api
+    url: https://docs.umami.is/docs/api
   - type: GitHubOrg
     url: https://github.com/umami-software/umami
   - type: JSONSchema
@@ -690,6 +752,10 @@ apis:
   - type: Examples
     url: examples/umami-active-visitors-example.json
 common:
+  - type: TrustCenter
+    url: security/umami-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/umami-vulnerability-disclosure.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/umami/overview
   - type: AgenticAccess
@@ -703,7 +769,7 @@ common:
   - type: Website
     url: https://umami.is
   - type: Documentation
-    url: https://umami.is/docs
+    url: https://docs.umami.is
   - type: Blog
     url: https://umami.is/blog
   - type: Pricing
@@ -717,9 +783,65 @@ common:
   - type: SelfHosting
     url: https://umami.is/docs/install
   - type: Support
-    url: https://umami.is/docs/support
+    url: https://umami.is/contact
   - type: SpectralRules
     url: rules/umami-spectral-rules.yml
+  - type: Packages
+    url: packages/umami-packages.yml
+  - type: SDKs
+    url: packages/umami-packages.yml
+  - type: CLI
+    url: cli/umami-cli.yml
+  - type: Components
+    url: components/umami-components.yml
+  - type: Conventions
+    url: conventions/umami-conventions.yml
+  - type: DataModel
+    url: data-model/umami-data-model.yml
+  - type: ErrorCatalog
+    url: errors/umami-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/umami-lifecycle.yml
+  - type: StatusPage
+    url: https://umami.statuspage.io
+  - type: ChangeLog
+    url: changelog/umami-changelog.yml
+  - type: Conformance
+    url: conformance/umami-conformance.yml
+  - type: Compliance
+    url: security/umami-trust-center.yml
+  - type: Security
+    url: security/umami-vulnerability-disclosure.yml
+  - type: Plans
+    url: plans/umami-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/umami-rate-limits.yml
+  - type: FinOps
+    url: finops/umami-finops.yml
+  - type: LLMsTxt
+    url: llms/umami-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: GitHubOrganization
+    url: https://github.com/umami-software
+  - type: ChangeLogPage
+    url: https://docs.umami.is/docs/cloud/changelog
+  - type: TermsOfService
+    url: https://umami.is/terms
+  - type: PrivacyPolicy
+    url: https://umami.is/privacy
+  - type: DataProcessingAgreement
+    url: https://umami.is/dpa
+  - type: SecurityPage
+    url: https://umami.is/security
+  - type: Contact
+    url: https://umami.is/contact
+  - type: Guides
+    url: https://docs.umami.is/docs/guides
   - type: Vocabulary
     url: vocabulary/umami-vocabulary.yaml
   - type: Features
@@ -775,3 +897,8 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v1
