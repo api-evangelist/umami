@@ -3,87 +3,88 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Umami
 providerId: umami
+generated: '2026-08-13'
+method: searched
+source: https://docs.umami.is/docs/cloud/api-key
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
+supersedes: >-
+  The 2026-05-04 bulk-sweep scaffold (method: generated), which invented
+  per-tier request quotas and a full set of X-RateLimit-* headers that Umami does
+  not document and does not return. Everything below is either Umami's own
+  published figure or a live observation, and the header block now records the
+  honest finding that no rate-limit headers were observed.
 tags:
-  - Cookieless Tracking
-  - Open Source
-  - Privacy
-  - Web Analytics
-  - Website Analytics
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the Umami API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+description: >-
+  Umami Cloud publishes exactly one rate limit, and it is a good one: a flat,
+  plan-independent 50 calls per 15 seconds per API key. It is not tiered, so an
+  Enterprise key is throttled identically to a Pro key. Separately, plans meter
+  collected EVENTS per month — that is a billing quota, not a rate limit, and it
+  is recorded in plans/umami-plans-pricing.yml.
+limit_count: 1
 limits:
-  - tier: free
-    name: Free Tier Default
+  - name: Umami Cloud API key limit
     scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Umami API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Umami API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Umami API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Umami API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Umami API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    applies_to: https://api.umami.is/v1
+    metric: requests
+    limit: 50
+    window: 15s
+    burst: null
+    tier: all
+    note: >-
+      Published verbatim as "Each API key is limited to 50 calls every 15
+      seconds." Umami publishes no per-endpoint, per-account or per-IP limit,
+      and no separate limit for the /api/send and /api/batch collection
+      endpoints.
+    source: https://docs.umami.is/docs/cloud/api-key
+self_hosted:
+  limits_published: false
+  note: >-
+    Self-hosted Umami ships no documented application-level rate limiting. The
+    operator's own reverse proxy or CDN is the only throttle. The documentation
+    covers Cloudflare header handling and ad-blocker bypass but never a request
+    ceiling.
+headers:
+  observed: none
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: >-
+    PROBED 2026-08-13. Unauthenticated GET https://api.umami.is/v1/websites
+    returned 400 and the same request with an invalid bearer token returned 401;
+    neither response carried any RateLimit-*, X-RateLimit-* or Retry-After
+    header. Response headers were limited to content-type, access-control-max-age,
+    expect-ct, x-content-type-options, x-frame-options and x-xss-protection.
+    Throttled (429) behavior could not be observed without a valid key, so the
+    exhaustion response shape is UNKNOWN rather than absent. The practical
+    consequence for an agent: there is no runtime signal to pace against — a
+    client must implement the 50/15s budget itself, blind.
+  verified: probed
+responseCodes:
+  throttled: unknown
+  note: >-
+    Umami does not document the status code returned when the 50-calls-per-15s
+    limit is exceeded, and it could not be observed anonymously. The documented
+    error envelope (see errors/umami-problem-types.yml) would give it the shape
+    {"error":{"message","code","status"}}.
+quotas:
+  - name: Monthly event allowance
+    kind: billing-quota
+    scope: account
+    metric: events
+    window: month
+    behavior: >-
+      Exceeding the plan's included events does NOT throttle or interrupt
+      collection and does not drop data; the overflow is billed at the plan's
+      per-event overage rate ($0.00003/event on Pro, $0.00002/event on
+      Business). Hobby has no overage.
+    source: https://umami.is/pricing
+    see: plans/umami-plans-pricing.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

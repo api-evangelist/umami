@@ -1,0 +1,137 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.umami.is/docs/tracker-configuration +
+  https://docs.umami.is/docs/tracker-functions +
+  https://docs.umami.is/docs/guides/embed-analytics-in-your-app +
+  https://umami.is/pricing + npm @umami scope
+provider: Umami
+providerId: umami
+description: >-
+  Client-side and embeddable surfaces Umami ships — the browser tracker script,
+  the session recorder script, hosted share pages designed to be iframed, and
+  two React component packages. These are distinct from the SDKs in packages/:
+  they run in the end user's browser rather than calling the API on the
+  developer's behalf.
+families:
+  - name: Tracker script
+    kind: script-tag
+    official: true
+    loader: |
+      <script defer src="https://cloud.umami.is/script.js"
+              data-website-id="YOUR-WEBSITE-ID"></script>
+    self_hosted_loader: '<script defer src="https://your-instance/script.js" data-website-id="..."></script>'
+    versioned: false
+    version: null
+    version_note: >-
+      The documented script URL carries no version segment; it floats to
+      whatever the instance serves. A consumer cannot tell which build is
+      running.
+    configuration_attributes:
+      - {name: data-website-id, description: Required. The website UUID.}
+      - {name: data-host-url, description: Override the endpoint events are sent to.}
+      - {name: data-auto-track, description: Set false to disable automatic pageview tracking.}
+      - {name: data-domains, description: Comma-delimited allowlist of domains to track.}
+      - {name: data-tag, description: Attach a tag to all events from this script.}
+      - {name: data-exclude-search, description: Exclude query strings from collected URLs.}
+      - {name: data-exclude-hash, description: Exclude the URL hash.}
+      - {name: data-do-not-track, description: Honor the browser Do Not Track setting.}
+    javascript_api:
+      - {name: 'umami.track()', description: 'Send a pageview or a custom event, optionally with a data payload.'}
+      - {name: 'umami.identify()', description: Attach a distinct ID and/or session properties to the current session.}
+    docs:
+      - https://docs.umami.is/docs/tracker-configuration
+      - https://docs.umami.is/docs/tracker-functions
+      - https://docs.umami.is/docs/track-events
+    note: >-
+      The primary integration surface for most customers — the analytics API is
+      the read side, this is the write side. Also distributable via Google Tag
+      Manager, and Umami documents a self-hosted proxy pattern for bypassing ad
+      blockers.
+  - name: Session recorder script
+    kind: script-tag
+    official: true
+    loader: '<script defer src="https://your-instance/r.js" data-website-id="..."></script>'
+    versioned: false
+    version: null
+    description: >-
+      Separate script that enables session replay and heatmap collection. Not
+      loaded by default — replays are off unless explicitly enabled.
+    configuration_source: >-
+      Reads its settings at runtime from GET
+      /api/websites/:websiteId/recorder, which is unauthenticated.
+    privacy_controls:
+      - Input fields masked by default
+      - 'maskLevel: strict or moderate'
+      - blockSelector to exclude elements from recording
+      - sampleRate and heatmapSampleRate to record a fraction of sessions
+      - maxDuration ceiling
+    plan_gated: 'Business plan and above (see plans/umami-plans-pricing.yml)'
+    docs:
+      - https://docs.umami.is/docs/replays
+      - https://docs.umami.is/docs/heatmaps
+  - name: Hosted share page
+    kind: hosted-embed
+    official: true
+    url_form: 'https://<your-umami>/share/<shareId>/<website-name>'
+    embed: |
+      <iframe src="https://your-umami.example.com/share/abc123/My-Website"
+              style="width:100%;height:800px;border:none;" loading="lazy"></iframe>
+    description: >-
+      A prebuilt, fully rendered analytics dashboard that can be dropped into
+      another application as an iframe. The lowest-effort way to put Umami
+      analytics in a client portal or internal tool.
+    requirements:
+      - A share URL must be created on the website (shareId set; null revokes it).
+      - >-
+        Self-hosted instances must set ALLOWED_FRAME_URLS to the embedding
+        application's origin, or the frame is refused.
+    authentication: none — possession of the share URL is the grant
+    theming: Share-page options support filtering and theme enforcement (added 2026-05-07).
+    docs:
+      - https://docs.umami.is/docs/guides/embed-analytics-in-your-app
+      - https://docs.umami.is/docs/enable-share-url
+      - https://docs.umami.is/docs/guides/create-a-public-dashboard
+  - name: '@umami/components'
+    kind: react-library
+    official: true
+    registry: npm
+    version: 0.131.0
+    published: '2026-02-16'
+    package: https://www.npmjs.com/package/@umami/components
+    description: 'Published as "Umami React components."'
+    documented: false
+    note: >-
+      First-party by npm scope but undocumented — the package manifest carries
+      no repository or homepage, and docs.umami.is never mentions it. Its
+      intended consumer is unclear; do not build against it expecting support.
+  - name: '@umami/zen'
+    kind: design-system
+    official: true
+    repository: https://github.com/umami-software/zen
+    registry: null
+    version: null
+    published: null
+    description: >-
+      "Zen is the design system and React component collection used by Umami."
+      Public source, actively maintained (last pushed 2026-08-05).
+    note: >-
+      Not published to npm under @umami/zen — the registry returns Not Found —
+      so it is consumable only from source. Recorded as version: null because
+      there is no registry metadata endpoint to read, not because it was
+      unchecked.
+white_label:
+  available: true
+  plan: 'Business and above'
+  docs: https://docs.umami.is/docs/cloud/white-label
+  note: Rebrand the hosted Umami surfaces for client-facing use.
+not_offered:
+  - >-
+    No embeddable chart or widget library for building custom dashboards. The
+    documented path for custom presentation is to call the API and render with
+    a third-party charting library (Umami's own guide demonstrates Recharts,
+    Chart.js and D3) — the components are all-or-nothing hosted pages, not
+    composable pieces.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

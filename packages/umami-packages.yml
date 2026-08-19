@@ -1,0 +1,170 @@
+generated: '2026-08-13'
+method: searched
+source: https://registry.npmjs.org/ + https://github.com/umami-software + https://docs.umami.is/docs/api/api-client
+provider: Umami
+providerId: umami
+description: >-
+  First-party Umami client libraries and distributables. Umami publishes under the
+  @umami npm scope from the github.com/umami-software organization. Versions and
+  publish dates below were read from registry.npmjs.org packument metadata on
+  2026-08-13, not from prose in the docs.
+registries_checked:
+  - registry: npm
+    status: answered
+    note: All first-party packages found here.
+  - registry: pypi
+    status: answered
+    note: No first-party Umami package. Third-party wrappers only; none listed here.
+  - registry: rubygems
+    status: answered
+    note: No first-party Umami gem.
+  - registry: crates.io
+    status: answered
+    note: No first-party Umami crate.
+  - registry: maven-central
+    status: answered
+    note: No first-party Umami artifact.
+  - registry: nuget
+    status: answered
+    note: No first-party Umami package.
+  - registry: pkg.go.dev
+    status: answered
+    note: No first-party Umami module.
+packages:
+  - name: '@umami/api-client'
+    registry: npm
+    language: typescript
+    official: true
+    version: 0.80.0
+    published: '2025-07-25'
+    url: https://www.npmjs.com/package/@umami/api-client
+    repository: https://github.com/umami-software/api-client
+    install: npm install @umami/api-client
+    docs: https://docs.umami.is/docs/api/api-client
+    description: >-
+      TypeScript client with a method for every Umami API endpoint. Configured by
+      environment variable (UMAMI_API_CLIENT_USER_ID / UMAMI_API_CLIENT_SECRET /
+      UMAMI_API_CLIENT_ENDPOINT for self-hosted, or UMAMI_API_KEY +
+      UMAMI_API_CLIENT_ENDPOINT for Umami Cloud). Every call returns
+      { ok, status, data?, error? }.
+    note: >-
+      Currency signal: the newest release (0.80.0, 2025-07-25) predates Umami v3.0
+      (2025-12-12) and every v3 API addition documented in the cloud changelog
+      through 2026-05-28 (revenue, event-data-pivot, session-data-pivot, links,
+      pixels, recorder, performance reports). The function map published in the
+      docs still lists the v2 surface, including /event-data/* paths the changelog
+      says moved under /websites/[id]/ in 2024. The official client therefore does
+      not cover the current API.
+  - name: '@umami/node'
+    registry: npm
+    language: javascript
+    official: true
+    version: 0.4.0
+    published: '2024-08-19'
+    url: https://www.npmjs.com/package/@umami/node
+    repository: https://github.com/umami-software/node
+    install: npm install @umami/node
+    docs: https://docs.umami.is/docs/api/node-client
+    description: >-
+      Server-side collection library. init({ websiteId, hostUrl }) then
+      track({ url, name, data, ... }). Writes to the collection endpoint only; it
+      does not read analytics data.
+    note: >-
+      Last published 2024-08-19; repository last pushed 2024-11-30. Predates the
+      June 2026 change that moved the Umami Cloud collect endpoint to
+      gateway.umami.is.
+  - name: '@umami/components'
+    registry: npm
+    language: typescript
+    official: true
+    version: 0.131.0
+    published: '2026-02-16'
+    url: https://www.npmjs.com/package/@umami/components
+    repository: null
+    install: npm install @umami/components
+    description: >-
+      Umami React components. Published from the @umami scope; the package
+      manifest carries no repository or homepage field.
+    note: >-
+      Not referenced from the public documentation. Recorded because it is
+      first-party by npm scope, but its intended consumer is not documented.
+  - name: '@umami/cli'
+    registry: npm
+    language: javascript
+    official: true
+    version: 0.2.0
+    published: '2023-11-28'
+    url: https://www.npmjs.com/package/@umami/cli
+    repository: https://github.com/umami-software/cli
+    install: npm install -g @umami/cli
+    description: Umami command line interface.
+    note: >-
+      Effectively abandoned. Source repository last pushed 2022-07-01; last npm
+      release 2023-11-28, more than two years before Umami v3. Not referenced
+      anywhere in the current documentation. See cli/umami-cli.yml.
+  - name: umami
+    registry: npm
+    language: javascript
+    official: true
+    version: 2.10.0
+    published: '2024-02-05'
+    url: https://www.npmjs.com/package/umami
+    repository: https://github.com/umami-software/umami
+    description: >-
+      The Umami application itself, published to npm. This is the self-hosted
+      server, not a client library.
+    note: >-
+      Stale relative to the product: npm stops at 2.10.0 (2024-02-05) while GitHub
+      releases have reached v3.3.0 (2026-08-12). Self-hosting is documented via
+      Docker and source, not npm — see https://docs.umami.is/docs/install.
+  - name: '@umami/shiso'
+    registry: npm
+    language: typescript
+    official: true
+    version: 0.55.0
+    published: '2025-05-01'
+    url: https://www.npmjs.com/package/@umami/shiso
+    repository: https://github.com/umami-software/shiso
+    description: >-
+      MDX-powered documentation site generator Umami built and uses for
+      docs.umami.is. Supporting tooling, not an API client.
+  - name: '@umami/prisma-client'
+    registry: npm
+    language: typescript
+    official: true
+    version: 0.20.0
+    published: '2025-09-11'
+    url: https://www.npmjs.com/package/@umami/prisma-client
+    repository: https://github.com/umami-software/prisma-client
+    description: Prisma client wrapper used internally by the Umami application.
+  - name: '@umami/redis-client'
+    registry: npm
+    language: typescript
+    official: true
+    version: 0.30.0
+    published: '2025-10-29'
+    url: https://www.npmjs.com/package/@umami/redis-client
+    repository: https://github.com/umami-software/redis-client
+    description: Redis client wrapper used internally by the Umami application.
+distributions:
+  - name: umami tracker script
+    registry: cdn
+    official: true
+    version: null
+    published: null
+    url: https://cloud.umami.is/script.js
+    description: >-
+      The browser tracking script, loaded with a script tag carrying
+      data-website-id. Self-hosted instances serve it from their own origin.
+    note: >-
+      Unpinned distribution — the documented script URL carries no version
+      segment and floats to whatever the instance currently serves, so a consumer
+      cannot determine which build they are running. Recorded as version: null
+      deliberately: checked, nothing versioned to record.
+third_party_note: >-
+  A large third-party ecosystem exists on npm (nuxt-umami, next-umami, ngx-umami,
+  qwik-umami, svelte-umami, astro-umami, several MCP servers, and others). None of
+  it is published by umami-software and none of it is listed above.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

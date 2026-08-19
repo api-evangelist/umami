@@ -1,0 +1,849 @@
+{
+  "item": [
+    {
+      "id": "f2db660b-d028-442d-92d2-16f314a4c0bc",
+      "name": "Website Statistics",
+      "description": {
+        "content": "Analytics metrics, pageviews, and statistics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "198d4614-e766-4f78-aab1-77bd0db5d2c6",
+          "name": "Umami Website Stats",
+          "request": {
+            "name": "Umami Website Stats",
+            "description": {
+              "content": "Retrieve summarized statistics for a website within a given time range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "websites",
+                ":websiteId",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startAt",
+                  "value": "<integer>",
+                  "description": "(Required) Start timestamp in milliseconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "endAt",
+                  "value": "<integer>",
+                  "description": "(Required) End timestamp in milliseconds"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "websiteId",
+                  "description": "(Required) Website identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "78a1dd49-6c02-4c56-adeb-414dff247518",
+              "name": "Website statistics summary",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageviews\": {\n    \"value\": 1500,\n    \"change\": 150\n  },\n  \"visitors\": {\n    \"value\": 800,\n    \"change\": 80\n  },\n  \"visits\": {\n    \"value\": 1000,\n    \"change\": 100\n  },\n  \"bounces\": {\n    \"value\": 400,\n    \"change\": -20\n  },\n  \"totaltime\": {\n    \"value\": 72000,\n    \"change\": 7200\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed536786-d377-4bbf-9858-5297ba62b9de",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4406e6d3-4136-415c-bc22-288705056e00",
+              "name": "Website not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d22fe01a-5330-4f7a-9e84-52370a9347f1",
+          "name": "Umami Website Pageviews",
+          "request": {
+            "name": "Umami Website Pageviews",
+            "description": {
+              "content": "Retrieve pageview data bucketed by time unit within a given date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "websites",
+                ":websiteId",
+                "pageviews"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startAt",
+                  "value": "<integer>",
+                  "description": "(Required) Start timestamp in milliseconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "endAt",
+                  "value": "<integer>",
+                  "description": "(Required) End timestamp in milliseconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "unit",
+                  "value": "<string>",
+                  "description": "(Required) Time bucket unit"
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "(Required) IANA timezone name"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "websiteId",
+                  "description": "(Required) Website identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6dbd10e3-3667-498a-bff5-5f52b6d78a87",
+              "name": "Pageview time series data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "pageviews"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "America/New_York"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageviews\": [\n    {\n      \"x\": \"2026-01-15 00:00:00\",\n      \"y\": 245\n    }\n  ],\n  \"sessions\": [\n    {\n      \"x\": \"2026-01-15 00:00:00\",\n      \"y\": 180\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7eaf43ca-61c2-4633-88ff-f79c1685bff0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "pageviews"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "America/New_York"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52a9d857-818a-4eea-b58e-55b736a49632",
+          "name": "Umami Website Metrics",
+          "request": {
+            "name": "Umami Website Metrics",
+            "description": {
+              "content": "Retrieve metrics for a website broken down by a specific dimension.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "websites",
+                ":websiteId",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startAt",
+                  "value": "<integer>",
+                  "description": "(Required) Start timestamp in milliseconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "endAt",
+                  "value": "<integer>",
+                  "description": "(Required) End timestamp in milliseconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) Metric dimension to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "500",
+                  "description": "Maximum number of results"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "websiteId",
+                  "description": "(Required) Website identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "889fb1a5-2d24-4275-adf0-c03570bb7d53",
+              "name": "Metrics data by dimension",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    },
+                    {
+                      "key": "type",
+                      "value": "url"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"x\": \"/home\",\n    \"y\": 450\n  },\n  {\n    \"x\": \"/blog\",\n    \"y\": 220\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72673a4b-a52c-4d68-bdee-ca4aa0dbbc07",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    },
+                    {
+                      "key": "type",
+                      "value": "url"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "910c447f-1d51-442d-b86d-663e3042c609",
+          "name": "Umami Active Visitors",
+          "request": {
+            "name": "Umami Active Visitors",
+            "description": {
+              "content": "Retrieve the number of currently active visitors on a website.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "websites",
+                ":websiteId",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "websiteId",
+                  "description": "(Required) Website identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eafcf391-62ec-4ce0-a8cb-026a8e1467fc",
+              "name": "Active visitor count",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"visitors\": 42\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34751513-5e2c-4afe-a10c-f829415cc537",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.umami.is",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "90279cc8-ebb5-493c-8b35-a2baed1946b7",
+    "name": "Umami Analytics Authentication Website Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "item": [
+    {
+      "id": "5a98cbd7-3ecf-48a7-b4fa-62f56d5c16f0",
+      "name": "Events",
+      "description": {
+        "content": "Custom event tracking",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a50b4a48-3ab0-4fff-863d-c020087f782a",
+          "name": "Umami Event Series",
+          "request": {
+            "name": "Umami Event Series",
+            "description": {
+              "content": "Retrieve custom events within a given time range for a website.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "websites",
+                ":websiteId",
+                "events",
+                "series"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startAt",
+                  "value": "<integer>",
+                  "description": "(Required) Start timestamp in milliseconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "endAt",
+                  "value": "<integer>",
+                  "description": "(Required) End timestamp in milliseconds"
+                },
+                {
+                  "disabled": false,
+                  "key": "unit",
+                  "value": "<string>",
+                  "description": "(Required) Time bucket unit"
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "(Required) IANA timezone name"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "websiteId",
+                  "description": "(Required) Website identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f95d7ac-62eb-40ff-84f1-dcedc25b3051",
+              "name": "Event time series data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "events",
+                    "series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "America/New_York"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"x\": \"2026-01-15 00:00:00\",\n    \"y\": 45\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02920582-19eb-4130-adce-83182dc6d5fa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "websites",
+                    ":websiteId",
+                    "events",
+                    "series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startAt",
+                      "value": "1704067200000"
+                    },
+                    {
+                      "key": "endAt",
+                      "value": "1704153600000"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "America/New_York"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "websiteId",
+                      "description": "(Required) Website identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.umami.is",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e06baa8b-e194-4c18-bc5a-d8e477576243",
+    "name": "Umami Analytics Authentication Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.\n\nContact Support:\n Name: Umami Support",
+      "type": "text/plain"
+    }
+  }
+}

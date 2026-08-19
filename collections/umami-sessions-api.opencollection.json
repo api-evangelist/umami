@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics Authentication Sessions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami List Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/sessions",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve session details for a website within a given time range."
+        },
+        {
+          "info": {
+            "name": "Umami Session Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/sessions/stats",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              }
+            ]
+          },
+          "docs": "Retrieve summarized session statistics for a website."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

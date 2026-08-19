@@ -1,0 +1,112 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live probes of https://api.umami.is/v1 (2026-08-13) + openapi/ 4xx/5xx
+  responses + https://docs.umami.is/docs/api
+provider: Umami
+providerId: umami
+description: >-
+  Umami's error catalog. The envelope was read off the live Cloud API, not
+  inferred: two anonymous probes returned the same nested shape with a stable
+  slug code. Umami publishes no error-reference page, so the catalog below is
+  the union of what was observed live and what the OpenAPI declares.
+format: custom
+rfc9457: false
+rfc7807: false
+envelope:
+  shape: |
+    {
+      "error": {
+        "message": "<human-readable string>",
+        "code": "<lowercase-hyphenated slug>",
+        "status": <http status code, duplicated from the response line>
+      }
+    }
+  content_type: application/json
+  problem_json: false
+  note: >-
+    Not RFC 9457. There is no `type` URI, no `title`, no `instance`, and no
+    extension members. The `code` slug is the only machine-stable field — key
+    handling off it, not off `message`.
+  collection_endpoints_differ: >-
+    POST /api/batch does not use this envelope. It returns 200 with a per-item
+    result object — {size, processed, errors, details} — where `errors` is a
+    failure count and `details` lists each failure with its `index` in the
+    submitted array. A partially failed batch is therefore a SUCCESS at the HTTP
+    layer; a client that only checks the status code will silently lose events.
+problem_types:
+  - code: bad-request
+    status: 400
+    title: Bad request
+    message_observed: No API key specified.
+    method: probed
+    evidence:
+      url: https://api.umami.is/v1/websites
+      request: GET with no Authorization header
+      status: 400
+      body: '{"error":{"message":"No API key specified.","code":"bad-request","status":400}}'
+      date: '2026-08-13'
+    remediation: >-
+      Send Authorization: Bearer <api-key>. Note that a MISSING credential is
+      400, not 401 — do not branch on 401 alone to detect an unauthenticated
+      call.
+  - code: unauthorized
+    status: 401
+    title: Unauthorized
+    message_observed: Invalid API key.
+    method: probed
+    evidence:
+      url: https://api.umami.is/v1/websites
+      request: GET with Authorization Bearer <invalid token>
+      status: 401
+      body: '{"error":{"message":"Invalid API key.","code":"unauthorized","status":401}}'
+      date: '2026-08-13'
+    remediation: >-
+      The credential was present but rejected. Regenerate the key in Umami Cloud
+      Settings → API keys, or re-authenticate against POST /api/auth/login on
+      self-hosted. Also returned when a valid key is used against a route the
+      key is not permitted to call (/me/password, /users, /users/*).
+  - status: 401
+    title: Unauthorized
+    method: derived
+    source: openapi/ — declared on 22 of 23 operations
+    note: >-
+      Every operation in the captured OpenAPI except none declares a 401. It is
+      the universal failure mode.
+  - status: 404
+    title: Not found
+    method: derived
+    source: >-
+      openapi/ — declared on getWebsite, updateWebsite, deleteWebsite,
+      getWebsiteStats, getTeam, deleteTeam, listTeamWebsites, getUser, deleteUser
+    remediation: >-
+      The websiteId / teamId / userId does not exist or is not visible to this
+      credential. Umami does not distinguish "absent" from "not yours".
+  - status: 400
+    title: Validation failure
+    method: derived
+    source: openapi/ — declared on createWebsite, createTeam, joinTeam, createUser
+    remediation: >-
+      A required field is missing or malformed on a create call. The response
+      carries the same {error:{message,code,status}} envelope.
+undocumented:
+  - >-
+    NO published error reference. There is no page in docs.umami.is enumerating
+    codes, so the full `code` vocabulary is unknown — only bad-request and
+    unauthorized were observable anonymously.
+  - >-
+    The response to exceeding the 50-calls-per-15-seconds API-key limit is not
+    documented and could not be observed without a valid key. Status code
+    UNKNOWN; 429 is the conventional guess but is NOT recorded here as fact.
+  - >-
+    No 5xx shape is documented or was observed.
+  - >-
+    No error codes are published for the collection endpoints beyond the batch
+    `details[]` array, whose per-failure object shape is not specified.
+gaps_for_the_provider:
+  - Publish an error-code reference listing every `code` slug and its meaning.
+  - Document the throttle response (status code + envelope + any Retry-After).
+  - Specify the shape of each element of the batch `details[]` array.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics Authentication Users API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user account. Only available for admin users on self-hosted instances."
+        },
+        {
+          "info": {
+            "name": "Umami Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "User identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a user account by ID. Only available for admin users on self-hosted instances."
+        },
+        {
+          "info": {
+            "name": "Umami Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.umami.is/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "User identifier"
+              }
+            ]
+          },
+          "docs": "Remove a user account. Only available for admin users on self-hosted instances."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

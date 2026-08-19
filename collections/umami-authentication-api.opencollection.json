@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics Authentication API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/auth/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain a JWT bearer token for API authentication on self-hosted instances."
+        },
+        {
+          "info": {
+            "name": "Umami Verify Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/auth/verify"
+          },
+          "docs": "Validate that a JWT bearer token is still active and retrieve current user info."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

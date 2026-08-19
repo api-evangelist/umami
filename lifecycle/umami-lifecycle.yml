@@ -1,0 +1,141 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.umami.is/docs/cloud/changelog + https://umami.statuspage.io +
+  https://github.com/umami-software/umami/releases + https://umami.is/pricing
+provider: Umami
+providerId: umami
+description: >-
+  Versioning, deprecation, status and support posture for the Umami API. Umami
+  is exceptionally good at TELLING you what changed and has no mechanism at all
+  for letting you change on your own schedule.
+versioning:
+  cloud_api:
+    scheme: single major path segment
+    current: v1
+    base: https://api.umami.is/v1
+    header_negotiation: false
+    date_pinning: false
+    note: >-
+      /v1 has never been incremented. Every change documented in the changelog —
+      including the six renames of 2025-10-07 and the parameter removal of
+      2025-11-13 — landed inside /v1.
+  self_hosted:
+    scheme: semver via GitHub releases
+    current: v3.3.0
+    released: '2026-08-12'
+    url: https://github.com/umami-software/umami/releases
+    note: >-
+      Self-hosted operators DO get versioning: they choose when to upgrade, and
+      v2 → v3 was a real major with a documented migration path. Cloud users get
+      none of that.
+    migration_guides:
+      - https://docs.umami.is/docs/guides/migrate-v1-v2
+deprecation:
+  policy_published: false
+  window: none
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy exists on any Umami surface. Breaking changes are
+    announced on the changelog on the day they take effect. There is no Sunset
+    or Deprecation response header, no advance notice period, and no documented
+    compatibility alias for a renamed path or parameter.
+  documented_deprecations:
+    - item: /teams/[id]/websites/[websiteId]
+      status: deprecated
+      date: '2024-02-16'
+      replacement: not stated
+      source: https://docs.umami.is/docs/cloud/changelog
+  documented_removals:
+    - item: 'GET /api/realtime/:websiteId — timezone parameter'
+      date: '2025-11-13'
+      replacement: none; all datasets now return UTC
+    - item: 'POST /api/reports/goals'
+      date: '2026-03-11'
+      replacement: 'POST /api/reports/goal (path renamed, singular)'
+    - item: 'filter parameters url, host, eventName'
+      date: '2025-10-07'
+      replacement: 'path, hostname, event'
+    - item: 'report type `insights`'
+      date: '2025-10-07'
+      replacement: '`breakdown`'
+  openapi_deprecated_operations: []
+  openapi_note: >-
+    No operation in openapi/ carries deprecated: true. That is an absence of
+    marking, not evidence of stability — the specs are documentation-generated
+    and predate several of the changes above.
+change_communication:
+  changelog:
+    url: https://docs.umami.is/docs/cloud/changelog
+    dated: true
+    route_level: true
+    machine_readable: false
+    feed: none
+  releases:
+    url: https://github.com/umami-software/umami/releases
+    feed: https://github.com/umami-software/umami/releases.atom
+  updates_guidance: https://docs.umami.is/docs/updates
+  note: >-
+    An agent cannot subscribe to Cloud API changes. The only machine-consumable
+    feed Umami publishes is the GitHub releases Atom feed, which covers the
+    self-hosted application, not Cloud.
+status_page:
+  published: true
+  url: https://umami.statuspage.io
+  provider: Atlassian Statuspage
+  machine_readable: true
+  api: https://umami.statuspage.io/api/v2/status.json
+  probed:
+    url: https://umami.statuspage.io/api/v2/status.json
+    status: 200
+    body_indicator: none
+    body_description: All Systems Operational
+    date: '2026-08-13'
+  note: >-
+    Real and machine-readable — status.json, summary.json, components.json and
+    incidents/unresolved.json are all available unauthenticated. It is not
+    linked from umami.is navigation or the docs; it is reachable from the
+    security page ("View service status").
+  discovery_gap: >-
+    status.umami.is does NOT resolve to the status page — it returns a Vercel
+    DEPLOYMENT_NOT_FOUND. A CNAME from status.umami.is to the Statuspage would
+    make the surface discoverable at the address every consumer tries first.
+sla:
+  published: false
+  tiers_with_sla: [enterprise]
+  note: >-
+    "Uptime SLA" is listed as an Enterprise-only line item on the pricing page.
+    No numeric target, credit schedule or measurement method is published, and
+    Hobby/Pro/Business carry no availability commitment. The security page
+    states plainly that "no online service can guarantee uninterrupted
+    availability".
+support:
+  channels:
+    - {tier: hobby, channel: community}
+    - {tier: pro, channel: email}
+    - {tier: business, channel: email + chat}
+    - {tier: enterprise, channel: enterprise support + designated support engineer + onboarding}
+  contacts:
+    support: support@umami.is
+    sales: sales@umami.is
+    security: security@umami.is
+    privacy: privacy@umami.is
+  url: https://umami.is/contact
+data_lifecycle:
+  retention_by_plan:
+    hobby: 6 months
+    pro: 2 years
+    business: 5 years
+    enterprise: custom
+  export: >-
+    Supported on every plan — CSV (gzip) from the dashboard, one website at a
+    time, or via the API. Umami states there is no vendor lock-in.
+  deletion: >-
+    Websites and their analytics data can be removed, and the account deleted.
+    Residual copies may remain in encrypted backups until those expire.
+  source: https://umami.is/pricing + https://umami.is/security
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

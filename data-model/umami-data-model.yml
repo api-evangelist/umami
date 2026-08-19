@@ -1,0 +1,271 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/umami-openapi.yml components.schemas + id-reference fields,
+  enriched from https://docs.umami.is/docs/api and
+  https://docs.umami.is/docs/metric-definitions
+provider: Umami
+providerId: umami
+description: >-
+  Entity-relationship graph for the Umami API. Two layers that behave very
+  differently: a small MANAGEMENT layer of durable, addressable resources
+  (user, team, website, board, link, pixel, report, share) joined by UUID
+  foreign keys, and an ANALYTICS layer (session, event, metric, pageview) that
+  is queried by time window and dimension rather than fetched by ID.
+identifiers:
+  format: UUID v4
+  prefixed: false
+  note: >-
+    Every management resource is keyed by a bare UUID with no type prefix — a
+    websiteId and a teamId are indistinguishable by inspection, unlike
+    prefixed-ID designs. Websites accept a caller-supplied `id` on create
+    (documented as "force a UUID assignment"), so IDs can be pinned across a
+    migration.
+soft_delete:
+  present: true
+  fields: [deletedAt]
+  note: >-
+    Website, Team and User all carry createdAt / updatedAt / deletedAt. A
+    non-null deletedAt is the tombstone; the API returns 404 for deleted
+    resources rather than the tombstoned row.
+entities:
+  - name: User
+    kind: management
+    id: id
+    fields: [id, username, role, isAdmin, createdAt, teams]
+    schema: json-schema/umami-user-schema.json
+    relationships:
+      - {type: has_many, target: Website, via: userId, note: Websites the user owns.}
+      - {type: has_many, target: TeamMember, via: userId}
+      - {type: has_many, target: Team, through: TeamMember}
+    operations: [createUser, getUser, deleteUser]
+    note: >-
+      NOT reachable on Umami Cloud. /users, /users/* and /me/password are
+      explicitly barred from API keys, so user administration is self-hosted-only
+      programmatically.
+  - name: Team
+    kind: management
+    id: id
+    fields: [id, name, accessCode, logoUrl, members, createdAt, updatedAt, deletedAt]
+    schema: json-schema/umami-team-schema.json
+    relationships:
+      - {type: has_many, target: TeamMember, via: teamId}
+      - {type: has_many, target: User, through: TeamMember}
+      - {type: has_many, target: Website, via: teamId}
+    operations: [listTeams, createTeam, joinTeam, getTeam, deleteTeam, listTeamWebsites]
+    note: >-
+      accessCode is the join token — POST /api/teams/join consumes it. Treat it
+      as a secret; anyone holding it can join the team.
+  - name: TeamMember
+    kind: join
+    id: id
+    fields: [id, teamId, userId, role, createdAt, updatedAt]
+    schema: json-schema/umami-team-member-schema.json
+    relationships:
+      - {type: belongs_to, target: Team, via: teamId}
+      - {type: belongs_to, target: User, via: userId}
+    note: Carries the role, so authorization is per team, not global.
+  - name: Website
+    kind: management
+    id: id
+    fields:
+      - id
+      - name
+      - domain
+      - shareId
+      - resetAt
+      - userId
+      - teamId
+      - replayConfig
+      - createdAt
+      - updatedAt
+      - deletedAt
+    schema: json-schema/umami-website-schema.json
+    relationships:
+      - {type: belongs_to, target: User, via: userId}
+      - {type: belongs_to, target: Team, via: teamId, optional: true}
+      - {type: has_many, target: Session, via: websiteId}
+      - {type: has_many, target: Event, via: websiteId}
+      - {type: has_one, target: Share, via: shareId, optional: true}
+    operations: [listWebsites, createWebsite, getWebsite, updateWebsite, deleteWebsite]
+    note: >-
+      The hub of the whole model — every analytics query is scoped to a
+      websiteId. Ownership is EITHER userId or teamId. shareId, when non-null,
+      makes the dashboard publicly readable at /share/<shareId>; setting it null
+      revokes. resetAt records the last data wipe (POST
+      /api/websites/:websiteId/reset). replayConfig became a nested object on
+      2026-05-28 — a breaking request-shape change.
+  - name: ReplayConfig
+    kind: embedded
+    parent: Website
+    fields:
+      - replayEnabled
+      - heatmapEnabled
+      - sampleRate
+      - heatmapSampleRate
+      - maskLevel
+      - maxDuration
+      - blockSelector
+    note: >-
+      Governs session replay and heatmap collection. maskLevel is `strict` or
+      `moderate`. Readable unauthenticated via GET
+      /api/websites/:websiteId/recorder, which the tracker calls to
+      self-configure — meaning a website's replay settings are public.
+  - name: Session
+    kind: analytics
+    id: id
+    fields: [id, websiteId, browser, os, device, screen, language, country, createdAt]
+    schema: json-schema/umami-session-schema.json
+    relationships:
+      - {type: belongs_to, target: Website, via: websiteId}
+      - {type: has_many, target: SessionProperty, via: sessionId}
+      - {type: has_many, target: Event, via: sessionId}
+    operations: [listSessions, getSessionStats]
+    note: >-
+      A session is an anonymized visit grouping, not a person. Umami states it
+      does not build persistent profiles. Optional distinctId can attach an
+      application-supplied identity, which changes the privacy posture and is
+      the customer's responsibility.
+  - name: SessionProperty
+    kind: analytics
+    parent: Session
+    query_paths:
+      - /websites/:websiteId/session-data/properties
+      - /websites/:websiteId/session-data/values
+      - /websites/:websiteId/session-data/stats
+      - /websites/:websiteId/session-data-pivot
+    note: Arbitrary key/value data attached to a session. Each stored property is billable.
+  - name: Event
+    kind: analytics
+    fields: [websiteId, sessionId, name, data, createdAt]
+    relationships:
+      - {type: belongs_to, target: Website, via: websiteId}
+      - {type: belongs_to, target: Session, via: sessionId}
+      - {type: has_many, target: EventProperty, via: eventId}
+    query_paths:
+      - /websites/:websiteId/events
+      - /websites/:websiteId/events/series
+      - /websites/:websiteId/events/stats
+    write_path: 'POST /api/send (type: event), POST /api/batch'
+    note: >-
+      Events are written through the unauthenticated collection endpoint and
+      read through the authenticated analytics endpoints. The write and read
+      surfaces are different hosts on Cloud (gateway.umami.is vs
+      api.umami.is/v1).
+  - name: EventProperty
+    kind: analytics
+    parent: Event
+    query_paths:
+      - /websites/:websiteId/event-data
+      - /websites/:websiteId/event-data/events
+      - /websites/:websiteId/event-data/fields
+      - /websites/:websiteId/event-data/properties
+      - /websites/:websiteId/event-data/values
+      - /websites/:websiteId/event-data/stats
+      - /websites/:websiteId/event-data-pivot
+    types: [string, number, boolean, date, array]
+    note: >-
+      THE BILLING UNIT NOBODY EXPECTS — each stored event data property counts
+      as one event against the plan quota, the same as a pageview.
+  - name: Report
+    kind: management
+    id: id
+    fields: [id, websiteId, userId, teamId, type, name, description, parameters]
+    relationships:
+      - {type: belongs_to, target: Website, via: websiteId}
+    types: [breakdown, funnel, goal, journey, retention, revenue, utm, attribution, performance]
+    operations_documented:
+      - GET /api/reports
+      - POST /api/reports
+      - GET /api/reports/:reportId
+      - POST /api/reports/:reportId
+      - DELETE /api/reports/:reportId
+    note: >-
+      Two distinct things share the /reports namespace: SAVED report objects
+      (CRUD) and ad-hoc report EXECUTION (POST /api/reports/<type>, which
+      computes and returns without persisting). `insights` was renamed
+      `breakdown` on 2025-10-07 and `goals` became `goal` on 2026-03-11.
+  - name: Link
+    kind: management
+    id: id
+    relationships:
+      - {type: has_many, target: Share, via: linkId}
+    operations_documented: [GET /api/links, POST /api/links, 'GET /api/links/:linkId', 'POST /api/links/:linkId', 'DELETE /api/links/:linkId']
+    note: Trackable short links. Added to the API on 2026-03-11.
+  - name: Pixel
+    kind: management
+    id: id
+    relationships:
+      - {type: has_many, target: Share, via: pixelId}
+    operations_documented: [GET /api/pixels, POST /api/pixels, 'GET /api/pixels/:pixelId', 'POST /api/pixels/:pixelId', 'DELETE /api/pixels/:pixelId']
+    note: Tracking pixels for surfaces that cannot run JavaScript, e.g. email.
+  - name: Board
+    kind: management
+    id: id
+    relationships:
+      - {type: has_many, target: Share, via: boardId}
+    note: >-
+      Custom dashboards, documented in the product guide
+      (https://docs.umami.is/docs/using-boards) with /api/boards routes present
+      in the open-source application, but NOT covered by the API reference.
+  - name: Share
+    kind: management
+    id: shareId
+    relationships:
+      - {type: belongs_to, target: Website, via: websiteId, optional: true}
+      - {type: belongs_to, target: Link, via: linkId, optional: true}
+      - {type: belongs_to, target: Pixel, via: pixelId, optional: true}
+      - {type: belongs_to, target: Board, via: boardId, optional: true}
+    operations_documented:
+      - POST /api/share
+      - 'GET /api/share/id/:shareId'
+      - 'POST /api/share/id/:shareId'
+      - 'DELETE /api/share/id/:shareId'
+      - 'GET /api/websites/:websiteId/shares'
+      - 'POST /api/websites/:websiteId/shares'
+    note: >-
+      A capability grant, not a resource view. Holding the shareId is
+      sufficient to read the shared dashboard with no credential at all.
+  - name: Segment
+    kind: analytics-definition
+    note: Saved filter set, referenced by UUID in the `segment` query filter.
+  - name: Cohort
+    kind: analytics-definition
+    note: Saved audience definition, referenced by UUID in the `cohort` query filter.
+value_objects:
+  - name: WebsiteStats
+    fields: [pageviews, visitors, visits, bounces, totaltime, comparison]
+    schema: json-schema/umami-website-stats-schema.json
+    note: >-
+      The response shape changed on 2025-10-07; `uniques` became `visitors` and
+      `change` became `prev` in earlier revisions. `comparison` carries the
+      prior-period figures when requested.
+  - name: Metric
+    fields: [x, y]
+    schema: json-schema/umami-metric-schema.json
+    note: 'Dimension breakdown: x is the value, y is the count.'
+  - name: PageviewData
+    fields: [pageviews, sessions]
+    schema: json-schema/umami-pageview-data-schema.json
+  - name: SessionStats
+    fields: [pageviews, visitors, visits, countries, events]
+    schema: json-schema/umami-session-stats-schema.json
+  - name: ActiveVisitors
+    fields: [visitors]
+  - name: OkResponse
+    fields: [ok]
+    note: 'The universal mutation acknowledgement — {"ok": true} on delete and reset.'
+list_envelope:
+  shape: '{data: [...], count: int, page: int, pageSize: int}'
+  applies_to: [WebsiteList, SessionList, TeamList]
+coverage_note: >-
+  The schemas above marked with `schema:` come from the generated OpenAPI and
+  cover the v2-era core. Link, Pixel, Board, Share, Segment, Cohort, Report and
+  the revenue/performance/replay entities are documented by Umami but have no
+  schema in openapi/, because the captured spec predates them. Their
+  relationships are recorded from the API reference so the graph is honest
+  about what exists, and the absence of a `schema:` field marks exactly where
+  the captured contract falls short of the live product.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

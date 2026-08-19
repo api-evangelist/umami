@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics Authentication Websites API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Websites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami List Websites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites",
+            "params": [
+              {
+                "name": "includeTeams",
+                "value": "false",
+                "type": "query",
+                "description": "Include team-owned websites"
+              },
+              {
+                "name": "search",
+                "value": "mysite",
+                "type": "query",
+                "description": "Filter websites by name or domain"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Number of results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve all websites accessible to the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Umami Create Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/websites",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new website to Umami for tracking."
+        },
+        {
+          "info": {
+            "name": "Umami Get Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific website by its ID."
+        },
+        {
+          "info": {
+            "name": "Umami Update Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/websites/:websiteId",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify settings for an existing website."
+        },
+        {
+          "info": {
+            "name": "Umami Delete Website",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.umami.is/api/websites/:websiteId",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ]
+          },
+          "docs": "Remove a website and all associated data from Umami."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

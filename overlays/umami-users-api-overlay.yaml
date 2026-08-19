@@ -1,0 +1,122 @@
+overlay: 1.0.0
+info:
+  title: Umami Analytics Authentication Users API Overlay
+  version: 1.0.0
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  source: openapi/umami-users-api-openapi.yml
+  note: >-
+    API Evangelist enhancements for the Umami Users surface. This overlay is
+    additive and never mutates openapi/umami-users-api-openapi.yml; apply it to produce the
+    enriched document. Every statement below is sourced from Umami's own
+    published documentation (docs.umami.is) or from a live probe of
+    https://api.umami.is/v1 recorded on 2026-08-13.
+extends: openapi/umami-users-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-api-evangelist:
+        enrichment-date: '2026-08-13'
+        docs: https://docs.umami.is/docs/api
+        changelog: https://docs.umami.is/docs/cloud/changelog
+        status-page: https://umami.statuspage.io
+        base-url-warning: "servers[] in the underlying document composes correctly for the SELF-HOSTED deployment\
+          \ (http://<instance>/api/...) and INCORRECTLY for Umami Cloud. The documented Cloud base is https://api.umami.is/v1\
+          \ with NO /api path prefix \u2014 https://api.umami.is/v1/websites, not https://api.umami.is/api/websites.\
+          \ Source: https://docs.umami.is/docs/cloud/api-key"
+        plan-gate: API access begins at the Pro plan ($20/month). The free Hobby plan has no API access.
+        rate-limit: 50 calls per 15 seconds per Umami Cloud API key, flat across all plans. No rate-limit
+          response headers are returned.
+        idempotency: None. Umami documents no idempotency key on any endpoint.
+        error-envelope: "{\"error\":{\"message\":<string>,\"code\":<slug>,\"status\":<int>}} \u2014 application/json,\
+          \ not RFC 9457."
+        deprecation-policy: None published. Breaking renames land on the live /v1 surface on the day they
+          ship; no Sunset or Deprecation header is sent.
+  - target: $.servers
+    update:
+    - url: https://api.umami.is/v1
+      description: Umami Cloud (documented base; resource paths have NO /api prefix on this host)
+      x-note: Added by overlay from https://docs.umami.is/docs/cloud/api-key. Paths in this document carry
+        the self-hosted /api prefix and must have it stripped when targeting this server.
+    - url: https://api.umami.is/v1/us
+      description: Umami Cloud, US region pinned
+    - url: https://api.umami.is/v1/eu
+      description: Umami Cloud, EU region pinned
+    - url: https://{instance}/api
+      description: Self-hosted Umami instance
+      variables:
+        instance:
+          default: localhost:3000
+          description: Host and port of your self-hosted Umami instance
+  - target: $.paths.*.*.responses['400']
+    description: Document the observed 400 envelope (missing credential is 400, not 401).
+    update:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UmamiError'
+          examples:
+            noApiKey:
+              summary: No credential supplied (probed 2026-08-13)
+              value:
+                error:
+                  message: No API key specified.
+                  code: bad-request
+                  status: 400
+  - target: $.paths.*.*.responses['401']
+    description: Document the observed 401 envelope.
+    update:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UmamiError'
+          examples:
+            invalidApiKey:
+              summary: Credential present but rejected (probed 2026-08-13)
+              value:
+                error:
+                  message: Invalid API key.
+                  code: unauthorized
+                  status: 401
+  - target: $.components.schemas
+    description: Add the Umami error envelope schema referenced above.
+    update:
+      UmamiError:
+        type: object
+        description: "Umami error envelope. Not RFC 9457 \u2014 no type, title or instance member."
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable message. Not stable; do not branch on it.
+              code:
+                type: string
+                description: 'Machine-stable slug. Observed values: bad-request, unauthorized.'
+              status:
+                type: integer
+                description: HTTP status, duplicated from the response line.
+            required:
+            - message
+            - code
+            - status
+        required:
+        - error
+  - target: $.components.securitySchemes
+    description: Separate the two credentials Umami actually issues; the base document conflates them into
+      one bearerAuth.
+    update:
+      cloudApiKey:
+        type: http
+        scheme: bearer
+        description: 'Umami Cloud API key created in the dashboard (Settings -> API keys). Sent as Authorization:
+          Bearer <api-key> against https://api.umami.is/v1. Barred from /me/password, /users and /users/*.
+          Requires the Pro plan or above.'
+      selfHostedJwt:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+        description: JWT obtained from POST /api/auth/login on a self-hosted instance. Does not work against
+          Umami Cloud.

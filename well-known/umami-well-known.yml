@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of every host named in apis.yml and openapi/ servers[]
+description: >-
+  Probe of the standard /.well-known/ discovery surface across every Umami host.
+  Every path missed. No WellKnown or SecurityTxt pointer is emitted in apis.yml,
+  because a probe that records an absence must not be scored as a presence.
+result: none
+hosts_probed:
+  - host: umami.is
+    role: marketing site + security/legal pages
+    behavior: >-
+      Next.js app; unknown paths return HTTP 404 with an HTML shell. Statuses
+      below are real 404s, not soft-200s.
+  - host: api.umami.is
+    role: Umami Cloud API host
+    behavior: >-
+      Answers every GET to a non-API path with HTTP 405
+      {"error":"GET method not allowed"}. The host serves the API only; it does
+      not serve static discovery documents at all.
+  - host: cloud.umami.is
+    role: Umami Cloud application
+    behavior: Next.js app on Vercel; unknown paths return HTTP 404 with an HTML shell.
+  - host: docs.umami.is
+    role: documentation
+    behavior: Next.js app; unknown paths return HTTP 404 with an HTML shell.
+probes:
+  - path: /.well-known/security.txt
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+      - {host: docs.umami.is, status: 404, file: null}
+  - path: /.well-known/openid-configuration
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+  - path: /.well-known/oauth-authorization-server
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+  - path: /.well-known/oauth-protected-resource
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+  - path: /.well-known/api-catalog
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+  - path: /.well-known/ai-plugin.json
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+  - path: /.well-known/agent-card.json
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+      - {host: docs.umami.is, status: 404, file: null}
+  - path: /.well-known/agent.json
+    results:
+      - {host: umami.is, status: 404, file: null}
+      - {host: api.umami.is, status: 405, file: null}
+      - {host: cloud.umami.is, status: 404, file: null}
+      - {host: docs.umami.is, status: 404, file: null}
+related_finding: >-
+  Umami does publish a vulnerability disclosure policy and a security contact
+  (security@umami.is) — but as an HTML page at https://umami.is/security, not as
+  a machine-readable /.well-known/security.txt. Serving that page's contact and
+  policy URLs as an RFC 9116 security.txt would be a one-file change on the
+  provider's side. See security/umami-vulnerability-disclosure.yml.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

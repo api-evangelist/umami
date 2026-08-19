@@ -1,0 +1,160 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics Authentication Website Statistics API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Website Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Website Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/stats",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              }
+            ]
+          },
+          "docs": "Retrieve summarized statistics for a website within a given time range."
+        },
+        {
+          "info": {
+            "name": "Umami Website Pageviews",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/pageviews",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "unit",
+                "value": "day",
+                "type": "query",
+                "description": "Time bucket unit"
+              },
+              {
+                "name": "timezone",
+                "value": "America/New_York",
+                "type": "query",
+                "description": "IANA timezone name"
+              }
+            ]
+          },
+          "docs": "Retrieve pageview data bucketed by time unit within a given date range."
+        },
+        {
+          "info": {
+            "name": "Umami Website Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/metrics",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "type",
+                "value": "url",
+                "type": "query",
+                "description": "Metric dimension to retrieve"
+              },
+              {
+                "name": "limit",
+                "value": "20",
+                "type": "query",
+                "description": "Maximum number of results"
+              }
+            ]
+          },
+          "docs": "Retrieve metrics for a website broken down by a specific dimension."
+        },
+        {
+          "info": {
+            "name": "Umami Active Visitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/active",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the number of currently active visitors on a website."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

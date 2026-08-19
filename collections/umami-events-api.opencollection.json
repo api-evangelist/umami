@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics Authentication Events API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami Event Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/websites/:websiteId/events/series",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Website identifier"
+              },
+              {
+                "name": "startAt",
+                "value": "1704067200000",
+                "type": "query",
+                "description": "Start timestamp in milliseconds"
+              },
+              {
+                "name": "endAt",
+                "value": "1704153600000",
+                "type": "query",
+                "description": "End timestamp in milliseconds"
+              },
+              {
+                "name": "unit",
+                "value": "day",
+                "type": "query",
+                "description": "Time bucket unit"
+              },
+              {
+                "name": "timezone",
+                "value": "America/New_York",
+                "type": "query",
+                "description": "IANA timezone name"
+              }
+            ]
+          },
+          "docs": "Retrieve custom events within a given time range for a website."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

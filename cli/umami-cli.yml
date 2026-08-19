@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/umami-software/cli + https://www.npmjs.com/package/@umami/cli
+  + full search of https://docs.umami.is
+provider: Umami
+providerId: umami
+description: >-
+  Umami has a first-party CLI, but it is abandoned. It is recorded here as a
+  real published artifact with an honest currency assessment, not as a usable
+  part of the current developer surface.
+status: abandoned
+cli:
+  name: '@umami/cli'
+  official: true
+  repository: https://github.com/umami-software/cli
+  package: https://www.npmjs.com/package/@umami/cli
+  registry: npm
+  version: 0.2.0
+  published: '2023-11-28'
+  repository_last_push: '2022-07-01'
+  install:
+    - npm install -g @umami/cli
+  docs: null
+  documented_in_product_docs: false
+currency_assessment: >-
+  The CLI has not been touched in the product's current era. Its source
+  repository was last pushed 2022-07-01 — before Umami v2 stabilized — and its
+  last npm release, 0.2.0, is dated 2023-11-28. Umami v3.0 shipped 2025-12-12
+  and v3.3.0 on 2026-08-12. Every API change in changelog/umami-changelog.yml
+  from 2024-02-16 forward postdates the last CLI release, including the
+  2025-10-07 batch that renamed six filter and report identifiers. It is also
+  absent from docs.umami.is entirely: a full-text search of the documentation
+  corpus returns no reference to a command line interface. Do not treat it as a
+  supported path.
+commands: []
+commands_note: >-
+  No command reference is published — the repository has no documented command
+  surface and the product documentation does not mention the CLI. Rather than
+  reconstruct a command list from an abandoned three-year-old package and
+  present it as current, this file records the absence. An honest empty
+  commands[] is more useful than an invented one.
+alternatives:
+  - name: '@umami/api-client'
+    kind: library
+    note: >-
+      The maintained programmatic path, though itself behind the API — see
+      packages/umami-packages.yml.
+  - name: curl against the REST API
+    kind: direct
+    note: >-
+      What the documentation actually teaches. The "Automate reporting with the
+      API" guide (https://docs.umami.is/docs/guides/automate-reporting-with-api)
+      demonstrates shell automation with curl and cron, not with a CLI.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

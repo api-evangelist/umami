@@ -1,0 +1,160 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.umami.is/docs/cloud/changelog
+provider: Umami
+providerId: umami
+description: >-
+  Umami maintains a dated changelog for Umami Cloud (cloud.umami.is) and the API
+  (api.umami.is). Entries are grouped by date and labelled by area, and API
+  entries name the exact route added, renamed, removed or changed. The
+  self-hosted product versions separately through GitHub releases.
+scheme: date-based
+versioning:
+  cloud: >-
+    Umami Cloud is continuously delivered; there is no cloud version number. The
+    changelog date is the only version identifier.
+  api: >-
+    The Umami Cloud API is served under a single major path segment, /v1
+    (https://api.umami.is/v1). No second version has been published.
+  self_hosted: >-
+    Semantic versioning through GitHub releases at
+    https://github.com/umami-software/umami/releases. Current release v3.3.0
+    (2026-08-12).
+current_version:
+  api: v1
+  self_hosted: v3.3.0
+  self_hosted_released: '2026-08-12'
+sources:
+  - name: Umami Cloud + API changelog
+    url: https://docs.umami.is/docs/cloud/changelog
+    format: html
+    dated: true
+  - name: Self-hosted releases
+    url: https://github.com/umami-software/umami/releases
+    format: html+json
+    dated: true
+  - name: Getting updates
+    url: https://docs.umami.is/docs/updates
+    format: html
+    dated: false
+entries:
+  - date: '2026-06-06'
+    area: Cloud
+    breaking: true
+    highlights:
+      - Collection endpoint moved to gateway.umami.is.
+    note: >-
+      Recorded as breaking because it relocates the ingest host. The changelog
+      itself does not label it as breaking and states no deprecation window for
+      the previous host.
+  - date: '2026-06-01'
+    area: Heatmaps
+    breaking: false
+    highlights:
+      - Path filtering added to heatmap pages.
+  - date: '2026-05-28'
+    area: API
+    breaking: true
+    additions:
+      - GET /api/websites/:websiteId/revenue/chart
+      - GET /api/websites/:websiteId/revenue/stats
+      - GET /api/websites/:websiteId/revenue/metrics
+      - GET /api/websites/:websiteId/revenue/sessions
+      - GET /api/websites/:websiteId/recorder
+    changes:
+      - >-
+        POST /api/websites/:websiteId — replayConfig is now a nested object;
+        replayEnabled moved inside replayConfig. Request-shape change to an
+        existing route.
+    highlights:
+      - Revenue reporting endpoints added.
+      - Recorder configuration endpoint added; requires no authentication.
+  - date: '2026-05-04'
+    area: API
+    breaking: false
+    additions:
+      - GET /api/websites/:websiteId/event-data-pivot
+      - GET /api/websites/:websiteId/session-data-pivot
+      - GET /api/websites/:websiteId/session-data/stats
+    changes:
+      - GET /api/websites/:websiteId/session-data/properties — added propertyName parameter.
+      - GET /api/websites/:websiteId/session-data/values — added dataType parameter.
+  - date: '2026-03-11'
+    area: API
+    breaking: true
+    additions:
+      - GET /api/websites/:websiteId/daterange
+      - GET /api/websites/:websiteId/events/stats
+      - POST /api/links
+      - POST /api/pixels
+      - POST /api/reports/performance
+    changes:
+      - >-
+        POST /api/reports/goal — renamed from POST /api/reports/goals. Path
+        rename with no compatibility alias documented.
+      - >-
+        POST /api/reports/revenue — added compare parameter; response total now
+        includes arpu and comparison, plus region/referrer/channel breakdowns.
+  - date: '2026-03-02'
+    area: API
+    breaking: false
+    additions:
+      - GET /api/websites/:websiteId/event-data
+  - date: '2026-02-04'
+    area: API
+    breaking: false
+    highlights:
+      - Share API documented at https://docs.umami.is/docs/api/share.
+  - date: '2025-11-13'
+    area: API
+    breaking: true
+    changes:
+      - >-
+        GET /api/realtime/:websiteId — timezone parameter REMOVED; responses are
+        always UTC across all datasets.
+  - date: '2025-10-07'
+    area: API
+    breaking: true
+    changes:
+      - Filter url renamed to path.
+      - Filter host renamed to hostname.
+      - GET /websites/[id]/metrics — type parameter value url renamed to path.
+      - GET /websites/[id]/stats — response data structure changed.
+      - GET /event-data/values — eventName query parameter renamed to event.
+      - POST /reports — the insights report type renamed to breakdown.
+    note: >-
+      The single largest breaking batch in the published window. Five renames
+      across filters, metrics, event data and reports, plus a response-shape
+      change, all shipped on one date with no version bump and no deprecation
+      period.
+window:
+  from: '2024-02-16'
+  to: '2026-06-06'
+  note: >-
+    The published changelog goes back to 2024-02-16. Only entries from
+    2025-10-07 forward are captured in full above; earlier entries are
+    summarized in the observations below.
+older_breaking_changes:
+  - date: '2024-09-09'
+    change: >-
+      /event-data/events, /event-data/fields and /event-data/stats MOVED under
+      /websites/[id]/. Sessions endpoints added.
+  - date: '2024-05-23'
+    change: 'GET /websites/[id]/stats — renamed change to prev.'
+  - date: '2024-03-27'
+    change: 'GET /websites/[id]/stats — renamed uniques to visitors; added visits.'
+  - date: '2024-02-16'
+    change: '/teams/[id]/websites/[websiteId] DEPRECATED.'
+observations:
+  - >-
+    Umami documents breaking API changes clearly and with route-level precision,
+    which is better than most providers of its size. What it does not do is
+    version them: renames and removals land on the live /v1 surface on the day
+    they ship. There is no Sunset or Deprecation header, no deprecation window,
+    and no parallel old-path alias documented anywhere in the changelog.
+  - >-
+    The changelog is HTML only. There is no RSS/Atom feed and no machine-readable
+    changelog document, so an agent must scrape it to detect a breaking change.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,221 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.umami.is/docs/api + openapi/ + live probes of https://api.umami.is/v1
+provider: Umami
+providerId: umami
+description: >-
+  Cross-cutting runtime semantics for the Umami API: how you authenticate, how
+  you page, how you filter, how errors come back, how versions move, and what
+  the API does not signal. Derived from the published API reference and
+  confirmed against live unauthenticated probes where possible.
+base_urls:
+  cloud:
+    url: https://api.umami.is/v1
+    note: >-
+      The Cloud base carries a /v1 segment and the resource paths hang directly
+      off it — GET https://api.umami.is/v1/websites. There is no /api prefix on
+      Cloud.
+    regional:
+      - https://api.umami.is/v1/us
+      - https://api.umami.is/v1/eu
+    source: https://docs.umami.is/docs/cloud/api-key
+  self_hosted:
+    url: http://<your-umami-instance>/api
+    note: >-
+      Self-hosted keeps the /api prefix and has no version segment — GET
+      http://your-instance/api/websites.
+    source: https://docs.umami.is/docs/api
+  collection:
+    url: https://gateway.umami.is
+    note: >-
+      Umami Cloud data collection moved to gateway.umami.is on 2026-06-06. It is
+      a separate host from the read API and takes no credential.
+    source: https://docs.umami.is/docs/cloud/changelog
+  spec_discrepancy: >-
+    IMPORTANT — the OpenAPI files in openapi/ declare servers[] of
+    https://api.umami.is plus http://localhost:3000, with paths written in the
+    self-hosted /api/... form. That composition is correct for the self-hosted
+    server and WRONG for the Cloud server: it produces
+    https://api.umami.is/api/websites, whereas Cloud expects
+    https://api.umami.is/v1/websites. The specs are documentation-generated
+    (info.x-generated-from: documentation), not provider-published, and this
+    discrepancy is inherited from that. Treat the Cloud base as authoritative
+    from the docs, not from servers[].
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer <credential>'
+  credentials: two — a Cloud API key or a self-hosted JWT (see authentication/)
+  scopes: none
+  see: authentication/umami-authentication.yml
+pagination:
+  style: page-number
+  request_params:
+    - name: page
+      type: number
+      default: 1
+      description: Which page to return.
+    - name: pageSize
+      type: number
+      description: How many results to return.
+    - name: search
+      type: string
+      description: Free-text search, accepted alongside paging on list endpoints.
+    - name: orderBy
+      type: string
+      description: >-
+        Sort field, accepted on several list endpoints. Not universally
+        documented per endpoint.
+  response_envelope:
+    shape: '{ data: [...], count: <int>, page: <int>, pageSize: <int> }'
+    items_field: data
+    total_field: count
+  cursors: false
+  link_header: false
+  note: >-
+    Offset/page paging only. `count` is a total row count, so deep paging is
+    stable but expensive. Analytics/metrics endpoints do NOT page — they take a
+    time range and return the full series.
+  source: https://docs.umami.is/docs/api/websites
+time_range:
+  params:
+    - name: startAt
+      type: number
+      description: Start of the window as a UNIX timestamp in MILLISECONDS.
+    - name: endAt
+      type: number
+      description: End of the window as a UNIX timestamp in MILLISECONDS.
+    - name: unit
+      type: string
+      description: Bucket size for series data.
+  unit_values:
+    - {unit: minute, maximum: up to 60 minutes}
+    - {unit: hour, maximum: up to 30 days}
+    - {unit: day, maximum: up to 6 months}
+    - {unit: month, maximum: no limit}
+    - {unit: year, maximum: no limit}
+  auto_promotion: >-
+    If the requested range exceeds the unit's maximum, Umami silently promotes
+    the unit to the next largest applicable one. A client asking for `hour` over
+    90 days gets daily buckets back without an error — check the returned series
+    granularity rather than assuming it matches the request.
+  timezone: >-
+    UTC. The `timezone` parameter was REMOVED from GET /api/realtime/:websiteId
+    on 2025-11-13 and all datasets now return UTC.
+  discovery: >-
+    GET /api/websites/:websiteId/daterange returns the earliest and latest dates
+    with collected data, so a client can bound a query without guessing.
+  source: https://docs.umami.is/docs/api/website-stats
+filtering:
+  style: flat query parameters, applied to endpoints marked `filters`
+  params:
+    - path
+    - referrer
+    - title
+    - query
+    - browser
+    - os
+    - device
+    - country
+    - region
+    - city
+    - language
+    - hostname
+    - tag
+    - event
+    - distinctId
+    - utmSource
+    - utmMedium
+    - utmCampaign
+    - utmContent
+    - utmTerm
+    - segment
+    - cohort
+  renames:
+    - {from: url, to: path, date: '2025-10-07'}
+    - {from: host, to: hostname, date: '2025-10-07'}
+    - {from: eventName, to: event, date: '2025-10-07', endpoint: GET /event-data/values}
+  note: >-
+    segment and cohort take a UUID and reference saved objects, so a filter can
+    reference server-side state a client did not create.
+  source: https://docs.umami.is/docs/api/website-stats
+field_expansion:
+  supported: false
+  note: >-
+    No expand/include/fields parameter. One partial exception: GET /api/websites
+    accepts includeTeams (boolean) to fold in team-owned websites, and
+    /metrics/expanded is a separate endpoint rather than a parameter on /metrics.
+metadata:
+  supported: true
+  note: >-
+    Arbitrary key/value data can be attached to collected events (payload.data)
+    and to sessions (session properties), and queried back through
+    /event-data/* and /session-data/*. Each stored property counts as one
+    BILLABLE event — see plans/. There is no metadata field on management
+    resources (websites, teams, users).
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Umami documents no idempotency key, no request-deduplication header, and no
+    retry-safety guarantee. This matters most on the unauthenticated collection
+    endpoints: POST /api/send and POST /api/batch have no client-supplied
+    dedupe token, so a retried batch after a timeout double-counts events — and
+    events are the billing metric. Mutations use POST for both create and update
+    (POST /api/websites/:websiteId updates), so a replayed create is a second
+    resource. NO Idempotency pointer is emitted in apis.yml, because none is
+    published.
+request_tracing:
+  request_id_header: none observed
+  note: >-
+    PROBED 2026-08-13 — responses from https://api.umami.is/v1 carried no
+    x-request-id, x-correlation-id or equivalent. There is no documented
+    identifier to quote in a support request.
+http_semantics:
+  methods_used: [GET, POST, DELETE]
+  put_patch: >-
+    Not used. Updates are POST to the resource path (POST
+    /api/websites/:websiteId), which is a partial update, not a replace.
+  content_type: application/json
+  success_codes: [200, 201]
+  delete_response: '{"ok": true}'
+  cors: >-
+    api.umami.is returns access-control-max-age: 86400 on error responses;
+    browser-side use is anticipated.
+  security_headers_observed:
+    - x-content-type-options: nosniff
+    - x-frame-options: SAMEORIGIN
+    - x-xss-protection: '1; mode=block'
+    - expect-ct: max-age=86400, enforce
+versioning:
+  scheme: single unversioned major on Cloud (/v1); unversioned on self-hosted
+  breaking_change_policy: >-
+    None published. Renames and removals land on the live surface on the day
+    they ship — see changelog/umami-changelog.yml, which records six breaking
+    renames on 2025-10-07 alone. There is no deprecation window, no Sunset
+    header, and no old-path alias.
+  see: lifecycle/umami-lifecycle.yml
+errors:
+  envelope: '{"error": {"message": <string>, "code": <slug>, "status": <int>}}'
+  rfc9457: false
+  content_type: application/json
+  see: errors/umami-problem-types.yml
+rate_limiting:
+  documented: 50 calls per 15 seconds per Cloud API key
+  runtime_signal: none — no RateLimit-*, X-RateLimit-* or Retry-After header observed
+  see: rate-limits/umami-rate-limits.yml
+agent_notes:
+  - >-
+    Budget your own pacing. The 50/15s ceiling is real but invisible at runtime;
+    nothing in a response tells you how close you are.
+  - >-
+    Check the granularity you got back, not the one you asked for — the `unit`
+    parameter is silently promoted on long ranges.
+  - >-
+    Never blind-retry POST /api/send or /api/batch. There is no idempotency key
+    and duplicated events are billable.
+  - >-
+    Do not derive the Cloud base URL from openapi/ servers[]; use
+    https://api.umami.is/v1 from the docs.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

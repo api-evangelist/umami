@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Umami Analytics Authentication Teams API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Umami List Teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/teams",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve all teams accessible to the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Umami Create Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/teams",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new team for collaborative website management."
+        },
+        {
+          "info": {
+            "name": "Umami Join Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.umami.is/api/teams/join",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Join an existing team using an access code."
+        },
+        {
+          "info": {
+            "name": "Umami Get Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/teams/:teamId",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Team identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a specific team including members."
+        },
+        {
+          "info": {
+            "name": "Umami Delete Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.umami.is/api/teams/:teamId",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Team identifier"
+              }
+            ]
+          },
+          "docs": "Remove a team and all associated memberships."
+        },
+        {
+          "info": {
+            "name": "Umami Team Websites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.umami.is/api/teams/:teamId/websites",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "type": "path",
+                "description": "Team identifier"
+              },
+              {
+                "name": "search",
+                "value": "mysite",
+                "type": "query",
+                "description": "Filter by name or domain"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ]
+          },
+          "docs": "Retrieve all websites belonging to a specific team."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
