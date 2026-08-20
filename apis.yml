@@ -35,6 +35,19 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/umami.png
 tags:
   - Cookieless Tracking
+  - Open-Source
+  - Privacy
+  - Web Analytics
+  - Website Analytics
+  - Product Analytics
+  - Event Tracking
+  - Self-Hosted
+  - GDPR
+  - Session Replay
+  - Heatmaps
+  - Marketing Attribution
+tags_raw:
+  - Cookieless Tracking
   - Open Source
   - Privacy
   - Web Analytics
@@ -157,6 +170,8 @@ apis:
   humanURL: https://umami.is
   baseURL: https://api.umami.is/v1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -357,6 +372,8 @@ apis:
   humanURL: https://umami.is
   baseURL: https://api.umami.is/v1
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -457,6 +474,8 @@ apis:
   humanURL: https://umami.is
   baseURL: https://api.umami.is/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
