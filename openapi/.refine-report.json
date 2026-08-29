@@ -21,6 +21,15 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "umami-authentication-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "umami-events-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "umami-sessions-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "umami-teams-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "umami-users-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "umami-website-statistics-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "umami-websites-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

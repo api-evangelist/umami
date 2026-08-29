@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Umami Analytics Authentication Sessions API
   description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.

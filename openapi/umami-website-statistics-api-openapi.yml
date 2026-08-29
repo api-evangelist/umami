@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Umami Analytics Authentication Website Statistics API
   description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
@@ -282,14 +282,20 @@ components:
           type: integer
           description: Metric value (count)
           example: 450
-    ActiveVisitors:
+    PageviewData:
       type: object
-      description: Count of currently active visitors
+      description: Time series pageview and session data
       properties:
-        visitors:
-          type: integer
-          description: Number of active visitors in the last 5 minutes
-          example: 42
+        pageviews:
+          type: array
+          description: Pageview data points
+          items:
+            $ref: '#/components/schemas/Metric'
+        sessions:
+          type: array
+          description: Session data points
+          items:
+            $ref: '#/components/schemas/Metric'
     WebsiteStats:
       type: object
       description: Summarized website analytics statistics
@@ -354,20 +360,14 @@ components:
               type: integer
               description: Change from previous period
               example: 7200
-    PageviewData:
+    ActiveVisitors:
       type: object
-      description: Time series pageview and session data
+      description: Count of currently active visitors
       properties:
-        pageviews:
-          type: array
-          description: Pageview data points
-          items:
-            $ref: '#/components/schemas/Metric'
-        sessions:
-          type: array
-          description: Session data points
-          items:
-            $ref: '#/components/schemas/Metric'
+        visitors:
+          type: integer
+          description: Number of active visitors in the last 5 minutes
+          example: 42
   securitySchemes:
     bearerAuth:
       type: http

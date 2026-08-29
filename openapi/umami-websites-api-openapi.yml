@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Umami Analytics Authentication Websites API
   description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
@@ -289,32 +289,14 @@ components:
           type: integer
           description: Records per page
           example: 20
-    WebsiteRequest:
+    OkResponse:
       type: object
-      description: Request body for creating or updating a website
-      required:
-      - name
-      - domain
+      description: Simple success confirmation
       properties:
-        name:
-          type: string
-          description: Display name for the website
-          example: My Website
-        domain:
-          type: string
-          description: Website domain
-          example: example.com
-        shareId:
-          type: string
-          nullable: true
-          description: Custom share identifier
-          example: null
-        teamId:
-          type: string
-          format: uuid
-          nullable: true
-          description: Team identifier for team ownership
-          example: null
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true
     Website:
       type: object
       description: Umami website tracking configuration
@@ -333,14 +315,16 @@ components:
           description: Website domain
           example: example.com
         shareId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Public share identifier for shared analytics views
           example: null
         resetAt:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: Timestamp of last data reset
           example: null
         userId:
@@ -349,9 +333,10 @@ components:
           description: Owner user identifier
           example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
         teamId:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: Team identifier if team-owned
           example: null
         createdAt:
@@ -365,19 +350,40 @@ components:
           description: Last update timestamp
           example: '2026-01-15T10:00:00.000Z'
         deletedAt:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: Deletion timestamp
           example: null
-    OkResponse:
+    WebsiteRequest:
       type: object
-      description: Simple success confirmation
+      description: Request body for creating or updating a website
+      required:
+      - name
+      - domain
       properties:
-        ok:
-          type: boolean
-          description: Indicates successful operation
-          example: true
+        name:
+          type: string
+          description: Display name for the website
+          example: My Website
+        domain:
+          type: string
+          description: Website domain
+          example: example.com
+        shareId:
+          type:
+          - string
+          - 'null'
+          description: Custom share identifier
+          example: null
+        teamId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Team identifier for team ownership
+          example: null
   securitySchemes:
     bearerAuth:
       type: http
