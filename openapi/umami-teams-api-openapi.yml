@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Umami Analytics Authentication Teams API
-  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  title: Umami Analytics Teams API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics.
   version: '1.0'
   contact:
     name: Umami Support
@@ -304,51 +304,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Team:
-      type: object
-      description: Umami team for collaborative website management
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Team identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        name:
-          type: string
-          description: Team name
-          example: Analytics Team
-        accessCode:
-          type: string
-          description: Access code for joining the team
-          example: XYZ789
-        logoUrl:
-          type:
-          - string
-          - 'null'
-          description: Team logo URL
-          example: null
-        members:
-          type: array
-          description: Team members
-          items:
-            $ref: '#/components/schemas/TeamMember'
-        createdAt:
-          type: string
-          format: date-time
-          description: Creation timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last update timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        deletedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Deletion timestamp
-          example: null
     OkResponse:
       type: object
       description: Simple success confirmation
@@ -357,41 +312,6 @@ components:
           type: boolean
           description: Indicates successful operation
           example: true
-    TeamRequest:
-      type: object
-      description: Request body for creating or updating a team
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Team name
-          example: Analytics Team
-        accessCode:
-          type: string
-          description: Custom access code
-          example: MYCODE123
-    TeamList:
-      type: object
-      description: Paginated list of teams
-      properties:
-        data:
-          type: array
-          description: Team records
-          items:
-            $ref: '#/components/schemas/Team'
-        count:
-          type: integer
-          description: Total number of records
-          example: 3
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
     Website:
       type: object
       description: Umami website tracking configuration
@@ -451,19 +371,19 @@ components:
           format: date-time
           description: Deletion timestamp
           example: null
-    WebsiteList:
+    TeamList:
       type: object
-      description: Paginated list of websites
+      description: Paginated list of teams
       properties:
         data:
           type: array
-          description: Website records
+          description: Team records
           items:
-            $ref: '#/components/schemas/Website'
+            $ref: '#/components/schemas/Team'
         count:
           type: integer
           description: Total number of records
-          example: 5
+          example: 3
         page:
           type: integer
           description: Current page number
@@ -510,6 +430,86 @@ components:
           format: date-time
           description: Last update timestamp
           example: '2026-01-15T10:00:00.000Z'
+    TeamRequest:
+      type: object
+      description: Request body for creating or updating a team
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Custom access code
+          example: MYCODE123
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    Team:
+      type: object
+      description: Umami team for collaborative website management
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Team identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Access code for joining the team
+          example: XYZ789
+        logoUrl:
+          type:
+          - string
+          - 'null'
+          description: Team logo URL
+          example: null
+        members:
+          type: array
+          description: Team members
+          items:
+            $ref: '#/components/schemas/TeamMember'
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Deletion timestamp
+          example: null
   securitySchemes:
     bearerAuth:
       type: http

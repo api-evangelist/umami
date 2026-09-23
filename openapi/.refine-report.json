@@ -1,13 +1,7 @@
 {
   "provider": "umami",
   "sources": [
-    "umami-authentication-api-openapi.yml",
-    "umami-events-api-openapi.yml",
-    "umami-sessions-api-openapi.yml",
-    "umami-teams-api-openapi.yml",
-    "umami-users-api-openapi.yml",
-    "umami-website-statistics-api-openapi.yml",
-    "umami-websites-api-openapi.yml"
+    "_ae-authored/umami-openapi.yml"
   ],
   "outputs": [
     "umami-authentication-api-openapi.yml",
@@ -22,14 +16,17 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "umami-authentication-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "umami-events-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "umami-sessions-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "umami-teams-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "umami-users-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "umami-website-statistics-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "umami-websites-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "umami-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "umami-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "umami-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "umami-sessions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "umami-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "umami-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "umami-website-statistics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "umami-websites-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

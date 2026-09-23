@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Umami Analytics Authentication Websites API
-  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics. Umami is an open source, privacy-first web analytics platform that collects data without cookies or personal data storage. The API supports website management, session tracking, real-time visitor data, and analytics reporting for self-hosted and cloud instances. Self-hosted instances use JWT bearer tokens from the auth endpoint; Umami Cloud uses API key authentication.
+  title: Umami Analytics Websites API
+  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics.
   version: '1.0'
   contact:
     name: Umami Support
@@ -268,27 +268,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    WebsiteList:
-      type: object
-      description: Paginated list of websites
-      properties:
-        data:
-          type: array
-          description: Website records
-          items:
-            $ref: '#/components/schemas/Website'
-        count:
-          type: integer
-          description: Total number of records
-          example: 5
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
     OkResponse:
       type: object
       description: Simple success confirmation
@@ -356,6 +335,27 @@ components:
           format: date-time
           description: Deletion timestamp
           example: null
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
     WebsiteRequest:
       type: object
       description: Request body for creating or updating a website
