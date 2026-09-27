@@ -7,16 +7,22 @@ description: >-
   features for both self-hosted and cloud instances.
 type: Index
 deliveryModel:
-  model: saas
-  open_source: false
+  model: open-core
+  license: MIT
+  license_evidence:
+    repo: umami-software/umami
+    spdx: MIT
+    stars: 39004
+  open_source: true
   commercial: true
   callable_host: true
-  label: Hosted service · you call their endpoint
-  confidence: high
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: medium
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -47,7 +53,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/umami.png
 tags:
   - Cookieless Tracking
-  - Open-Source
+  - Open Source
   - Privacy
   - Web Analytics
   - Website Analytics
@@ -71,6 +77,7 @@ tags_raw:
   - Session Replay
   - Heatmaps
   - Marketing Attribution
+  - Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml
 created: '2026-03-26'
 modified: '2026-08-13'

@@ -147,27 +147,30 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    SessionList:
+    SessionStats:
       type: object
-      description: Paginated list of sessions
+      description: Summarized session statistics
       properties:
-        data:
-          type: array
-          description: Session records
-          items:
-            $ref: '#/components/schemas/Session'
-        count:
+        pageviews:
           type: integer
-          description: Total number of records
-          example: 100
-        page:
+          description: Total pageviews
+          example: 1500
+        visitors:
           type: integer
-          description: Current page number
-          example: 1
-        pageSize:
+          description: Unique visitors
+          example: 800
+        visits:
           type: integer
-          description: Records per page
-          example: 20
+          description: Total visits
+          example: 1000
+        countries:
+          type: integer
+          description: Number of countries
+          example: 25
+        events:
+          type: integer
+          description: Custom event count
+          example: 200
     Session:
       type: object
       description: Visitor session record
@@ -211,30 +214,27 @@ components:
           format: date-time
           description: Session start timestamp
           example: '2026-01-15T10:00:00.000Z'
-    SessionStats:
+    SessionList:
       type: object
-      description: Summarized session statistics
+      description: Paginated list of sessions
       properties:
-        pageviews:
+        data:
+          type: array
+          description: Session records
+          items:
+            $ref: '#/components/schemas/Session'
+        count:
           type: integer
-          description: Total pageviews
-          example: 1500
-        visitors:
+          description: Total number of records
+          example: 100
+        page:
           type: integer
-          description: Unique visitors
-          example: 800
-        visits:
+          description: Current page number
+          example: 1
+        pageSize:
           type: integer
-          description: Total visits
-          example: 1000
-        countries:
-          type: integer
-          description: Number of countries
-          example: 25
-        events:
-          type: integer
-          description: Custom event count
-          example: 200
+          description: Records per page
+          example: 20
   securitySchemes:
     bearerAuth:
       type: http

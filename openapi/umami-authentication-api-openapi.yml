@@ -96,6 +96,16 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    LoginResponse:
+      type: object
+      description: Successful login response with token and user info
+      properties:
+        token:
+          type: string
+          description: JWT bearer token for API authentication
+          example: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
+        user:
+          $ref: '#/components/schemas/User'
     User:
       type: object
       description: Umami user account
@@ -146,16 +156,6 @@ components:
           type: string
           description: Umami password
           example: umami
-    LoginResponse:
-      type: object
-      description: Successful login response with token and user info
-      properties:
-        token:
-          type: string
-          description: JWT bearer token for API authentication
-          example: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
-        user:
-          $ref: '#/components/schemas/User'
   securitySchemes:
     bearerAuth:
       type: http

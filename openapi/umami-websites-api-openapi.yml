@@ -268,6 +268,27 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
     OkResponse:
       type: object
       description: Simple success confirmation
@@ -276,6 +297,34 @@ components:
           type: boolean
           description: Indicates successful operation
           example: true
+    WebsiteRequest:
+      type: object
+      description: Request body for creating or updating a website
+      required:
+      - name
+      - domain
+      properties:
+        name:
+          type: string
+          description: Display name for the website
+          example: My Website
+        domain:
+          type: string
+          description: Website domain
+          example: example.com
+        shareId:
+          type:
+          - string
+          - 'null'
+          description: Custom share identifier
+          example: null
+        teamId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Team identifier for team ownership
+          example: null
     Website:
       type: object
       description: Umami website tracking configuration
@@ -334,55 +383,6 @@ components:
           - 'null'
           format: date-time
           description: Deletion timestamp
-          example: null
-    WebsiteList:
-      type: object
-      description: Paginated list of websites
-      properties:
-        data:
-          type: array
-          description: Website records
-          items:
-            $ref: '#/components/schemas/Website'
-        count:
-          type: integer
-          description: Total number of records
-          example: 5
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
-    WebsiteRequest:
-      type: object
-      description: Request body for creating or updating a website
-      required:
-      - name
-      - domain
-      properties:
-        name:
-          type: string
-          description: Display name for the website
-          example: My Website
-        domain:
-          type: string
-          description: Website domain
-          example: example.com
-        shareId:
-          type:
-          - string
-          - 'null'
-          description: Custom share identifier
-          example: null
-        teamId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Team identifier for team ownership
           example: null
   securitySchemes:
     bearerAuth:

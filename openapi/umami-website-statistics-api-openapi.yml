@@ -284,6 +284,26 @@ components:
           description: Session data points
           items:
             $ref: '#/components/schemas/Metric'
+    ActiveVisitors:
+      type: object
+      description: Count of currently active visitors
+      properties:
+        visitors:
+          type: integer
+          description: Number of active visitors in the last 5 minutes
+          example: 42
+    Metric:
+      type: object
+      description: Analytics metric data point
+      properties:
+        x:
+          type: string
+          description: Dimension value (timestamp, URL, browser name, etc.)
+          example: /home
+        y:
+          type: integer
+          description: Metric value (count)
+          example: 450
     WebsiteStats:
       type: object
       description: Summarized website analytics statistics
@@ -348,26 +368,6 @@ components:
               type: integer
               description: Change from previous period
               example: 7200
-    Metric:
-      type: object
-      description: Analytics metric data point
-      properties:
-        x:
-          type: string
-          description: Dimension value (timestamp, URL, browser name, etc.)
-          example: /home
-        y:
-          type: integer
-          description: Metric value (count)
-          example: 450
-    ActiveVisitors:
-      type: object
-      description: Count of currently active visitors
-      properties:
-        visitors:
-          type: integer
-          description: Number of active visitors in the last 5 minutes
-          example: 42
   securitySchemes:
     bearerAuth:
       type: http
