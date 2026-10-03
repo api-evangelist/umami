@@ -268,27 +268,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    WebsiteList:
-      type: object
-      description: Paginated list of websites
-      properties:
-        data:
-          type: array
-          description: Website records
-          items:
-            $ref: '#/components/schemas/Website'
-        count:
-          type: integer
-          description: Total number of records
-          example: 5
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
     OkResponse:
       type: object
       description: Simple success confirmation
@@ -325,6 +304,27 @@ components:
           format: uuid
           description: Team identifier for team ownership
           example: null
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
     Website:
       type: object
       description: Umami website tracking configuration

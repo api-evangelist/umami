@@ -325,6 +325,94 @@ components:
           type: integer
           description: Records per page
           example: 20
+    Team:
+      type: object
+      description: Umami team for collaborative website management
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Team identifier
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Access code for joining the team
+          example: XYZ789
+        logoUrl:
+          type:
+          - string
+          - 'null'
+          description: Team logo URL
+          example: null
+        members:
+          type: array
+          description: Team members
+          items:
+            $ref: '#/components/schemas/TeamMember'
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-15T10:00:00.000Z'
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Deletion timestamp
+          example: null
+    OkResponse:
+      type: object
+      description: Simple success confirmation
+      properties:
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true
+    WebsiteList:
+      type: object
+      description: Paginated list of websites
+      properties:
+        data:
+          type: array
+          description: Website records
+          items:
+            $ref: '#/components/schemas/Website'
+        count:
+          type: integer
+          description: Total number of records
+          example: 5
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
+    TeamRequest:
+      type: object
+      description: Request body for creating or updating a team
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Custom access code
+          example: MYCODE123
     Website:
       type: object
       description: Umami website tracking configuration
@@ -384,94 +472,6 @@ components:
           format: date-time
           description: Deletion timestamp
           example: null
-    WebsiteList:
-      type: object
-      description: Paginated list of websites
-      properties:
-        data:
-          type: array
-          description: Website records
-          items:
-            $ref: '#/components/schemas/Website'
-        count:
-          type: integer
-          description: Total number of records
-          example: 5
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
-    OkResponse:
-      type: object
-      description: Simple success confirmation
-      properties:
-        ok:
-          type: boolean
-          description: Indicates successful operation
-          example: true
-    Team:
-      type: object
-      description: Umami team for collaborative website management
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Team identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        name:
-          type: string
-          description: Team name
-          example: Analytics Team
-        accessCode:
-          type: string
-          description: Access code for joining the team
-          example: XYZ789
-        logoUrl:
-          type:
-          - string
-          - 'null'
-          description: Team logo URL
-          example: null
-        members:
-          type: array
-          description: Team members
-          items:
-            $ref: '#/components/schemas/TeamMember'
-        createdAt:
-          type: string
-          format: date-time
-          description: Creation timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last update timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        deletedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Deletion timestamp
-          example: null
-    TeamRequest:
-      type: object
-      description: Request body for creating or updating a team
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Team name
-          example: Analytics Team
-        accessCode:
-          type: string
-          description: Custom access code
-          example: MYCODE123
     TeamMember:
       type: object
       description: Team membership record

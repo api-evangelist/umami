@@ -147,30 +147,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    SessionStats:
-      type: object
-      description: Summarized session statistics
-      properties:
-        pageviews:
-          type: integer
-          description: Total pageviews
-          example: 1500
-        visitors:
-          type: integer
-          description: Unique visitors
-          example: 800
-        visits:
-          type: integer
-          description: Total visits
-          example: 1000
-        countries:
-          type: integer
-          description: Number of countries
-          example: 25
-        events:
-          type: integer
-          description: Custom event count
-          example: 200
     Session:
       type: object
       description: Visitor session record
@@ -214,6 +190,30 @@ components:
           format: date-time
           description: Session start timestamp
           example: '2026-01-15T10:00:00.000Z'
+    SessionStats:
+      type: object
+      description: Summarized session statistics
+      properties:
+        pageviews:
+          type: integer
+          description: Total pageviews
+          example: 1500
+        visitors:
+          type: integer
+          description: Unique visitors
+          example: 800
+        visits:
+          type: integer
+          description: Total visits
+          example: 1000
+        countries:
+          type: integer
+          description: Number of countries
+          example: 25
+        events:
+          type: integer
+          description: Custom event count
+          example: 200
     SessionList:
       type: object
       description: Paginated list of sessions
