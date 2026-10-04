@@ -325,6 +325,14 @@ components:
           type: integer
           description: Records per page
           example: 20
+    OkResponse:
+      type: object
+      description: Simple success confirmation
+      properties:
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true
     Team:
       type: object
       description: Umami team for collaborative website management
@@ -370,14 +378,20 @@ components:
           format: date-time
           description: Deletion timestamp
           example: null
-    OkResponse:
+    TeamRequest:
       type: object
-      description: Simple success confirmation
+      description: Request body for creating or updating a team
+      required:
+      - name
       properties:
-        ok:
-          type: boolean
-          description: Indicates successful operation
-          example: true
+        name:
+          type: string
+          description: Team name
+          example: Analytics Team
+        accessCode:
+          type: string
+          description: Custom access code
+          example: MYCODE123
     WebsiteList:
       type: object
       description: Paginated list of websites
@@ -399,20 +413,6 @@ components:
           type: integer
           description: Records per page
           example: 20
-    TeamRequest:
-      type: object
-      description: Request body for creating or updating a team
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Team name
-          example: Analytics Team
-        accessCode:
-          type: string
-          description: Custom access code
-          example: MYCODE123
     Website:
       type: object
       description: Umami website tracking configuration

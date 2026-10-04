@@ -190,6 +190,27 @@ components:
           format: date-time
           description: Session start timestamp
           example: '2026-01-15T10:00:00.000Z'
+    SessionList:
+      type: object
+      description: Paginated list of sessions
+      properties:
+        data:
+          type: array
+          description: Session records
+          items:
+            $ref: '#/components/schemas/Session'
+        count:
+          type: integer
+          description: Total number of records
+          example: 100
+        page:
+          type: integer
+          description: Current page number
+          example: 1
+        pageSize:
+          type: integer
+          description: Records per page
+          example: 20
     SessionStats:
       type: object
       description: Summarized session statistics
@@ -214,27 +235,6 @@ components:
           type: integer
           description: Custom event count
           example: 200
-    SessionList:
-      type: object
-      description: Paginated list of sessions
-      properties:
-        data:
-          type: array
-          description: Session records
-          items:
-            $ref: '#/components/schemas/Session'
-        count:
-          type: integer
-          description: Total number of records
-          example: 100
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
   securitySchemes:
     bearerAuth:
       type: http

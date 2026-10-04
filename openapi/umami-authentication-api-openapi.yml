@@ -96,6 +96,21 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    LoginRequest:
+      type: object
+      description: Login credentials for authentication
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Umami username
+          example: admin
+        password:
+          type: string
+          description: Umami password
+          example: umami
     LoginResponse:
       type: object
       description: Successful login response with token and user info
@@ -141,21 +156,6 @@ components:
           description: Teams the user belongs to
           items:
             type: object
-    LoginRequest:
-      type: object
-      description: Login credentials for authentication
-      required:
-      - username
-      - password
-      properties:
-        username:
-          type: string
-          description: Umami username
-          example: admin
-        password:
-          type: string
-          description: Umami password
-          example: umami
   securitySchemes:
     bearerAuth:
       type: http

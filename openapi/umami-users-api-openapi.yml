@@ -140,6 +140,37 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    OkResponse:
+      type: object
+      description: Simple success confirmation
+      properties:
+        ok:
+          type: boolean
+          description: Indicates successful operation
+          example: true
+    UserRequest:
+      type: object
+      description: Request body for creating or updating a user
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Username
+          example: newuser
+        password:
+          type: string
+          description: Password
+          example: securepassword
+        role:
+          type: string
+          description: User role
+          example: user
+          enum:
+          - admin
+          - user
+          - view-only
     User:
       type: object
       description: Umami user account
@@ -175,37 +206,6 @@ components:
           description: Teams the user belongs to
           items:
             type: object
-    OkResponse:
-      type: object
-      description: Simple success confirmation
-      properties:
-        ok:
-          type: boolean
-          description: Indicates successful operation
-          example: true
-    UserRequest:
-      type: object
-      description: Request body for creating or updating a user
-      required:
-      - username
-      - password
-      properties:
-        username:
-          type: string
-          description: Username
-          example: newuser
-        password:
-          type: string
-          description: Password
-          example: securepassword
-        role:
-          type: string
-          description: User role
-          example: user
-          enum:
-          - admin
-          - user
-          - view-only
   securitySchemes:
     bearerAuth:
       type: http

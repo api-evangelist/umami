@@ -270,14 +270,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ActiveVisitors:
-      type: object
-      description: Count of currently active visitors
-      properties:
-        visitors:
-          type: integer
-          description: Number of active visitors in the last 5 minutes
-          example: 42
     Metric:
       type: object
       description: Analytics metric data point
@@ -304,6 +296,14 @@ components:
           description: Session data points
           items:
             $ref: '#/components/schemas/Metric'
+    ActiveVisitors:
+      type: object
+      description: Count of currently active visitors
+      properties:
+        visitors:
+          type: integer
+          description: Number of active visitors in the last 5 minutes
+          example: 42
     WebsiteStats:
       type: object
       description: Summarized website analytics statistics
