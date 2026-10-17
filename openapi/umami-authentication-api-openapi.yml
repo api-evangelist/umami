@@ -96,31 +96,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    LoginRequest:
-      type: object
-      description: Login credentials for authentication
-      required:
-      - username
-      - password
-      properties:
-        username:
-          type: string
-          description: Umami username
-          example: admin
-        password:
-          type: string
-          description: Umami password
-          example: umami
-    LoginResponse:
-      type: object
-      description: Successful login response with token and user info
-      properties:
-        token:
-          type: string
-          description: JWT bearer token for API authentication
-          example: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
-        user:
-          $ref: '#/components/schemas/User'
     User:
       type: object
       description: Umami user account
@@ -156,6 +131,31 @@ components:
           description: Teams the user belongs to
           items:
             type: object
+    LoginResponse:
+      type: object
+      description: Successful login response with token and user info
+      properties:
+        token:
+          type: string
+          description: JWT bearer token for API authentication
+          example: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
+        user:
+          $ref: '#/components/schemas/User'
+    LoginRequest:
+      type: object
+      description: Login credentials for authentication
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: Umami username
+          example: admin
+        password:
+          type: string
+          description: Umami password
+          example: umami
   securitySchemes:
     bearerAuth:
       type: http
