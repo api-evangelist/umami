@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: Umami API overlay (API Evangelist)
+  version: 1.0.0
+extends: ../openapi/_original/umami-openapi.yml
+x-generated: '2026-10-20'
+x-method: generated
+actions:
+- target: $.info
+  update:
+    x-apievangelist-cloud-base: https://api.umami.is/v1
+    x-apievangelist-note: Umami Cloud serves this API at https://api.umami.is/v1 (docs.umami.is/docs/api); self-hosted instances serve it under
+      /api.
+- target: $.info
+  update:
+    x-apievangelist-rate-limit: Each API key is limited to 50 calls every 15 seconds. (https://docs.umami.is/docs/cloud/api-key)

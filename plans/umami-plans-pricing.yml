@@ -1,3 +1,4 @@
+name: Umami API Plans
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -8,253 +9,238 @@ method: searched
 source: https://umami.is/pricing
 created: '2026-05-04'
 modified: '2026-08-13'
-supersedes: >-
-  The 2026-05-04 bulk-sweep scaffold (method: generated) that invented
-  free/professional/enterprise tiers with placeholder quotas. Every value below
-  is Umami's own published figure, read from the pricing page's plan cards and
-  feature-comparison table on 2026-08-13.
+supersedes: 'The 2026-05-04 bulk-sweep scaffold (method: generated) that invented free/professional/enterprise tiers with placeholder quotas. Every value below is Umami''s own published figure, read from
+  the pricing page''s plan cards and feature-comparison table on 2026-08-13.'
 tags:
-  - Cookieless Tracking
-  - Open Source
-  - Privacy
-  - Web Analytics
-  - Website Analytics
-description: >-
-  Umami Cloud pricing. Four published tiers — Hobby, Pro, Business, Enterprise —
-  metered on events, with published per-event overage rates on Pro and Business.
-  Self-hosting the MIT-licensed application is free and unmetered and is not a
-  plan. NOTE FOR API CONSUMERS: API access is NOT included in the free Hobby
-  tier; it starts at Pro ($20/month). The Streaming API starts at Business
-  ($200/month).
+- Cookieless Tracking
+- Open Source
+- Privacy
+- Web Analytics
+- Website Analytics
+description: 'Umami Cloud pricing. Four published tiers — Hobby, Pro, Business, Enterprise — metered on events, with published per-event overage rates on Pro and Business. Self-hosting the MIT-licensed
+  application is free and unmetered and is not a plan. NOTE FOR API CONSUMERS: API access is NOT included in the free Hobby tier; it starts at Pro ($20/month). The Streaming API starts at Business ($200/month).'
 currency: USD
 billing_period: month
 trial:
   available: true
   length_days: 14
-  applies_to: [pro, business]
-  note: >-
-    Full access to the plan's features during the trial; cancel within the
-    window at no charge. Payments are processed by Stripe.
+  applies_to:
+  - pro
+  - business
+  note: Full access to the plan's features during the trial; cancel within the window at no charge. Payments are processed by Stripe.
 usage_metric:
   name: events
-  definition: >-
-    One website pageview counts as one event. Each stored custom event counts as
-    one event, and each stored event data property counts as one additional
-    event.
+  definition: One website pageview counts as one event. Each stored custom event counts as one event, and each stored event data property counts as one additional event.
   source: https://umami.is/pricing
-overage_policy: >-
-  Exceeding the included events does not interrupt collection and does not drop
-  data; additional events are billed at the plan's per-event rate.
+overage_policy: Exceeding the included events does not interrupt collection and does not drop data; additional events are billed at the plan's per-event rate.
 plan_count: 4
 plans:
-  - id: umami-hobby
-    name: Hobby
-    type: free
+- id: umami-hobby
+  name: Hobby
+  type: free
+  price: '0.00'
+  currency: USD
+  period: month
+  description: Free forever tier for a single personal site.
+  api_access: false
+  entries:
+  - label: Events (included)
+    name: events_included
+    type: quota
+    metric: events
+    limit: 100000
+    timeFrame: month
     price: '0.00'
+  - label: Additional events
+    name: overage
+    type: metered
+    metric: events
+    limit: 0
+    note: No overage available on Hobby.
+  - label: Websites
+    name: websites
+    type: quota
+    limit: 1
+  - label: Data retention
+    name: retention
+    type: duration
+    limit: 6
+    unit: months
+  elements:
+  - name: Community support
+  - name: Custom events
+  - name: Event properties
+  - name: Session properties
+  - name: Data export
+  - name: Realtime events
+  - name: Custom dashboards
+  - name: 'Reports: Breakdown, Funnel, Retention, UTM, Goals, Journey, Revenue, Attribution'
+  - name: GDPR + CCPA compliant, no cookie banner required
+  excludes:
+  - API access
+  - Streaming API
+  - Teams and team members
+  - Data import
+  - Email reports
+  - Session replays
+  - Heatmaps
+  - White-labeling
+  - Email support
+  price_text: $0 / month
+- id: umami-pro
+  name: Pro
+  type: paid
+  price: '20.00'
+  currency: USD
+  period: month
+  description: Everything in Hobby, plus API access, teams and a larger event allowance.
+  api_access: true
+  entries:
+  - label: Events (included)
+    name: events_included
+    type: quota
+    metric: events
+    limit: 1000000
+    timeFrame: month
+  - label: Additional events
+    name: overage
+    type: metered
+    metric: events
+    unit: 1
+    price: '0.00003'
     currency: USD
-    period: month
-    description: Free forever tier for a single personal site.
-    api_access: false
-    entries:
-      - label: Events (included)
-        name: events_included
-        type: quota
-        metric: events
-        limit: 100000
-        timeFrame: month
-        price: '0.00'
-      - label: Additional events
-        name: overage
-        type: metered
-        metric: events
-        limit: 0
-        note: No overage available on Hobby.
-      - label: Websites
-        name: websites
-        type: quota
-        limit: 1
-      - label: Data retention
-        name: retention
-        type: duration
-        limit: 6
-        unit: months
-    elements:
-      - name: Community support
-      - name: Custom events
-      - name: Event properties
-      - name: Session properties
-      - name: Data export
-      - name: Realtime events
-      - name: Custom dashboards
-      - name: 'Reports: Breakdown, Funnel, Retention, UTM, Goals, Journey, Revenue, Attribution'
-      - name: GDPR + CCPA compliant, no cookie banner required
-    excludes:
-      - API access
-      - Streaming API
-      - Teams and team members
-      - Data import
-      - Email reports
-      - Session replays
-      - Heatmaps
-      - White-labeling
-      - Email support
-  - id: umami-pro
-    name: Pro
-    type: paid
-    price: '20.00'
+  - label: Websites
+    name: websites
+    type: quota
+    limit: 20
+  - label: Team members
+    name: team_members
+    type: quota
+    limit: 10
+  - label: Data retention
+    name: retention
+    type: duration
+    limit: 2
+    unit: years
+  elements:
+  - name: API access
+  - name: Teams
+  - name: Data import
+  - name: Email reports
+  - name: IP filters
+  - name: Email support
+  excludes:
+  - Streaming API
+  - Session replays
+  - Heatmaps
+  - White-labeling
+  price_text: $20 / month
+- id: umami-business
+  name: Business
+  type: paid
+  price: '200.00'
+  currency: USD
+  period: month
+  description: Everything in Pro, plus replays, heatmaps, white-labeling and the Streaming API.
+  api_access: true
+  entries:
+  - label: Events (included)
+    name: events_included
+    type: quota
+    metric: events
+    limit: 10000000
+    timeFrame: month
+  - label: Additional events
+    name: overage
+    type: metered
+    metric: events
+    unit: 1
+    price: '0.00002'
     currency: USD
-    period: month
-    description: 'Everything in Hobby, plus API access, teams and a larger event allowance.'
-    api_access: true
-    entries:
-      - label: Events (included)
-        name: events_included
-        type: quota
-        metric: events
-        limit: 1000000
-        timeFrame: month
-      - label: Additional events
-        name: overage
-        type: metered
-        metric: events
-        unit: 1
-        price: '0.00003'
-        currency: USD
-      - label: Websites
-        name: websites
-        type: quota
-        limit: 20
-      - label: Team members
-        name: team_members
-        type: quota
-        limit: 10
-      - label: Data retention
-        name: retention
-        type: duration
-        limit: 2
-        unit: years
-    elements:
-      - name: API access
-      - name: Teams
-      - name: Data import
-      - name: Email reports
-      - name: IP filters
-      - name: Email support
-    excludes:
-      - Streaming API
-      - Session replays
-      - Heatmaps
-      - White-labeling
-  - id: umami-business
-    name: Business
-    type: paid
-    price: '200.00'
+  - label: Session replays (included)
+    name: replays_included
+    type: quota
+    metric: replays
+    limit: 5000
+    timeFrame: month
+  - label: Additional replays
+    name: replay_overage
+    type: metered
+    metric: replays
+    unit: 1
+    price: '0.005'
     currency: USD
-    period: month
-    description: 'Everything in Pro, plus replays, heatmaps, white-labeling and the Streaming API.'
-    api_access: true
-    entries:
-      - label: Events (included)
-        name: events_included
-        type: quota
-        metric: events
-        limit: 10000000
-        timeFrame: month
-      - label: Additional events
-        name: overage
-        type: metered
-        metric: events
-        unit: 1
-        price: '0.00002'
-        currency: USD
-      - label: Session replays (included)
-        name: replays_included
-        type: quota
-        metric: replays
-        limit: 5000
-        timeFrame: month
-      - label: Additional replays
-        name: replay_overage
-        type: metered
-        metric: replays
-        unit: 1
-        price: '0.005'
-        currency: USD
-      - label: Websites
-        name: websites
-        type: quota
-        limit: -1
-        note: Unlimited.
-      - label: Team members
-        name: team_members
-        type: quota
-        limit: -1
-        note: Unlimited.
-      - label: Data retention
-        name: retention
-        type: duration
-        limit: 5
-        unit: years
-    elements:
-      - name: Streaming API
-      - name: Session replays
-      - name: Heatmaps
-      - name: White-labeling
-      - name: Email and chat support
-    excludes:
-      - SAML SSO
-      - Audit log
-      - Uptime SLA
-  - id: umami-enterprise
-    name: Enterprise
-    type: enterprise
-    price: custom
-    currency: USD
-    period: month
-    description: 'Everything in Business, plus SSO, audit log, SLA and invoice billing.'
-    api_access: true
-    contact: mailto:sales@umami.is
-    entries:
-      - label: Events (included)
-        name: events_included
-        type: quota
-        metric: events
-        limit: -1
-        note: Custom / negotiated.
-      - label: Data retention
-        name: retention
-        type: duration
-        limit: -1
-        note: Custom.
-    elements:
-      - name: Single sign on (SAML SSO)
-      - name: Audit log
-      - name: Uptime SLA
-      - name: Onboarding support
-      - name: Designated support engineer
-      - name: Enterprise support
-      - name: Invoice billing
-      - name: Custom pricing and data retention
+  - label: Websites
+    name: websites
+    type: quota
+    limit: -1
+    note: Unlimited.
+  - label: Team members
+    name: team_members
+    type: quota
+    limit: -1
+    note: Unlimited.
+  - label: Data retention
+    name: retention
+    type: duration
+    limit: 5
+    unit: years
+  elements:
+  - name: Streaming API
+  - name: Session replays
+  - name: Heatmaps
+  - name: White-labeling
+  - name: Email and chat support
+  excludes:
+  - SAML SSO
+  - Audit log
+  - Uptime SLA
+  price_text: $200 / month
+- id: umami-enterprise
+  name: Enterprise
+  type: enterprise
+  price: Contact sales
+  currency: USD
+  period: month
+  description: Everything in Business, plus SSO, audit log, SLA and invoice billing.
+  api_access: true
+  contact: mailto:sales@umami.is
+  entries:
+  - label: Events (included)
+    name: events_included
+    type: quota
+    metric: events
+    limit: -1
+    note: Custom / negotiated.
+  - label: Data retention
+    name: retention
+    type: duration
+    limit: -1
+    note: Custom.
+  elements:
+  - name: Single sign on (SAML SSO)
+  - name: Audit log
+  - name: Uptime SLA
+  - name: Onboarding support
+  - name: Designated support engineer
+  - name: Enterprise support
+  - name: Invoice billing
+  - name: Custom pricing and data retention
+  price_text: Custom
 self_hosted:
   price: '0.00'
   license: MIT
   metered: false
   url: https://docs.umami.is/docs/install
-  note: >-
-    Self-hosting is free and has no event ceiling. Umami states that Cloud
-    includes features not available self-hosted, specifically email reports and
-    the Streaming API.
+  note: Self-hosting is free and has no event ceiling. Umami states that Cloud includes features not available self-hosted, specifically email reports and the Streaming API.
 data_regions:
   regions:
-    - us
-    - eu
-  note: >-
-    Umami Cloud servers are in the US and EU. Region defaults to the region of
-    the account that owns the API key and can be pinned per call —
-    https://api.umami.is/v1/us or https://api.umami.is/v1/eu.
+  - us
+  - eu
+  note: Umami Cloud servers are in the US and EU. Region defaults to the region of the account that owns the API key and can be pinned per call — https://api.umami.is/v1/us or https://api.umami.is/v1/eu.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
 x-canonical:
   generated: '2026-10-08'
   vocabulary: all/0-working/economics/plans-canonical.yml
@@ -297,3 +283,13 @@ x-canonical:
     - message
     periods:
     - month
+delivery:
+  delivery: open-core
+  evidence: Self-host the open-source platform on your own infrastructure, or use Umami Cloud.
+  evidence_url: https://umami.is
+  free_edition: self-hosted
+  managed_tier: Umami Cloud
+  note: License MIT per umami-software/umami repository; the page itself does not state the license.
+audience: business-product
+pricing_basis: tiered-subscription
+published: true

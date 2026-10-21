@@ -1,184 +1,130 @@
-generated: '2026-08-13'
-method: derived
-source: >-
-  openapi/ operations + https://docs.umami.is/docs/api (searched first; no
-  first-party MCP server exists)
+generated: '2026-10-20'
+method: searched
+source: https://docs.umami.is/docs/mcp
 provider: Umami
 providerId: umami
-status: candidate
-description: >-
-  Umami publishes no MCP server. This file is a DERIVED candidate tool list
-  showing what a Umami MCP server would expose if one existed, mapped to real
-  documented endpoints. Nothing here is served by Umami and no endpoint URL is
-  asserted.
+status: official
+name: Umami MCP Server
+description: 'Umami ships an official MCP server: a remote endpoint on Umami Cloud (https://cloud.umami.is/mcp), the same /mcp endpoint on self-hosted v3.4.0+ (MCP_ENABLED=1), and the @umami/mcp stdio package.
+  All 23 tools are read-only. Tool names are as DOCUMENTED on docs.umami.is/docs/mcp; tools/list was not called because the endpoint requires an API key (anonymous probe returned 401).'
 deployment:
-  mode: none
-  endpoint: null
-  install: null
-  package: null
-  auth: unknown
-  verified: searched
-  note: >-
-    mode: none because nobody at Umami ships a server — neither a remote HTTPS
-    endpoint an agent can POST to, nor a stdio package a human can install. No
-    MCP endpoint URL is guessed here.
-search_performed:
-  - target: umami-software GitHub organization (12 public repos)
-    result: >-
-      No MCP repository. The org ships umami, shiso, docs, zen, api-client,
-      node, redis-client, prisma-client, esbuild-plugin-css-modules, cli,
-      migrate-v1-v2, types.
-    date: '2026-08-13'
-  - target: npm @umami scope
-    result: >-
-      No @umami/mcp package. Scope contains api-client, node, components, cli,
-      shiso, prisma-client, redis-client.
-    date: '2026-08-13'
-  - target: docs.umami.is (full corpus via llms-full.txt)
-    result: No mention of MCP, Model Context Protocol, or an agent surface.
-    date: '2026-08-13'
-  - target: /.well-known/ probes on umami.is, api.umami.is, cloud.umami.is, docs.umami.is
-    result: >-
-      No agent card, no ai-plugin.json, no oauth-protected-resource. api.umami.is
-      answers 405 to every non-API GET.
-    date: '2026-08-13'
+  mode: both
+  endpoint: https://cloud.umami.is/mcp
+  install: npx -y @umami/mcp
+  package: https://www.npmjs.com/package/@umami/mcp
+  auth: api-key
+  verified: probed
+  note: 'Endpoint and install verbatim from https://docs.umami.is/docs/cloud/mcp. Anonymous probe of https://cloud.umami.is/mcp returned 401 (pre-flight 2026-10-20, control 200). Auth: Authorization: Bearer
+    api_<cloud key> or x-umami-api-key; Pro, Business and Enterprise plans. Self-hosted endpoint https://<your-umami-instance>/mcp with umami_ keys. @umami/mcp latest 0.2.0 published 2026-09-10 (registry.npmjs.org).'
+tools_source:
+  l3: table
+  evidence_url: https://docs.umami.is/docs/mcp
+  live_tools_list: gated (401)
+tools:
+- name: list_websites
+  description: Find the websites you can access (call first to get a `websiteId`).
+  readOnly: true
+- name: get_website_daterange
+  description: Earliest and latest dates with recorded data.
+  readOnly: true
+- name: get_website_stats
+  description: Pageviews, visitors, visits, bounce rate, duration, and previous period.
+  readOnly: true
+- name: get_website_traffic
+  description: Pageview and visit time series by minute, hour, day, month, or year.
+  readOnly: true
+- name: get_website_metrics
+  description: Top pages, referrers, channels, countries, browsers, devices, UTM, and events.
+  readOnly: true
+- name: get_realtime
+  description: Visitors active right now.
+  readOnly: true
+- name: get_events
+  description: Individual tracked events (paginated).
+  readOnly: true
+- name: get_event_stats
+  description: Custom event totals and previous period.
+  readOnly: true
+- name: get_event_series
+  description: Custom event counts over time, grouped by event name.
+  readOnly: true
+- name: get_event_properties
+  description: Custom event property names, or the values of one property.
+  readOnly: true
+- name: get_sessions
+  description: Visitor sessions (paginated).
+  readOnly: true
+- name: get_session
+  description: One session with its activity timeline and properties.
+  readOnly: true
+- name: get_session_stats
+  description: 'Session-level totals: visitors, visits, pageviews, events, countries.'
+  readOnly: true
+- name: get_annotations
+  description: Dated notes on the timeline (launches, campaigns) that explain changes.
+  readOnly: true
+- name: list_segments
+  description: Saved segments and cohorts; pass IDs via `filters.segment` or `filters.cohort`.
+  readOnly: true
+- name: list_funnels
+  description: Saved funnels with their steps.
+  readOnly: true
+- name: run_funnel
+  description: Conversion funnel from a saved `funnelId` or ad-hoc page and event steps.
+  readOnly: true
+- name: get_goals
+  description: Saved goals with conversions, visitors, and rate for a date range.
+  readOnly: true
+- name: run_journey
+  description: Most common paths visitors take.
+  readOnly: true
+- name: run_retention
+  description: Cohort retention table.
+  readOnly: true
+- name: run_attribution
+  description: First-click or last-click attribution for a conversion.
+  readOnly: true
+- name: get_revenue
+  description: Revenue totals, series, and breakdowns.
+  readOnly: true
+- name: get_performance
+  description: Web Vitals (LCP, INP, CLS, FCP, TTFB) percentiles, trend, and breakdown.
+  readOnly: true
+previous_assessment:
+  generated: '2026-08-13'
+  method: derived
+  status: candidate
+  note: Earlier pass found no official server and derived candidates; superseded by the provider-published MCP docs.
 third_party_servers:
-  note: >-
-    A third-party MCP ecosystem exists for Umami. NONE of it is published by
-    umami-software and none of it is endorsed in Umami's documentation. Listed
-    for accuracy about the landscape, not as a Umami surface — do not credit
-    Umami for these.
+  note: A third-party MCP ecosystem exists for Umami. NONE of it is published by umami-software and none of it is endorsed in Umami's documentation. Listed for accuracy about the landscape, not as a Umami
+    surface — do not credit Umami for these.
   servers:
-    - name: umami-compass
-      package: https://www.npmjs.com/package/umami-compass
-      version: 0.5.1
-      published: '2026-07-21'
-      repository: https://github.com/webcredo/umami-compass
-      description: Read-only MCP server for Umami Analytics 3.2+, Cloud and self-hosted.
-      official: false
-    - name: '@climactic/umami-mcp'
-      package: https://www.npmjs.com/package/@climactic/umami-mcp
-      version: 0.1.2
-      published: '2026-04-12'
-      repository: https://github.com/climactic/umami-mcp
-      official: false
-    - name: '@mikusnuz/umami-mcp'
-      package: https://www.npmjs.com/package/@mikusnuz/umami-mcp
-      version: 1.2.1
-      published: '2026-03-19'
-      repository: https://github.com/mikusnuz/umami-mcp
-      description: Full-coverage MCP server for Umami Analytics API v2.
-      official: false
-    - name: '@zgeoff/umami-mcp'
-      package: https://www.npmjs.com/package/@zgeoff/umami-mcp
-      version: 0.1.0
-      published: '2026-07-17'
-      repository: https://github.com/zgeoff/umami-mcp
-      official: false
-candidate_tools:
-  note: >-
-    Derived from operations that exist in openapi/ and are confirmed present in
-    the published API reference. inputSchema fields are the documented request
-    parameters. This is a design sketch, not a served contract.
-  tools:
-    - name: list_websites
-      description: List the websites this credential can read, with paging and search.
-      rest: {method: GET, path: /websites, operationId: listWebsites}
-      inputSchema: {page: number, pageSize: number, search: string, includeTeams: boolean}
-      read_only: true
-    - name: get_website
-      description: Fetch one website by ID.
-      rest: {method: GET, path: '/websites/{websiteId}', operationId: getWebsite}
-      inputSchema: {websiteId: string}
-      read_only: true
-    - name: get_website_stats
-      description: >-
-        Summary metrics for a website over a time window — pageviews, visitors,
-        visits, bounces, totaltime, with optional period-over-period comparison.
-      rest: {method: GET, path: '/websites/{websiteId}/stats', operationId: getWebsiteStats}
-      inputSchema: {websiteId: string, startAt: number, endAt: number}
-      read_only: true
-    - name: get_website_pageviews
-      description: Pageview and session time series bucketed by unit.
-      rest: {method: GET, path: '/websites/{websiteId}/pageviews', operationId: getWebsitePageviews}
-      inputSchema: {websiteId: string, startAt: number, endAt: number, unit: string}
-      read_only: true
-    - name: get_website_metrics
-      description: >-
-        Breakdown of a single dimension (path, referrer, browser, os, device,
-        country, ...) for a window.
-      rest: {method: GET, path: '/websites/{websiteId}/metrics', operationId: getWebsiteMetrics}
-      inputSchema: {websiteId: string, startAt: number, endAt: number, type: string}
-      read_only: true
-    - name: get_active_visitors
-      description: Current visitor count for a website.
-      rest: {method: GET, path: '/websites/{websiteId}/active', operationId: getActiveVisitors}
-      inputSchema: {websiteId: string}
-      read_only: true
-    - name: get_event_series
-      description: Custom event counts as a time series.
-      rest: {method: GET, path: '/websites/{websiteId}/events/series', operationId: getEventSeries}
-      inputSchema: {websiteId: string, startAt: number, endAt: number, unit: string}
-      read_only: true
-    - name: list_sessions
-      description: Paginated visitor sessions for a website.
-      rest: {method: GET, path: '/websites/{websiteId}/sessions', operationId: listSessions}
-      inputSchema: {websiteId: string, startAt: number, endAt: number, page: number, pageSize: number}
-      read_only: true
-    - name: get_session_stats
-      description: Aggregate session statistics for a website.
-      rest: {method: GET, path: '/websites/{websiteId}/sessions/stats', operationId: getSessionStats}
-      inputSchema: {websiteId: string, startAt: number, endAt: number}
-      read_only: true
-    - name: list_teams
-      description: List teams visible to this credential.
-      rest: {method: GET, path: /teams, operationId: listTeams}
-      inputSchema: {page: number, pageSize: number}
-      read_only: true
-    - name: get_team
-      description: Fetch one team by ID.
-      rest: {method: GET, path: '/teams/{teamId}', operationId: getTeam}
-      inputSchema: {teamId: string}
-      read_only: true
-    - name: list_team_websites
-      description: List the websites belonging to a team.
-      rest: {method: GET, path: '/teams/{teamId}/websites', operationId: listTeamWebsites}
-      inputSchema: {teamId: string}
-      read_only: true
-    - name: create_website
-      description: Register a website for tracking.
-      rest: {method: POST, path: /websites, operationId: createWebsite}
-      inputSchema: {name: string, domain: string, shareId: string, teamId: string}
-      read_only: false
-      destructive: false
-    - name: update_website
-      description: Update a website's name, domain, share ID or replay configuration.
-      rest: {method: POST, path: '/websites/{websiteId}', operationId: updateWebsite}
-      inputSchema: {websiteId: string, name: string, domain: string, shareId: string, replayConfig: object}
-      read_only: false
-      destructive: false
-    - name: delete_website
-      description: Delete a website and its analytics data.
-      rest: {method: DELETE, path: '/websites/{websiteId}', operationId: deleteWebsite}
-      inputSchema: {websiteId: string}
-      read_only: false
-      destructive: true
-design_notes:
-  - >-
-    Read tools would dominate. Umami's value to an agent is querying analytics,
-    and every high-value operation is a GET.
-  - >-
-    A Cloud-backed server must target https://api.umami.is/v1 (no /api prefix)
-    and must NOT expose /users or /me/password — Umami bars API keys from those
-    routes entirely.
-  - >-
-    A server would have to enforce the 50-calls-per-15-seconds budget itself.
-    Umami returns no rate-limit headers, so a naive tool loop will hit the
-    ceiling with no warning.
-  - >-
-    startAt/endAt are UNIX milliseconds and the `unit` parameter is silently
-    promoted on long ranges — a tool wrapper should normalize both and report
-    the granularity actually returned.
+  - name: umami-compass
+    package: https://www.npmjs.com/package/umami-compass
+    version: 0.5.1
+    published: '2026-07-21'
+    repository: https://github.com/webcredo/umami-compass
+    description: Read-only MCP server for Umami Analytics 3.2+, Cloud and self-hosted.
+    official: false
+  - name: '@climactic/umami-mcp'
+    package: https://www.npmjs.com/package/@climactic/umami-mcp
+    version: 0.1.2
+    published: '2026-04-12'
+    repository: https://github.com/climactic/umami-mcp
+    official: false
+  - name: '@mikusnuz/umami-mcp'
+    package: https://www.npmjs.com/package/@mikusnuz/umami-mcp
+    version: 1.2.1
+    published: '2026-03-19'
+    repository: https://github.com/mikusnuz/umami-mcp
+    description: Full-coverage MCP server for Umami Analytics API v2.
+    official: false
+  - name: '@zgeoff/umami-mcp'
+    package: https://www.npmjs.com/package/@zgeoff/umami-mcp
+    version: 0.1.0
+    published: '2026-07-17'
+    repository: https://github.com/zgeoff/umami-mcp
+    official: false
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

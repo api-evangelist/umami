@@ -1,0 +1,725 @@
+openapi: 3.2.0
+info:
+  title: Umami Two-factor authentication API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Two-factor authentication across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
+tags:
+- name: Two-factor authentication
+paths:
+  /api/2fa/disable:
+    post:
+      description: Disables two-factor authentication for the current user after verifying their password and authenticator code. Rejected when an administrator or team requires it.
+      operationId: disableTwoFactor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                password:
+                  description: Password used to authenticate the account.
+                  type: string
+                token:
+                  maxLength: 6
+                  minLength: 6
+                  type: string
+              required:
+              - password
+              - token
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - properties:
+                    error:
+                      description: Error details returned when the operation fails.
+                      properties:
+                        code:
+                          type: string
+                        lockedUntil:
+                          description: Time until which further authentication attempts are blocked.
+                          format: date-time
+                          type: string
+                        message:
+                          description: Human-readable explanation of the result.
+                          type: string
+                      required:
+                      - code
+                      - message
+                      - lockedUntil
+                      type: object
+                  required:
+                  - error
+                  type: object
+                - properties:
+                    ok:
+                      description: Whether the operation succeeded.
+                      type: boolean
+                  required:
+                  - ok
+                  type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '403':
+          content:
+            application/json:
+              example:
+                error:
+                  code: forbidden
+                  message: Forbidden.
+                  status: 403
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Forbidden.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+        '429':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: Error details returned when the operation fails.
+                    properties:
+                      code:
+                        type: string
+                      lockedUntil:
+                        description: Time until which further authentication attempts are blocked.
+                        format: date-time
+                        type: string
+                      message:
+                        description: Human-readable explanation of the result.
+                        type: string
+                    required:
+                    - code
+                    - message
+                    - lockedUntil
+                    type: object
+                required:
+                - error
+                type: object
+          description: The operation completed successfully.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security:
+      - bearerAuth: []
+      summary: Disable two-factor authentication
+      tags:
+      - Two-factor authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/2fa/disable/contract.generated.ts
+  /api/2fa/setup/cancel:
+    post:
+      description: Deletes the current user's pending setup without changing an already enabled authenticator.
+      operationId: cancelTwoFactorSetup
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    description: Whether the operation succeeded.
+                    type: boolean
+                required:
+                - ok
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      summary: Cancel two-factor authentication setup
+      tags:
+      - Two-factor authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/2fa/setup/cancel/contract.generated.ts
+  /api/2fa/setup/confirm:
+    post:
+      description: Verifies an authenticator code, enables two-factor authentication, and returns a new set of backup codes.
+      operationId: confirmTwoFactorSetup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                token:
+                  maxLength: 6
+                  minLength: 6
+                  type: string
+              required:
+              - token
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - properties:
+                    error:
+                      description: Error details returned when the operation fails.
+                      properties:
+                        code:
+                          type: string
+                        lockedUntil:
+                          description: Time until which further authentication attempts are blocked.
+                          format: date-time
+                          type: string
+                        message:
+                          description: Human-readable explanation of the result.
+                          type: string
+                      required:
+                      - code
+                      - message
+                      - lockedUntil
+                      type: object
+                  required:
+                  - error
+                  type: object
+                - properties:
+                    backupCodes:
+                      description: Single-use backup codes for two-factor authentication.
+                      items:
+                        type: string
+                      type: array
+                  required:
+                  - backupCodes
+                  type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+        '429':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: Error details returned when the operation fails.
+                    properties:
+                      code:
+                        type: string
+                      lockedUntil:
+                        description: Time until which further authentication attempts are blocked.
+                        format: date-time
+                        type: string
+                      message:
+                        description: Human-readable explanation of the result.
+                        type: string
+                    required:
+                    - code
+                    - message
+                    - lockedUntil
+                    type: object
+                required:
+                - error
+                type: object
+          description: The operation completed successfully.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security:
+      - bearerAuth: []
+      summary: Confirm two-factor authentication setup
+      tags:
+      - Two-factor authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/2fa/setup/confirm/contract.generated.ts
+  /api/2fa/setup/initiate:
+    post:
+      description: Starts or replaces the current user's pending setup and returns a QR code and manual setup key for an authenticator app.
+      operationId: initiateTwoFactorSetup
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  manualKey:
+                    description: Secret key for manually configuring an authenticator app.
+                    type: string
+                  qrCodeDataUrl:
+                    description: Data URL of the QR code for authenticator setup.
+                    type: string
+                required:
+                - qrCodeDataUrl
+                - manualKey
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security:
+      - bearerAuth: []
+      summary: Set up two-factor authentication
+      tags:
+      - Two-factor authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/2fa/setup/initiate/contract.generated.ts
+  /api/2fa/status:
+    get:
+      description: Returns whether two-factor authentication is enabled, configured, or required for the current user, including the reason it is required.
+      operationId: getTwoFactorStatus
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - properties:
+                    globalRequired:
+                      description: Whether two-factor authentication is required for all users.
+                      type: boolean
+                    isConfigured:
+                      description: Whether two-factor authentication has been configured.
+                      type: boolean
+                    isEnabled:
+                      description: Whether two-factor authentication is enabled.
+                      type: boolean
+                    isRequired:
+                      description: Whether two-factor authentication is required for this user.
+                      type: boolean
+                    requiredReason:
+                      description: Reason two-factor authentication is required.
+                      type: 'null'
+                  required:
+                  - isEnabled
+                  - isRequired
+                  - requiredReason
+                  - isConfigured
+                  - globalRequired
+                  type: object
+                - properties:
+                    globalRequired:
+                      description: Whether two-factor authentication is required for all users.
+                      type: boolean
+                    isConfigured:
+                      description: Whether two-factor authentication has been configured.
+                      type: boolean
+                    isEnabled:
+                      description: Whether two-factor authentication is enabled.
+                      type: boolean
+                    isRequired:
+                      description: Whether two-factor authentication is required for this user.
+                      type: boolean
+                    requiredReason:
+                      description: Reason two-factor authentication is required.
+                      type: string
+                  required:
+                  - isEnabled
+                  - isRequired
+                  - requiredReason
+                  - isConfigured
+                  - globalRequired
+                  type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Get two-factor authentication status
+      tags:
+      - Two-factor authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/2fa/status/contract.generated.ts
+  /api/2fa/verify:
+    post:
+      description: Exchanges a partial sign-in token and a valid authenticator or backup code for a full authentication token and user details.
+      operationId: verifyTwoFactor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - properties:
+                  token:
+                    maxLength: 6
+                    minLength: 6
+                    type: string
+                required:
+                - token
+                type: object
+              - properties:
+                  backupCode:
+                    description: Single-use backup code for two-factor authentication.
+                    minLength: 1
+                    type: string
+                required:
+                - backupCode
+                type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - properties:
+                    error:
+                      description: Error details returned when the operation fails.
+                      properties:
+                        code:
+                          type: string
+                        lockedUntil:
+                          description: Time until which further authentication attempts are blocked.
+                          format: date-time
+                          type: string
+                        message:
+                          description: Human-readable explanation of the result.
+                          type: string
+                      required:
+                      - code
+                      - message
+                      - lockedUntil
+                      type: object
+                  required:
+                  - error
+                  type: object
+                - properties:
+                    token:
+                      type: string
+                    user:
+                      description: User associated with the resource.
+                      properties:
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        isAdmin:
+                          description: Whether the user has administrator privileges.
+                          type: boolean
+                        role:
+                          description: Permission role assigned to the user.
+                          type: string
+                        teams:
+                          description: Teams associated with the user.
+                          items:
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              logoUrl:
+                                description: URL of the logo image.
+                                type: string
+                              name:
+                                description: Display name of the resource.
+                                type: string
+                            required:
+                            - id
+                            - logoUrl
+                            - name
+                            type: object
+                          type: array
+                        username:
+                          description: Username of the account.
+                          type: string
+                      required:
+                      - id
+                      - username
+                      - role
+                      - createdAt
+                      - isAdmin
+                      - teams
+                      type: object
+                  required:
+                  - token
+                  - user
+                  type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+        '429':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: Error details returned when the operation fails.
+                    properties:
+                      code:
+                        type: string
+                      lockedUntil:
+                        description: Time until which further authentication attempts are blocked.
+                        format: date-time
+                        type: string
+                      message:
+                        description: Human-readable explanation of the result.
+                        type: string
+                    required:
+                    - code
+                    - message
+                    - lockedUntil
+                    type: object
+                required:
+                - error
+                type: object
+          description: The operation completed successfully.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security: []
+      summary: Complete two-factor sign-in
+      tags:
+      - Two-factor authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/2fa/verify/contract.generated.ts
+components:
+  schemas:
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
+      properties:
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
+      required:
+      - error
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
+      scheme: bearer
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

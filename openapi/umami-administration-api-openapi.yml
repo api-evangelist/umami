@@ -1,0 +1,1017 @@
+openapi: 3.2.0
+info:
+  title: Umami Administration API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Administration across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
+tags:
+- name: Administration
+paths:
+  /api/admin/2fa/global:
+    post:
+      description: Enables or disables the installation-wide requirement for users to set up two-factor authentication.
+      operationId: postAdmin2faGlobal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                required:
+                  type: boolean
+              required:
+              - required
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    description: Whether the operation succeeded.
+                    type: boolean
+                  required: {}
+                required:
+                - ok
+                - required
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security:
+      - bearerAuth: []
+      summary: Set the two-factor requirement for everyone
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/2fa/global/contract.generated.ts
+  /api/admin/teams:
+    get:
+      description: Returns a paginated list of teams with member details and website and member counts for administration.
+      operationId: getAdminTeams
+      parameters:
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        accessCode:
+                          description: Code used to join the team.
+                          type: string
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        deletedAt:
+                          description: Date and time the record was deleted, if applicable.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        logoUrl:
+                          description: URL of the logo image.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        twoFactorRequired:
+                          description: Whether two-factor authentication is required.
+                          type: boolean
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                      required:
+                      - id
+                      - createdAt
+                      - updatedAt
+                      - logoUrl
+                      - twoFactorRequired
+                      - deletedAt
+                      - name
+                      - accessCode
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List all teams
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/teams/contract.generated.ts
+  /api/admin/teams/{teamId}/2fa:
+    post:
+      description: Enables or disables the requirement for members of the specified team to use two-factor authentication.
+      operationId: postAdminTeamsTeamId2fa
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                required:
+                  type: boolean
+              required:
+              - required
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    description: Whether the operation succeeded.
+                    type: boolean
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  twoFactorRequired:
+                    description: Whether two-factor authentication is required.
+                required:
+                - ok
+                - teamId
+                - twoFactorRequired
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security:
+      - bearerAuth: []
+      summary: Set a team's two-factor requirement
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/teams/[teamId]/2fa/contract.generated.ts
+  /api/admin/users:
+    get:
+      description: Returns a paginated list of users and their website counts for administration, excluding passwords.
+      operationId: getAdminUsers
+      parameters:
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        _count:
+                          properties:
+                            websites:
+                              type: number
+                          required:
+                          - websites
+                          type: object
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        role:
+                          description: Permission role assigned to the user.
+                          type: string
+                        twoFactorRequired:
+                          description: Whether two-factor authentication is required.
+                          type: boolean
+                        username:
+                          description: Username of the account.
+                          type: string
+                      required:
+                      - id
+                      - username
+                      - role
+                      - createdAt
+                      - twoFactorRequired
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List all users
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/users/contract.generated.ts
+  /api/admin/users/{userId}/2fa:
+    delete:
+      description: Removes the specified user's authenticator setup, backup codes, used-code history, and failed-attempt limits so they can set up authentication again.
+      operationId: deleteAdminUsersUserId2fa
+      parameters:
+      - description: ID of the associated user.
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    description: Whether the operation succeeded.
+                    type: boolean
+                  reset:
+                    properties:
+                      backupCodes:
+                        description: Single-use backup codes for two-factor authentication.
+                      otpUsed: {}
+                      rateLimit: {}
+                      twoFactorAuth: {}
+                    required:
+                    - twoFactorAuth
+                    - backupCodes
+                    - otpUsed
+                    - rateLimit
+                    type: object
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - ok
+                - userId
+                - reset
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      summary: Reset a user's two-factor authentication
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/users/[userId]/2fa/contract.generated.ts
+    get:
+      description: Returns whether two-factor authentication is enabled for the specified user.
+      operationId: getAdminUsersUserId2fa
+      parameters:
+      - description: ID of the associated user.
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  isEnabled:
+                    description: Whether two-factor authentication is enabled.
+                    type: boolean
+                required:
+                - isEnabled
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      summary: Get a user's two-factor status
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/users/[userId]/2fa/contract.generated.ts
+    post:
+      description: Enables or disables the requirement for the specified user to set up two-factor authentication.
+      operationId: postAdminUsersUserId2fa
+      parameters:
+      - description: ID of the associated user.
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                required:
+                  type: boolean
+              required:
+              - required
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    description: Whether the operation succeeded.
+                    type: boolean
+                  twoFactorRequired:
+                    description: Whether two-factor authentication is required.
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - ok
+                - userId
+                - twoFactorRequired
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security:
+      - bearerAuth: []
+      summary: Set a user's two-factor requirement
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/users/[userId]/2fa/contract.generated.ts
+  /api/admin/websites:
+    get:
+      description: Returns a paginated, searchable list of websites across users and teams for administration.
+      operationId: getAdminWebsites
+      parameters:
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      allOf:
+                      - properties:
+                          createdAt:
+                            description: Date and time the record was created.
+                            format: date-time
+                            type: string
+                          createdBy:
+                            description: ID of the user who created the resource.
+                            type: string
+                          deletedAt:
+                            description: Date and time the record was deleted, if applicable.
+                            format: date-time
+                            type: string
+                          domain:
+                            description: Domain name associated with the resource.
+                            type: string
+                          id:
+                            description: Unique identifier of the resource.
+                            type: string
+                          name:
+                            description: Display name of the resource.
+                            type: string
+                          recorderEnabled:
+                            description: Whether recording is enabled for the website.
+                            type: boolean
+                          replayConfig:
+                            anyOf:
+                            - type: string
+                            - type: number
+                            - const: false
+                            - const: true
+                            - additionalProperties:
+                                anyOf:
+                                - type: string
+                                - type: number
+                                - const: false
+                                - const: true
+                                - {}
+                                - properties:
+                                    length:
+                                      type: number
+                                  required:
+                                  - length
+                                  type: object
+                              properties: {}
+                              type: object
+                            - properties:
+                                length:
+                                  type: number
+                              required:
+                              - length
+                              type: object
+                            description: Session replay and heatmap recording configuration.
+                          resetAt:
+                            description: Date and time the website analytics were last reset.
+                            format: date-time
+                            type: string
+                          teamId:
+                            description: ID of the associated team.
+                            type: string
+                          updatedAt:
+                            description: Date and time the record was last updated.
+                            format: date-time
+                            type: string
+                          userId:
+                            description: ID of the associated user.
+                            type: string
+                        required:
+                        - id
+                        - userId
+                        - createdAt
+                        - updatedAt
+                        - deletedAt
+                        - createdBy
+                        - name
+                        - domain
+                        - resetAt
+                        - teamId
+                        - recorderEnabled
+                        - replayConfig
+                        type: object
+                      - properties:
+                          createUser:
+                            description: User who created the resource.
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              username:
+                                description: Username of the account.
+                                type: string
+                            required:
+                            - id
+                            - username
+                            type: object
+                          shareId:
+                            description: Identifier used to access a shared resource.
+                            type: string
+                          team:
+                            description: Team associated with the resource.
+                            properties:
+                              members:
+                                description: Members of the team.
+                                items:
+                                  properties:
+                                    role:
+                                      description: Permission role assigned to the user.
+                                      type: string
+                                    userId:
+                                      description: ID of the associated user.
+                                      type: string
+                                  required:
+                                  - userId
+                                  - role
+                                  type: object
+                                type: array
+                            required:
+                            - members
+                            type: object
+                          user:
+                            description: User associated with the resource.
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              username:
+                                description: Username of the account.
+                                type: string
+                            required:
+                            - id
+                            - username
+                            type: object
+                        required:
+                        - shareId
+                        type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List all websites
+      tags:
+      - Administration
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/admin/websites/contract.generated.ts
+components:
+  schemas:
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
+      properties:
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
+      required:
+      - error
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
+      scheme: bearer
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

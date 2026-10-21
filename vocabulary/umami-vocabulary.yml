@@ -1,0 +1,312 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/umami-authentication-api-openapi.yml
+- openapi/umami-events-api-openapi.yml
+- openapi/umami-openapi.yml
+- openapi/umami-sessions-api-openapi.yml
+- openapi/umami-teams-api-openapi.yml
+vocabulary:
+  name: Umami Domain Vocabulary
+  description: 'Terms declared by Umami''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-20'
+  terms:
+  - term: Authentication
+    definition: Login and token verification
+    tags:
+    - Resource Group
+    source: openapi/umami-authentication-api-openapi.yml
+  - term: Events
+    definition: Custom event tracking
+    tags:
+    - Resource Group
+    source: openapi/umami-events-api-openapi.yml
+  - term: Sessions
+    definition: Visitor session data
+    tags:
+    - Resource Group
+    source: openapi/umami-sessions-api-openapi.yml
+  - term: Teams
+    definition: Team and access management
+    tags:
+    - Resource Group
+    source: openapi/umami-teams-api-openapi.yml
+  - term: Users
+    definition: User account management
+    tags:
+    - Resource Group
+    source: openapi/umami-users-api-openapi.yml
+  - term: Website Statistics
+    definition: Analytics metrics, pageviews, and statistics
+    tags:
+    - Resource Group
+    source: openapi/umami-website-statistics-api-openapi.yml
+  - term: Websites
+    definition: Website management and configuration
+    tags:
+    - Resource Group
+    source: openapi/umami-websites-api-openapi.yml
+  - term: User
+    definition: Umami user account
+    tags:
+    - Object
+    source: openapi/umami-authentication-api-openapi.yml#/components/schemas/User
+  - term: LoginResponse
+    definition: Successful login response with token and user info
+    tags:
+    - Object
+    source: openapi/umami-authentication-api-openapi.yml#/components/schemas/LoginResponse
+  - term: LoginRequest
+    definition: Login credentials for authentication
+    tags:
+    - Object
+    source: openapi/umami-authentication-api-openapi.yml#/components/schemas/LoginRequest
+  - term: Metric
+    definition: Analytics metric data point
+    tags:
+    - Object
+    source: openapi/umami-events-api-openapi.yml#/components/schemas/Metric
+  - term: ActiveVisitors
+    definition: 'Object declared by the contract with fields: visitors.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/ActiveVisitors
+  - term: ApiError
+    definition: Standard Umami API error response.
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/ApiError
+  - term: CreateWebsiteRequest
+    definition: 'Object declared by the contract with fields: domain, id, name, shareId, teamId.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/CreateWebsiteRequest
+  - term: LoginTeam
+    definition: 'Object declared by the contract with fields: id, logoUrl, name.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/LoginTeam
+  - term: LoginUser
+    definition: 'Object declared by the contract with fields: createdAt, id, isAdmin, role, teams, username.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/LoginUser
+  - term: MetricRow
+    definition: 'Object declared by the contract with fields: t, x, y.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/MetricRow
+  - term: Ok
+    definition: Successful operation response.
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/Ok
+  - term: ReplayConfig
+    definition: 'Object declared by the contract with fields: blockSelector, heatmapEnabled, heatmapSampleRate, maskLevel, maxDuration, replayEnabled,
+      sampleRate.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/ReplayConfig
+  - term: ReplayConfigInput
+    definition: 'Object declared by the contract with fields: blockSelector, heatmapEnabled, heatmapSampleRate, maskLevel, maxDuration, replayEnabled,
+      sampleRate.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/ReplayConfigInput
+  - term: TimeSeriesPoint
+    definition: 'Object declared by the contract with fields: x, y.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/TimeSeriesPoint
+  - term: UpdateWebsiteRequest
+    definition: 'Object declared by the contract with fields: domain, name, replayConfig, shareId.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/UpdateWebsiteRequest
+  - term: Website
+    definition: 'Object declared by the contract with fields: createdAt, createdBy, deletedAt, domain, id, name, recorderEnabled, replayConfig,
+      resetAt, shareId, teamId, updatedAt. (2 more)'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/Website
+  - term: WebsiteEvent
+    definition: 'Object declared by the contract with fields: createdAt, distinctId, eventName, eventType, hostname, id, pageTitle, referrerDomain,
+      sessionId, urlPath, urlQuery, websiteId.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsiteEvent
+  - term: WebsiteEventPage
+    definition: 'Object declared by the contract with fields: count, data, isCapped, page, pageSize.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsiteEventPage
+  - term: WebsitePage
+    definition: 'Object declared by the contract with fields: count, data, orderBy, page, pageSize, search.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsitePage
+  - term: WebsitePageviews
+    definition: 'Object declared by the contract with fields: compare, endDate, pageviews, sessions, startDate.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsitePageviews
+  - term: WebsiteSession
+    definition: 'Object declared by the contract with fields: browser, city, country, createdAt, device, distinctId, events, firstAt, hostname,
+      id, language, lastAt. (6 more)'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsiteSession
+  - term: WebsiteSessionPage
+    definition: 'Object declared by the contract with fields: count, data, isCapped, page, pageSize.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsiteSessionPage
+  - term: WebsiteStats
+    definition: 'Object declared by the contract with fields: bounces, comparison, pageviews, totaltime, visitors, visits.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsiteStats
+  - term: WebsiteStatsValues
+    definition: 'Object declared by the contract with fields: bounces, pageviews, totaltime, visitors, visits.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsiteStatsValues
+  - term: WebsiteUser
+    definition: 'Object declared by the contract with fields: id, username.'
+    tags:
+    - Object
+    source: openapi/umami-openapi.yml#/components/schemas/WebsiteUser
+  - term: Session
+    definition: Visitor session record
+    tags:
+    - Object
+    source: openapi/umami-sessions-api-openapi.yml#/components/schemas/Session
+  - term: SessionStats
+    definition: Summarized session statistics
+    tags:
+    - Object
+    source: openapi/umami-sessions-api-openapi.yml#/components/schemas/SessionStats
+  - term: SessionList
+    definition: Paginated list of sessions
+    tags:
+    - Object
+    source: openapi/umami-sessions-api-openapi.yml#/components/schemas/SessionList
+  - term: WebsiteList
+    definition: Paginated list of websites
+    tags:
+    - Object
+    source: openapi/umami-teams-api-openapi.yml#/components/schemas/WebsiteList
+  - term: Team
+    definition: Umami team for collaborative website management
+    tags:
+    - Object
+    source: openapi/umami-teams-api-openapi.yml#/components/schemas/Team
+  - term: TeamMember
+    definition: Team membership record
+    tags:
+    - Object
+    source: openapi/umami-teams-api-openapi.yml#/components/schemas/TeamMember
+  - term: TeamRequest
+    definition: Request body for creating or updating a team
+    tags:
+    - Object
+    source: openapi/umami-teams-api-openapi.yml#/components/schemas/TeamRequest
+  - term: OkResponse
+    definition: Simple success confirmation
+    tags:
+    - Object
+    source: openapi/umami-teams-api-openapi.yml#/components/schemas/OkResponse
+  - term: TeamList
+    definition: Paginated list of teams
+    tags:
+    - Object
+    source: openapi/umami-teams-api-openapi.yml#/components/schemas/TeamList
+  - term: UserRequest
+    definition: Request body for creating or updating a user
+    tags:
+    - Object
+    source: openapi/umami-users-api-openapi.yml#/components/schemas/UserRequest
+  - term: PageviewData
+    definition: Time series pageview and session data
+    tags:
+    - Object
+    source: openapi/umami-website-statistics-api-openapi.yml#/components/schemas/PageviewData
+  - term: WebsiteRequest
+    definition: Request body for creating or updating a website
+    tags:
+    - Object
+    source: openapi/umami-websites-api-openapi.yml#/components/schemas/WebsiteRequest
+  - term: Two-factor authentication
+    definition: 'Resource group in the contract; its operation POST /api/2fa/disable: Disables two-factor authentication for the current user
+      after verifying their password and authenticator code.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Administration
+    definition: 'Resource group in the contract; its operation POST /api/admin/2fa/global: Enables or disables the installation-wide requirement
+      for users to set up two-factor authentication.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Collection
+    definition: 'Resource group in the contract; its operation POST /api/batch: Processes up to 500 tracking payloads and returns processed and
+      failed counts, individual error details, and a tracking cache token.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Boards
+    definition: 'Resource group in the contract; its operation GET /api/boards: Returns a paginated list of the current user''s boards, with search
+      and sorting options.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Dashboard
+    definition: 'Resource group in the contract; its operation GET /api/dashboard: Returns the current user''s personal dashboard board and its
+      configuration.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: System
+    definition: 'Resource group in the contract; its operation GET /api/heartbeat: Returns a simple success response to confirm that the application
+      can serve requests.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Links
+    definition: 'Resource group in the contract; its operation GET /api/links: Returns a paginated list of the current user''s tracked links,
+      with search and sorting options.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Account
+    definition: 'Resource group in the contract; its operation GET /api/me: Returns the current authentication context, including the authenticated
+      user or share credentials.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Pixels
+    definition: 'Resource group in the contract; its operation GET /api/pixels: Returns a paginated list of the current user''s tracking pixels,
+      with search and sorting options.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Realtime
+    definition: 'Resource group in the contract; its operation GET /api/realtime/{websiteId}: Returns recent website activity and visitor data
+      for the real-time view, applying the supplied filters.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Scripts
+    definition: 'Resource group in the contract; its operation GET /api/scripts/telemetry: Returns JavaScript that sends the application version
+      through a telemetry pixel, or an inactive script when telemetry is disabled.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml
+  - term: Shares
+    definition: 'Resource group in the contract; its operation POST /api/share: Creates a named share for a website, board, link, or pixel with
+      parameters and an optional custom slug.'
+    tags:
+    - Resource Group
+    source: openapi/umami-openapi.yml

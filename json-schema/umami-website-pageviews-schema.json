@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/main/json-schema/umami-website-pageviews-schema.json",
+  "title": "WebsitePageviews",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/umami-openapi.yml#/components/schemas/WebsitePageviews",
+  "additionalProperties": false,
+  "properties": {
+    "compare": {
+      "additionalProperties": false,
+      "description": "Present when `compare` was requested.",
+      "properties": {
+        "endDate": {
+          "description": "End of the date range as an ISO 8601 date or date-time.",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+          "type": "string"
+        },
+        "pageviews": {
+          "description": "Pageview counts for the selected period.",
+          "items": {
+            "$ref": "#/$defs/TimeSeriesPoint"
+          },
+          "type": "array"
+        },
+        "sessions": {
+          "items": {
+            "$ref": "#/$defs/TimeSeriesPoint"
+          },
+          "type": "array"
+        },
+        "startDate": {
+          "description": "Start of the date range as an ISO 8601 date or date-time.",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pageviews",
+        "sessions",
+        "startDate",
+        "endDate"
+      ],
+      "type": "object"
+    },
+    "endDate": {
+      "description": "End of the date range as an ISO 8601 date or date-time.",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "type": "string"
+    },
+    "pageviews": {
+      "description": "Pageview counts for the selected period.",
+      "items": {
+        "$ref": "#/$defs/TimeSeriesPoint"
+      },
+      "type": "array"
+    },
+    "sessions": {
+      "items": {
+        "$ref": "#/$defs/TimeSeriesPoint"
+      },
+      "type": "array"
+    },
+    "startDate": {
+      "description": "Start of the date range as an ISO 8601 date or date-time.",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "pageviews",
+    "sessions"
+  ],
+  "type": "object",
+  "$defs": {
+    "TimeSeriesPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "description": "Bucket start (ISO date/time).",
+          "type": "string"
+        },
+        "y": {
+          "description": "Value for the bucket.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "type": "object"
+    }
+  }
+}

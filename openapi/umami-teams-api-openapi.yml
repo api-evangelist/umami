@@ -1,517 +1,1910 @@
 openapi: 3.2.0
 info:
-  title: Umami Analytics Teams API
-  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics.
-  version: '1.0'
-  contact:
-    name: Umami Support
-    url: https://umami.is/docs/support
-  termsOfService: https://umami.is/terms
-  x-generated-from: documentation
+  title: Umami Teams API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Teams across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.umami.is
-  description: Umami Cloud API
-- url: http://localhost:3000
-  description: Self-hosted Umami instance
-security:
-- bearerAuth: []
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
 tags:
 - name: Teams
-  description: Team and access management
 paths:
   /api/teams:
     get:
-      operationId: listTeams
-      summary: Umami List Teams
-      description: Retrieve all teams accessible to the authenticated user.
-      tags:
-      - Teams
+      description: Returns a paginated list of teams the current user belongs to, with sorting options.
+      operationId: getTeams
       parameters:
-      - name: page
+      - description: Page number, starting at 1.
         in: query
+        name: page
+        required: false
         schema:
+          minimum: 1
           type: integer
-          default: 1
-        description: Page number
-        example: 1
-      - name: pageSize
+      - description: Number of results per page.
         in: query
+        name: pageSize
+        required: false
         schema:
+          minimum: 1
           type: integer
-        description: Results per page
-        example: 20
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
       responses:
         '200':
-          description: List of teams
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamList'
-              examples:
-                listTeams200Example:
-                  summary: Default listTeams 200 response
-                  x-microcks-default: true
-                  value:
-                    data:
-                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                      name: My Team
-                      accessCode: ABC123
-                      createdAt: '2026-01-15T10:00:00.000Z'
-                      updatedAt: '2026-01-15T10:00:00.000Z'
-                      deletedAt: null
-                    count: 1
-                    page: 1
-                    pageSize: 20
-        '401':
-          description: Unauthorized
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-    post:
-      operationId: createTeam
-      summary: Umami Create Team
-      description: Create a new team for collaborative website management.
-      tags:
-      - Teams
-      requestBody:
-        required: true
-        description: Team configuration
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TeamRequest'
-            examples:
-              createTeamRequestExample:
-                summary: Default createTeam request
-                x-microcks-default: true
-                value:
-                  name: Analytics Team
-      responses:
-        '201':
-          description: Team created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-              examples:
-                createTeam201Example:
-                  summary: Default createTeam 201 response
-                  x-microcks-default: true
-                  value:
-                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                    name: Analytics Team
-                    accessCode: XYZ789
-                    createdAt: '2026-01-15T10:00:00.000Z'
-                    updatedAt: '2026-01-15T10:00:00.000Z'
-                    deletedAt: null
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        accessCode:
+                          description: Code used to join the team.
+                          type: string
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        deletedAt:
+                          description: Date and time the record was deleted, if applicable.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        logoUrl:
+                          description: URL of the logo image.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        twoFactorRequired:
+                          description: Whether two-factor authentication is required.
+                          type: boolean
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                      required:
+                      - id
+                      - createdAt
+                      - updatedAt
+                      - logoUrl
+                      - twoFactorRequired
+                      - deletedAt
+                      - name
+                      - accessCode
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
         '400':
-          description: Invalid request body
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
         '401':
-          description: Unauthorized
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-  /api/teams/join:
-    post:
-      operationId: joinTeam
-      summary: Umami Join Team
-      description: Join an existing team using an access code.
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: List my teams
       tags:
       - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/contract.generated.ts
+    post:
+      description: Creates a team with an access code and an owner. Administrators can specify a different user as the owner.
+      operationId: createTeam
       requestBody:
-        required: true
-        description: Team access code
         content:
           application/json:
             schema:
-              type: object
+              properties:
+                name:
+                  description: Display name of the resource.
+                  maxLength: 50
+                  type: string
+                ownerId:
+                  format: uuid
+                  type: string
               required:
-              - accessCode
+              - name
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                maxItems: 2
+                minItems: 2
+                prefixItems:
+                - properties:
+                    accessCode:
+                      description: Code used to join the team.
+                      type: string
+                    createdAt:
+                      description: Date and time the record was created.
+                      format: date-time
+                      type: string
+                    deletedAt:
+                      description: Date and time the record was deleted, if applicable.
+                      format: date-time
+                      type: string
+                    id:
+                      description: Unique identifier of the resource.
+                      type: string
+                    logoUrl:
+                      description: URL of the logo image.
+                      type: string
+                    name:
+                      description: Display name of the resource.
+                      type: string
+                    twoFactorRequired:
+                      description: Whether two-factor authentication is required.
+                      type: boolean
+                    updatedAt:
+                      description: Date and time the record was last updated.
+                      format: date-time
+                      type: string
+                  required:
+                  - id
+                  - createdAt
+                  - updatedAt
+                  - logoUrl
+                  - twoFactorRequired
+                  - deletedAt
+                  - name
+                  - accessCode
+                  type: object
+                - properties:
+                    createdAt:
+                      description: Date and time the record was created.
+                      format: date-time
+                      type: string
+                    id:
+                      description: Unique identifier of the resource.
+                      type: string
+                    role:
+                      description: Permission role assigned to the user.
+                      type: string
+                    teamId:
+                      description: ID of the associated team.
+                      type: string
+                    updatedAt:
+                      description: Date and time the record was last updated.
+                      format: date-time
+                      type: string
+                    userId:
+                      description: ID of the associated user.
+                      type: string
+                  required:
+                  - id
+                  - userId
+                  - createdAt
+                  - updatedAt
+                  - role
+                  - teamId
+                  type: object
+                type: array
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Create a team
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/contract.generated.ts
+  /api/teams/{teamId}:
+    delete:
+      description: Deletes the specified team after checking the caller's permission to remove it.
+      operationId: deleteTeam
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: true
+                    description: Whether the operation succeeded.
+                required:
+                - ok
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Delete a team
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/contract.generated.ts
+    get:
+      description: Returns the specified team's details, including its members.
+      operationId: getTeam
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  accessCode:
+                    description: Code used to join the team.
+                    type: string
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  deletedAt:
+                    description: Date and time the record was deleted, if applicable.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  logoUrl:
+                    description: URL of the logo image.
+                    type: string
+                  name:
+                    description: Display name of the resource.
+                    type: string
+                  twoFactorRequired:
+                    description: Whether two-factor authentication is required.
+                    type: boolean
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                required:
+                - id
+                - createdAt
+                - updatedAt
+                - logoUrl
+                - twoFactorRequired
+                - deletedAt
+                - name
+                - accessCode
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: Get a team
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/contract.generated.ts
+    post:
+      description: Updates the specified team's name or access code.
+      operationId: updateTeam
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
               properties:
                 accessCode:
+                  description: Code used to join the team.
+                  maxLength: 50
                   type: string
-                  description: Team access code
-                  example: ABC123
-            examples:
-              joinTeamRequestExample:
-                summary: Default joinTeam request
-                x-microcks-default: true
-                value:
-                  accessCode: ABC123
+                name:
+                  description: Display name of the resource.
+                  maxLength: 50
+                  type: string
+              type: object
+        required: true
       responses:
         '200':
-          description: Successfully joined team
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamMember'
-              examples:
-                joinTeam200Example:
-                  summary: Default joinTeam 200 response
-                  x-microcks-default: true
-                  value:
-                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                    teamId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                    userId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                    role: team-member
-                    createdAt: '2026-01-15T10:00:00.000Z'
+                properties:
+                  accessCode:
+                    description: Code used to join the team.
+                    type: string
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  deletedAt:
+                    description: Date and time the record was deleted, if applicable.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  logoUrl:
+                    description: URL of the logo image.
+                    type: string
+                  name:
+                    description: Display name of the resource.
+                    type: string
+                  twoFactorRequired:
+                    description: Whether two-factor authentication is required.
+                    type: boolean
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                required:
+                - id
+                - createdAt
+                - updatedAt
+                - logoUrl
+                - twoFactorRequired
+                - deletedAt
+                - name
+                - accessCode
+                type: object
+          description: The operation completed successfully.
         '400':
-          description: Invalid access code
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
         '401':
-          description: Unauthorized
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-  /api/teams/{teamId}:
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Update a team
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/contract.generated.ts
+  /api/teams/{teamId}/boards:
     get:
-      operationId: getTeam
-      summary: Umami Get Team
-      description: Retrieve details for a specific team including members.
-      tags:
-      - Teams
+      description: Returns a paginated list of boards belonging to the specified team, with search and sorting options.
+      operationId: getTeamBoards
       parameters:
-      - name: teamId
+      - description: ID of the associated team.
         in: path
+        name: teamId
         required: true
         schema:
           type: string
-          format: uuid
-        description: Team identifier
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
       responses:
         '200':
-          description: Team details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
-              examples:
-                getTeam200Example:
-                  summary: Default getTeam 200 response
-                  x-microcks-default: true
-                  value:
-                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                    name: Analytics Team
-                    accessCode: XYZ789
-                    members: []
-                    createdAt: '2026-01-15T10:00:00.000Z'
-                    updatedAt: '2026-01-15T10:00:00.000Z'
-                    deletedAt: null
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        description:
+                          description: Description of the resource.
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        parameters:
+                          anyOf:
+                          - type: string
+                          - type: number
+                          - const: false
+                          - const: true
+                          - additionalProperties:
+                              anyOf:
+                              - type: string
+                              - type: number
+                              - const: false
+                              - const: true
+                              - {}
+                              - properties:
+                                  length:
+                                    type: number
+                                required:
+                                - length
+                                type: object
+                            properties: {}
+                            type: object
+                          - properties:
+                              length:
+                                type: number
+                            required:
+                            - length
+                            type: object
+                          description: Configuration parameters for the resource.
+                        teamId:
+                          description: ID of the associated team.
+                          type: string
+                        type:
+                          type: string
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                        userId:
+                          description: ID of the associated user.
+                          type: string
+                      required:
+                      - id
+                      - userId
+                      - createdAt
+                      - updatedAt
+                      - name
+                      - teamId
+                      - type
+                      - description
+                      - parameters
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
         '401':
-          description: Unauthorized
-        '404':
-          description: Team not found
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List a team's boards
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/boards/contract.generated.ts
+  /api/teams/{teamId}/links:
+    get:
+      description: Returns a paginated list of tracked links belonging to the specified team, with search and sorting options.
+      operationId: getTeamLinks
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        deletedAt:
+                          description: Date and time the record was deleted, if applicable.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        slug:
+                          description: URL slug used to access the resource.
+                          type: string
+                        teamId:
+                          description: ID of the associated team.
+                          type: string
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                        url:
+                          description: URL associated with the resource.
+                          type: string
+                        userId:
+                          description: ID of the associated user.
+                          type: string
+                      required:
+                      - id
+                      - userId
+                      - createdAt
+                      - updatedAt
+                      - deletedAt
+                      - name
+                      - teamId
+                      - url
+                      - slug
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List a team's links
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/links/contract.generated.ts
+  /api/teams/{teamId}/pixels:
+    get:
+      description: Returns a paginated list of tracking pixels belonging to the specified team, with search and sorting options.
+      operationId: getTeamPixels
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        deletedAt:
+                          description: Date and time the record was deleted, if applicable.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        slug:
+                          description: URL slug used to access the resource.
+                          type: string
+                        teamId:
+                          description: ID of the associated team.
+                          type: string
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                        userId:
+                          description: ID of the associated user.
+                          type: string
+                      required:
+                      - id
+                      - userId
+                      - createdAt
+                      - updatedAt
+                      - deletedAt
+                      - name
+                      - teamId
+                      - slug
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List a team's tracking pixels
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/pixels/contract.generated.ts
+  /api/teams/{teamId}/users:
+    get:
+      description: Returns a paginated list of members of the specified team, including usernames and membership details.
+      operationId: getTeamUsers
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      allOf:
+                      - properties:
+                          createdAt:
+                            description: Date and time the record was created.
+                            format: date-time
+                            type: string
+                          id:
+                            description: Unique identifier of the resource.
+                            type: string
+                          role:
+                            description: Permission role assigned to the user.
+                            type: string
+                          teamId:
+                            description: ID of the associated team.
+                            type: string
+                          updatedAt:
+                            description: Date and time the record was last updated.
+                            format: date-time
+                            type: string
+                          userId:
+                            description: ID of the associated user.
+                            type: string
+                        required:
+                        - id
+                        - userId
+                        - createdAt
+                        - updatedAt
+                        - role
+                        - teamId
+                        type: object
+                      - properties:
+                          user:
+                            description: User associated with the resource.
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              username:
+                                description: Username of the account.
+                                type: string
+                            required:
+                            - id
+                            - username
+                            type: object
+                        type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List team members
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/users/contract.generated.ts
+    post:
+      description: Adds an existing user to the specified team with the supplied team role.
+      operationId: createTeamUser
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                role:
+                  description: Permission role assigned to the user.
+                  enum:
+                  - team-member
+                  - team-view-only
+                  - team-manager
+                  type: string
+                userId:
+                  description: ID of the associated user.
+                  format: uuid
+                  type: string
+              required:
+              - userId
+              - role
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  role:
+                    description: Permission role assigned to the user.
+                    type: string
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - role
+                - teamId
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Add a team member
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/users/contract.generated.ts
+  /api/teams/{teamId}/users/{userId}:
     delete:
-      operationId: deleteTeam
-      summary: Umami Delete Team
-      description: Remove a team and all associated memberships.
-      tags:
-      - Teams
+      description: Removes a user's membership from the specified team, subject to team role and ownership restrictions.
+      operationId: deleteTeamUser
       parameters:
-      - name: teamId
+      - description: ID of the associated team.
         in: path
+        name: teamId
         required: true
         schema:
           type: string
-          format: uuid
-        description: Team identifier
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - description: ID of the associated user.
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
       responses:
         '200':
-          description: Team deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OkResponse'
-              examples:
-                deleteTeam200Example:
-                  summary: Default deleteTeam 200 response
-                  x-microcks-default: true
-                  value:
-                    ok: true
+                properties:
+                  ok:
+                    const: true
+                    description: Whether the operation succeeded.
+                required:
+                - ok
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
         '401':
-          description: Unauthorized
-        '404':
-          description: Team not found
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Remove a team member
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/users/[userId]/contract.generated.ts
+    get:
+      description: Returns the specified user's membership details for a team.
+      operationId: getTeamUser
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      - description: ID of the associated user.
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  role:
+                    description: Permission role assigned to the user.
+                    type: string
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - role
+                - teamId
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Get a team member
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/users/[userId]/contract.generated.ts
+    post:
+      description: Updates a user's role in the specified team, subject to the caller's role and permissions.
+      operationId: updateTeamUser
+      parameters:
+      - description: ID of the associated team.
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+      - description: ID of the associated user.
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                role:
+                  description: Permission role assigned to the user.
+                  enum:
+                  - team-member
+                  - team-view-only
+                  - team-manager
+                  type: string
+              required:
+              - role
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  role:
+                    description: Permission role assigned to the user.
+                    type: string
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - role
+                - teamId
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Change a team member's role
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/users/[userId]/contract.generated.ts
   /api/teams/{teamId}/websites:
     get:
-      operationId: listTeamWebsites
-      summary: Umami Team Websites
-      description: Retrieve all websites belonging to a specific team.
-      tags:
-      - Teams
+      description: Returns a paginated list of websites belonging to the specified team, with search and sorting options.
+      operationId: getTeamWebsites
       parameters:
-      - name: teamId
+      - description: ID of the associated team.
         in: path
+        name: teamId
         required: true
         schema:
           type: string
-          format: uuid
-        description: Team identifier
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: search
+      - description: Page number, starting at 1.
         in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
         schema:
           type: string
-        description: Filter by name or domain
-        example: mysite
-      - name: page
+      - description: Field to sort the results by.
         in: query
+        name: orderBy
+        required: false
         schema:
-          type: integer
-          default: 1
-        description: Page number
-        example: 1
-      - name: pageSize
+          type: string
+      - description: Whether to sort results in descending order.
         in: query
+        name: sortDescending
+        required: false
         schema:
-          type: integer
-        description: Results per page
-        example: 20
+          enum:
+          - 'true'
+          - 'false'
+          type: string
       responses:
         '200':
-          description: Team websites
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WebsiteList'
-              examples:
-                listTeamWebsites200Example:
-                  summary: Default listTeamWebsites 200 response
-                  x-microcks-default: true
-                  value:
-                    data:
-                    - id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                      name: Team Website
-                      domain: teamsite.com
-                      shareId: null
-                      createdAt: '2026-01-15T10:00:00.000Z'
-                    count: 1
-                    page: 1
-                    pageSize: 20
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      allOf:
+                      - properties:
+                          createdAt:
+                            description: Date and time the record was created.
+                            format: date-time
+                            type: string
+                          createdBy:
+                            description: ID of the user who created the resource.
+                            type: string
+                          deletedAt:
+                            description: Date and time the record was deleted, if applicable.
+                            format: date-time
+                            type: string
+                          domain:
+                            description: Domain name associated with the resource.
+                            type: string
+                          id:
+                            description: Unique identifier of the resource.
+                            type: string
+                          name:
+                            description: Display name of the resource.
+                            type: string
+                          recorderEnabled:
+                            description: Whether recording is enabled for the website.
+                            type: boolean
+                          replayConfig:
+                            anyOf:
+                            - type: string
+                            - type: number
+                            - const: false
+                            - const: true
+                            - additionalProperties:
+                                anyOf:
+                                - type: string
+                                - type: number
+                                - const: false
+                                - const: true
+                                - {}
+                                - properties:
+                                    length:
+                                      type: number
+                                  required:
+                                  - length
+                                  type: object
+                              properties: {}
+                              type: object
+                            - properties:
+                                length:
+                                  type: number
+                              required:
+                              - length
+                              type: object
+                            description: Session replay and heatmap recording configuration.
+                          resetAt:
+                            description: Date and time the website analytics were last reset.
+                            format: date-time
+                            type: string
+                          teamId:
+                            description: ID of the associated team.
+                            type: string
+                          updatedAt:
+                            description: Date and time the record was last updated.
+                            format: date-time
+                            type: string
+                          userId:
+                            description: ID of the associated user.
+                            type: string
+                        required:
+                        - id
+                        - userId
+                        - createdAt
+                        - updatedAt
+                        - deletedAt
+                        - createdBy
+                        - name
+                        - domain
+                        - resetAt
+                        - teamId
+                        - recorderEnabled
+                        - replayConfig
+                        type: object
+                      - properties:
+                          createUser:
+                            description: User who created the resource.
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              username:
+                                description: Username of the account.
+                                type: string
+                            required:
+                            - id
+                            - username
+                            type: object
+                          shareId:
+                            description: Identifier used to access a shared resource.
+                            type: string
+                          team:
+                            description: Team associated with the resource.
+                            properties:
+                              members:
+                                description: Members of the team.
+                                items:
+                                  properties:
+                                    role:
+                                      description: Permission role assigned to the user.
+                                      type: string
+                                    userId:
+                                      description: ID of the associated user.
+                                      type: string
+                                  required:
+                                  - userId
+                                  - role
+                                  type: object
+                                type: array
+                            required:
+                            - members
+                            type: object
+                          user:
+                            description: User associated with the resource.
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              username:
+                                description: Username of the account.
+                                type: string
+                            required:
+                            - id
+                            - username
+                            type: object
+                        required:
+                        - shareId
+                        type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
         '401':
-          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List a team's websites
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/[teamId]/websites/contract.generated.ts
+  /api/teams/join:
+    post:
+      description: Adds the current user to a team as a member using the team's access code.
+      operationId: joinTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                accessCode:
+                  description: Code used to join the team.
+                  maxLength: 50
+                  type: string
+              required:
+              - accessCode
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  role:
+                    description: Permission role assigned to the user.
+                    type: string
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - role
+                - teamId
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
         '404':
-          description: Team not found
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      summary: Join a team
+      tags:
+      - Teams
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/teams/join/contract.generated.ts
 components:
   schemas:
-    WebsiteList:
-      type: object
-      description: Paginated list of websites
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
       properties:
-        data:
-          type: array
-          description: Website records
-          items:
-            $ref: '#/components/schemas/Website'
-        count:
-          type: integer
-          description: Total number of records
-          example: 5
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
-    Team:
-      type: object
-      description: Umami team for collaborative website management
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Team identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        name:
-          type: string
-          description: Team name
-          example: Analytics Team
-        accessCode:
-          type: string
-          description: Access code for joining the team
-          example: XYZ789
-        logoUrl:
-          type:
-          - string
-          - 'null'
-          description: Team logo URL
-          example: null
-        members:
-          type: array
-          description: Team members
-          items:
-            $ref: '#/components/schemas/TeamMember'
-        createdAt:
-          type: string
-          format: date-time
-          description: Creation timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last update timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        deletedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Deletion timestamp
-          example: null
-    TeamMember:
-      type: object
-      description: Team membership record
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Membership identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        teamId:
-          type: string
-          format: uuid
-          description: Team identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        userId:
-          type: string
-          format: uuid
-          description: User identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        role:
-          type: string
-          description: Member role within the team
-          example: team-member
-          enum:
-          - team-owner
-          - team-manager
-          - team-member
-          - team-view-only
-        createdAt:
-          type: string
-          format: date-time
-          description: Membership creation timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last update timestamp
-          example: '2026-01-15T10:00:00.000Z'
-    TeamRequest:
-      type: object
-      description: Request body for creating or updating a team
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
       required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Team name
-          example: Analytics Team
-        accessCode:
-          type: string
-          description: Custom access code
-          example: MYCODE123
-    OkResponse:
+      - error
       type: object
-      description: Simple success confirmation
-      properties:
-        ok:
-          type: boolean
-          description: Indicates successful operation
-          example: true
-    TeamList:
-      type: object
-      description: Paginated list of teams
-      properties:
-        data:
-          type: array
-          description: Team records
-          items:
-            $ref: '#/components/schemas/Team'
-        count:
-          type: integer
-          description: Total number of records
-          example: 3
-        page:
-          type: integer
-          description: Current page number
-          example: 1
-        pageSize:
-          type: integer
-          description: Records per page
-          example: 20
-    Website:
-      type: object
-      description: Umami website tracking configuration
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Website identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        name:
-          type: string
-          description: Display name for the website in Umami
-          example: My Website
-        domain:
-          type: string
-          description: Website domain
-          example: example.com
-        shareId:
-          type:
-          - string
-          - 'null'
-          description: Public share identifier for shared analytics views
-          example: null
-        resetAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Timestamp of last data reset
-          example: null
-        userId:
-          type: string
-          format: uuid
-          description: Owner user identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        teamId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Team identifier if team-owned
-          example: null
-        createdAt:
-          type: string
-          format: date-time
-          description: Creation timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last update timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        deletedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Deletion timestamp
-          example: null
   securitySchemes:
     bearerAuth:
-      type: http
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
       scheme: bearer
-      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

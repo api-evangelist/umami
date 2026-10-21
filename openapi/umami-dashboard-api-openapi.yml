@@ -1,0 +1,287 @@
+openapi: 3.2.0
+info:
+  title: Umami Dashboard API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Dashboard across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
+tags:
+- name: Dashboard
+paths:
+  /api/dashboard:
+    get:
+      description: Returns the current user's personal dashboard board and its configuration.
+      operationId: getDashboard
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  description:
+                    description: Description of the dashboard.
+                    type: string
+                  id:
+                    description: Dashboard board ID, equal to the owning user ID.
+                    type: string
+                  name:
+                    description: Display name of the dashboard.
+                    type: string
+                  parameters:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - const: false
+                    - const: true
+                    - additionalProperties:
+                        anyOf:
+                        - type: string
+                        - type: number
+                        - const: false
+                        - const: true
+                        - {}
+                        - properties:
+                            length:
+                              type: number
+                          required:
+                          - length
+                          type: object
+                      properties: {}
+                      type: object
+                    - properties:
+                        length:
+                          type: number
+                      required:
+                      - length
+                      type: object
+                    description: Dashboard configuration, including components, layout, and saved reports.
+                  teamId:
+                    description: ID of the associated team, if any.
+                    type: string
+                  type:
+                    description: Board type used for the dashboard.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  userId:
+                    description: ID of the user who owns the dashboard.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - name
+                - teamId
+                - type
+                - description
+                - parameters
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Get my dashboard
+      tags:
+      - Dashboard
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/dashboard/contract.generated.ts
+    post:
+      description: Creates or updates the current user's personal dashboard with the supplied name, description, and configuration.
+      operationId: postDashboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                description:
+                  description: Description of the dashboard.
+                  maxLength: 500
+                  type: string
+                name:
+                  description: Display name of the dashboard.
+                  maxLength: 200
+                  type: string
+                parameters:
+                  description: Dashboard configuration, including components, layout, and saved reports.
+                  properties: {}
+                  type: object
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  description:
+                    description: Description of the dashboard.
+                    type: string
+                  id:
+                    description: Dashboard board ID, equal to the owning user ID.
+                    type: string
+                  name:
+                    description: Display name of the dashboard.
+                    type: string
+                  parameters:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - const: false
+                    - const: true
+                    - additionalProperties:
+                        anyOf:
+                        - type: string
+                        - type: number
+                        - const: false
+                        - const: true
+                        - {}
+                        - properties:
+                            length:
+                              type: number
+                          required:
+                          - length
+                          type: object
+                      properties: {}
+                      type: object
+                    - properties:
+                        length:
+                          type: number
+                      required:
+                      - length
+                      type: object
+                    description: Dashboard configuration, including components, layout, and saved reports.
+                  teamId:
+                    description: ID of the associated team, if any.
+                    type: string
+                  type:
+                    description: Board type used for the dashboard.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  userId:
+                    description: ID of the user who owns the dashboard.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - name
+                - teamId
+                - type
+                - description
+                - parameters
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Save my dashboard
+      tags:
+      - Dashboard
+      x-umami-audience: internal
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/dashboard/contract.generated.ts
+components:
+  schemas:
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
+      properties:
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
+      required:
+      - error
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
+      scheme: bearer
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

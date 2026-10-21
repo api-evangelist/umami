@@ -1,0 +1,865 @@
+openapi: 3.2.0
+info:
+  title: Umami Account API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Account across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
+tags:
+- name: Account
+paths:
+  /api/me:
+    get:
+      description: Returns the current authentication context, including the authenticated user or share credentials.
+      operationId: getMe
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  apiKey:
+                    description: API key authentication details.
+                    properties:
+                      id:
+                        description: Unique identifier of the resource.
+                        type: string
+                      name:
+                        description: Display name of the resource.
+                        type: string
+                    required:
+                    - id
+                    - name
+                    type: object
+                  authType:
+                    anyOf:
+                    - const: session
+                    - const: share
+                    - const: api-key
+                  shareToken:
+                    properties:
+                      boardId:
+                        description: ID of the board.
+                        type: string
+                      linkId:
+                        description: ID of the tracked link.
+                        type: string
+                      linkIds:
+                        items:
+                          type: string
+                        type: array
+                      parameters:
+                        additionalProperties:
+                          anyOf:
+                          - const: false
+                          - const: true
+                          - const: light
+                          - const: dark
+                        description: Configuration parameters for the resource.
+                        properties:
+                          allowFilter:
+                            type: boolean
+                          theme:
+                            anyOf:
+                            - const: light
+                            - const: dark
+                        type: object
+                      pixelId:
+                        description: ID of the tracking pixel.
+                        type: string
+                      pixelIds:
+                        items:
+                          type: string
+                        type: array
+                      shareType:
+                        description: Type of resource made available by the share.
+                        type: number
+                      websiteId:
+                        description: ID of the website.
+                        type: string
+                      websiteIds:
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  user:
+                    description: User associated with the resource.
+                    properties:
+                      id:
+                        description: Unique identifier of the resource.
+                        type: string
+                      isAdmin:
+                        description: Whether the user has administrator privileges.
+                        type: boolean
+                      role:
+                        description: Permission role assigned to the user.
+                        type: string
+                      username:
+                        description: Username of the account.
+                        type: string
+                    required:
+                    - id
+                    - username
+                    - role
+                    - isAdmin
+                    type: object
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Get my authentication details
+      tags:
+      - Account
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/me/contract.generated.ts
+  /api/me/api-keys:
+    get:
+      description: Returns metadata for the current user's API keys. Available on self-hosted installations.
+      operationId: getMyApiKeys
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    createdAt:
+                      description: Date and time the record was created.
+                      format: date-time
+                      type: string
+                    id:
+                      description: Unique identifier of the resource.
+                      type: string
+                    keyPrefix:
+                      description: Visible prefix used to identify an API key.
+                      type: string
+                    lastUsedAt:
+                      description: Date and time the credential was last used.
+                      format: date-time
+                      type: string
+                    name:
+                      description: Display name of the resource.
+                      type: string
+                  required:
+                  - id
+                  - createdAt
+                  - name
+                  - keyPrefix
+                  - lastUsedAt
+                  type: object
+                type: array
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      summary: List my API keys
+      tags:
+      - Account
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/me/api-keys/contract.generated.ts
+    post:
+      description: Creates a named API key for the current user and returns its secret value. Available on self-hosted installations.
+      operationId: createMyApiKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: Display name of the resource.
+                  maximum: 255
+                  minimum: 1
+              required:
+              - name
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  key:
+                    type: string
+                  keyPrefix:
+                    description: Visible prefix used to identify an API key.
+                    type: string
+                  name:
+                    description: Display name of the resource.
+                    type: string
+                required:
+                - key
+                - id
+                - createdAt
+                - name
+                - keyPrefix
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      summary: Create an API key
+      tags:
+      - Account
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/me/api-keys/contract.generated.ts
+  /api/me/api-keys/{keyId}:
+    delete:
+      description: Deletes an API key belonging to the current user, revoking its access. Available on self-hosted installations.
+      operationId: deleteMyApiKey
+      parameters:
+      - description: ID of the API key.
+        in: path
+        name: keyId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: true
+                    description: Whether the operation succeeded.
+                required:
+                - ok
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '404':
+          content:
+            application/json:
+              example:
+                error:
+                  code: not-found
+                  message: Not found.
+                  status: 404
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Not found.
+      security:
+      - bearerAuth: []
+      summary: Delete an API key
+      tags:
+      - Account
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/me/api-keys/[keyId]/contract.generated.ts
+  /api/me/password:
+    post:
+      description: Verifies the current password and replaces it with the supplied new password.
+      operationId: updateMyPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                currentPassword:
+                  description: Current account password.
+                  type: string
+                newPassword:
+                  description: New password to set for the account.
+                  minLength: 8
+                  type: string
+              required:
+              - currentPassword
+              - newPassword
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  role:
+                    description: Permission role assigned to the user.
+                    type: string
+                  username:
+                    description: Username of the account.
+                    type: string
+                required:
+                - id
+                - createdAt
+                - username
+                - role
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Change my password
+      tags:
+      - Account
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/me/password/contract.generated.ts
+  /api/me/teams:
+    get:
+      description: Returns a paginated list of teams the current user belongs to, with sorting options.
+      operationId: getMyTeams
+      parameters:
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        accessCode:
+                          description: Code used to join the team.
+                          type: string
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        deletedAt:
+                          description: Date and time the record was deleted, if applicable.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        logoUrl:
+                          description: URL of the logo image.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        twoFactorRequired:
+                          description: Whether two-factor authentication is required.
+                          type: boolean
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                      required:
+                      - id
+                      - createdAt
+                      - updatedAt
+                      - logoUrl
+                      - twoFactorRequired
+                      - deletedAt
+                      - name
+                      - accessCode
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: List my team memberships
+      tags:
+      - Account
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/me/teams/contract.generated.ts
+  /api/me/websites:
+    get:
+      description: Returns a paginated list of the current user's websites, optionally including websites accessible through team membership.
+      operationId: getMyWebsites
+      parameters:
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      - description: Set a non-empty value to include websites accessible through team membership.
+        in: query
+        name: includeTeams
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      allOf:
+                      - properties:
+                          createdAt:
+                            description: Date and time the record was created.
+                            format: date-time
+                            type: string
+                          createdBy:
+                            description: ID of the user who created the resource.
+                            type: string
+                          deletedAt:
+                            description: Date and time the record was deleted, if applicable.
+                            format: date-time
+                            type: string
+                          domain:
+                            description: Domain name associated with the resource.
+                            type: string
+                          id:
+                            description: Unique identifier of the resource.
+                            type: string
+                          name:
+                            description: Display name of the resource.
+                            type: string
+                          recorderEnabled:
+                            description: Whether recording is enabled for the website.
+                            type: boolean
+                          replayConfig:
+                            anyOf:
+                            - type: string
+                            - type: number
+                            - const: false
+                            - const: true
+                            - additionalProperties:
+                                anyOf:
+                                - type: string
+                                - type: number
+                                - const: false
+                                - const: true
+                                - {}
+                                - properties:
+                                    length:
+                                      type: number
+                                  required:
+                                  - length
+                                  type: object
+                              properties: {}
+                              type: object
+                            - properties:
+                                length:
+                                  type: number
+                              required:
+                              - length
+                              type: object
+                            description: Session replay and heatmap recording configuration.
+                          resetAt:
+                            description: Date and time the website analytics were last reset.
+                            format: date-time
+                            type: string
+                          teamId:
+                            description: ID of the associated team.
+                            type: string
+                          updatedAt:
+                            description: Date and time the record was last updated.
+                            format: date-time
+                            type: string
+                          userId:
+                            description: ID of the associated user.
+                            type: string
+                        required:
+                        - id
+                        - userId
+                        - createdAt
+                        - updatedAt
+                        - deletedAt
+                        - createdBy
+                        - name
+                        - domain
+                        - resetAt
+                        - teamId
+                        - recorderEnabled
+                        - replayConfig
+                        type: object
+                      - properties:
+                          createUser:
+                            description: User who created the resource.
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              username:
+                                description: Username of the account.
+                                type: string
+                            required:
+                            - id
+                            - username
+                            type: object
+                          shareId:
+                            description: Identifier used to access a shared resource.
+                            type: string
+                          team:
+                            description: Team associated with the resource.
+                            properties:
+                              members:
+                                description: Members of the team.
+                                items:
+                                  properties:
+                                    role:
+                                      description: Permission role assigned to the user.
+                                      type: string
+                                    userId:
+                                      description: ID of the associated user.
+                                      type: string
+                                  required:
+                                  - userId
+                                  - role
+                                  type: object
+                                type: array
+                            required:
+                            - members
+                            type: object
+                          user:
+                            description: User associated with the resource.
+                            properties:
+                              id:
+                                description: Unique identifier of the resource.
+                                type: string
+                              username:
+                                description: Username of the account.
+                                type: string
+                            required:
+                            - id
+                            - username
+                            type: object
+                        required:
+                        - shareId
+                        type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: List my websites
+      tags:
+      - Account
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/me/websites/contract.generated.ts
+components:
+  schemas:
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
+      properties:
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
+      required:
+      - error
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
+      scheme: bearer
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

@@ -1,10 +1,8 @@
 aid: umami
 name: Umami
-description: >-
-  Umami is an open source, privacy-first web analytics platform that provides website traffic insights without cookies
-  or personal data collection, serving as a simple and fast alternative to Google Analytics. The Umami API provides full
-  programmatic access to analytics data, website management, session tracking, event data, and team collaboration
-  features for both self-hosted and cloud instances.
+description: Umami is an open source, privacy-first web analytics platform that provides website traffic insights without cookies or personal
+  data collection, serving as a simple and fast alternative to Google Analytics. The Umami API provides full programmatic access to analytics
+  data, website management, session tracking, event data, and team collaboration features for both self-hosted and cloud instances.
 type: Index
 deliveryModel:
   model: open-core
@@ -36,13 +34,9 @@ accessModel:
   api_entry_price: '20.00'
   api_entry_currency: USD
   label: Freemium product, paid API · Self-serve signup · 14-day trial
-  note: >-
-    The PRODUCT has a free forever tier (Hobby, 100K events/month) and the
-    self-hosted application is free under MIT. The API does NOT: API access
-    begins at the Pro plan, $20/month. Verified on https://umami.is/pricing
-    2026-08-13 — the feature-comparison table marks "API access" as absent on
-    Hobby and present from Pro. Anyone evaluating Umami as an API cannot do so
-    without paying.
+  note: 'The PRODUCT has a free forever tier (Hobby, 100K events/month) and the self-hosted application is free under MIT. The API does NOT: API
+    access begins at the Pro plan, $20/month. Verified on https://umami.is/pricing 2026-08-13 — the feature-comparison table marks "API access"
+    as absent on Hobby and present from Pro. Anyone evaluating Umami as an API cannot do so without paying.'
   confidence: high
   source:
   - https://umami.is/pricing
@@ -52,37 +46,227 @@ accessModel:
   method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/umami.png
 tags:
-  - Cookieless Tracking
-  - Open Source
-  - Privacy
-  - Web Analytics
-  - Website Analytics
-  - Product Analytics
-  - Event Tracking
-  - Self-Hosted
-  - GDPR
-  - Session Replay
-  - Heatmaps
-  - Marketing Attribution
+- Cookieless Tracking
+- Open Source
+- Privacy
+- Web Analytics
+- Website Analytics
+- Product Analytics
+- Event Tracking
+- Self-Hosted
+- GDPR
+- Session Replay
+- Heatmaps
+- Marketing Attribution
 tags_raw:
-  - Cookieless Tracking
-  - Open Source
-  - Privacy
-  - Web Analytics
-  - Website Analytics
-  - Product Analytics
-  - Event Tracking
-  - Self-Hosted
-  - GDPR
-  - Session Replay
-  - Heatmaps
-  - Marketing Attribution
-  - Open-Source
+- Cookieless Tracking
+- Open Source
+- Privacy
+- Web Analytics
+- Website Analytics
+- Product Analytics
+- Event Tracking
+- Self-Hosted
+- GDPR
+- Session Replay
+- Heatmaps
+- Marketing Attribution
+- Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml
 created: '2026-03-26'
 modified: '2026-08-13'
 specificationVersion: '0.23'
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+common:
+- type: Overlay
+  url: overlays/umami-events-api-overlay.yaml
+- type: Overlay
+  url: overlays/umami-sessions-api-overlay.yaml
+- type: Overlay
+  url: overlays/umami-website-statistics-api-overlay.yaml
+- type: ToolCrosswalk
+  url: mcp/umami-tool-crosswalk.yml
+- type: MCPServer
+  url: mcp/umami-mcp.yml
+- type: Spectral
+  url: rules/umami-spectral-rules.yml
+- type: Spectral
+  url: rules/umami-rules.yml
+- type: Spectral
+  url: rules/umami-jsonschema-spectral-rules.yml
+- type: JSONLD
+  url: json-ld/umami-context.jsonld
+- type: Vocabulary
+  url: vocabulary/umami-vocabulary.yml
+- type: Deprecation
+  url: lifecycle/umami-lifecycle.yml
+- type: Hosts
+  url: hosts/umami-hosts.yml
+- type: IntegrationEdges
+  url: integrations/umami-integration-edges.yml
+- type: Vendors
+  url: vendors/umami-vendors.yml
+- type: DeveloperPortal
+  url: https://umami.is/product/developers
+- type: TrustCenter
+  url: security/umami-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/umami-vulnerability-disclosure.yml
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/umami/overview
+- type: AgenticAccess
+  url: agentic-access/umami-agentic-access.yml
+- type: DomainSecurity
+  url: security/umami-domain-security.yml
+- type: Authentication
+  url: authentication/umami-authentication.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/umami-software
+- type: Website
+  url: https://umami.is
+- type: Documentation
+  url: https://docs.umami.is
+- type: Blog
+  url: https://umami.is/blog
+- type: Pricing
+  url: https://umami.is/pricing
+- type: GitHub
+  url: https://github.com/umami-software/umami
+- type: Login
+  url: https://cloud.umami.is
+- type: Signup
+  url: https://cloud.umami.is
+- type: SelfHosting
+  url: https://umami.is/docs/install
+- type: Support
+  url: https://umami.is/contact
+- type: SpectralRules
+  url: rules/umami-spectral-rules.yml
+- type: Packages
+  url: packages/umami-packages.yml
+- type: SDKs
+  url: packages/umami-packages.yml
+- type: CLI
+  url: cli/umami-cli.yml
+- type: Components
+  url: components/umami-components.yml
+- type: Conventions
+  url: conventions/umami-conventions.yml
+- type: DataModel
+  url: data-model/umami-data-model.yml
+- type: ErrorCatalog
+  url: errors/umami-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/umami-lifecycle.yml
+- type: StatusPage
+  url: https://umami.statuspage.io
+- type: ChangeLog
+  url: changelog/umami-changelog.yml
+- type: Conformance
+  url: conformance/umami-conformance.yml
+- type: Compliance
+  url: security/umami-trust-center.yml
+- type: Security
+  url: security/umami-vulnerability-disclosure.yml
+- type: Plans
+  url: plans/umami-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/umami-rate-limits.yml
+- type: FinOps
+  url: finops/umami-finops.yml
+- type: LLMsTxt
+  url: llms/umami-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: APIReference
+  url: https://docs.umami.is/docs/api
+- type: GettingStarted
+  url: https://docs.umami.is/docs/collect-data
+- type: GitHubOrganization
+  url: https://github.com/umami-software
+- type: ChangeLogPage
+  url: https://docs.umami.is/docs/cloud/changelog
+- type: TermsOfService
+  url: https://umami.is/terms
+- type: PrivacyPolicy
+  url: https://umami.is/privacy
+- type: DataProcessingAgreement
+  url: https://umami.is/dpa
+- type: SecurityPage
+  url: https://umami.is/security
+- type: Contact
+  url: https://umami.is/contact
+- type: Guides
+  url: https://docs.umami.is/docs/guides
+- type: Vocabulary
+  url: vocabulary/umami-vocabulary.yaml
+- type: Features
+  data:
+  - name: Privacy-First Analytics
+    description: Tracks website traffic without cookies or personal data, fully GDPR compliant without consent banners.
+  - name: Real-Time Data
+    description: Live visitor counts and real-time pageview tracking for immediate traffic insights.
+  - name: Custom Events
+    description: Track custom user interactions and conversions with a simple JavaScript API.
+  - name: Team Collaboration
+    description: Share analytics access across teams with role-based access control.
+  - name: Self-Hosting Support
+    description: Deploy on your own infrastructure for complete data ownership and control.
+  - name: Open Source
+    description: MIT-licensed open source software with active community development and full transparency.
+  - name: Multi-Site Support
+    description: Manage and analyze multiple websites from a single Umami instance.
+  - name: API Access
+    description: Full REST API for programmatic access to all analytics data and management functions.
+- type: UseCases
+  data:
+  - name: Website Performance Monitoring
+    description: Track pageviews, unique visitors, bounce rates, and session duration for website optimization.
+  - name: Privacy-Compliant Analytics
+    description: Replace Google Analytics with a cookieless solution that requires no consent banners under GDPR.
+  - name: Marketing Analytics
+    description: Analyze traffic sources, referrers, and UTM campaign data to measure marketing effectiveness.
+  - name: Custom Event Tracking
+    description: Track button clicks, form submissions, and custom conversions using the Umami event API.
+  - name: Developer Dashboards
+    description: Build custom analytics dashboards using the REST API to display site metrics in your own apps.
+  - name: Multi-Tenant Analytics
+    description: Provide analytics access to multiple clients or teams with shared infrastructure and access controls.
+- type: Integrations
+  data:
+  - name: Next.js
+    description: First-class integration with Next.js via the @umami/nextjs package for page view tracking.
+  - name: WordPress
+    description: Track WordPress sites by adding the Umami tracking script via plugin or manual installation.
+  - name: Vercel
+    description: Deploy Umami on Vercel with a one-click deployment for managed self-hosting.
+  - name: Docker
+    description: Run Umami in any environment using the official Docker container image.
+  - name: Cloudflare
+    description: Deploy tracking scripts behind Cloudflare for performance and abuse prevention.
+- type: Solutions
+  data:
+  - name: Umami Cloud
+    description: Hosted Umami instance at cloud.umami.is with managed infrastructure and API key authentication.
+  - name: Umami Self-Hosted
+    description: Run your own Umami instance on any infrastructure with full data ownership and JWT authentication.
 apis:
+- aid: umami:umami-mcp-server
+  name: Umami MCP Server
+  description: >-
+    Remote Model Context Protocol server for Umami Cloud at https://cloud.umami.is/mcp (Bearer api_ Cloud
+    API key, Pro plan and above), also available on self-hosted v3.4.0+ at /mcp with MCP_ENABLED=1, and
+    as the @umami/mcp stdio package. Exposes 23 read-only analytics tools.
+  humanURL: https://docs.umami.is/docs/mcp
+  baseURL: https://cloud.umami.is/mcp
+  tags:
+  - MCP
+  - Web Analytics
+  properties:
+  - type: Documentation
+    url: https://docs.umami.is/docs/cloud/mcp
 - aid: umami:umami-authentication-api
   name: Umami Authentication API
   description: Login and token verification
@@ -99,208 +283,6 @@ apis:
     url: postman/umami-authentication-api.postman_collection.json
   - type: OpenCollection
     url: collections/umami-authentication-api.opencollection.json
-  - type: Documentation
-    url: https://docs.umami.is
-  - type: GettingStarted
-    url: https://docs.umami.is/docs/collect-data
-  - type: APIDocumentation
-    url: https://docs.umami.is/docs/api
-  - type: GitHubOrg
-    url: https://github.com/umami-software/umami
-  - type: JSONSchema
-    url: json-schema/umami-website-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-stats-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-pageview-data-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-metric-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-active-visitors-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-stats-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-user-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-member-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-login-response-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-ok-response-schema.json
-  - type: JSONStructure
-    url: json-structure/umami-website-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-website-list-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-website-stats-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-session-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-session-list-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-metric-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-user-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-team-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-team-member-structure.json
-  - type: JSONLDContext
-    url: json-ld/umami-context.jsonld
-  - type: Examples
-    url: examples/umami-website-example.json
-  - type: Examples
-    url: examples/umami-website-stats-example.json
-  - type: Examples
-    url: examples/umami-pageview-data-example.json
-  - type: Examples
-    url: examples/umami-metric-example.json
-  - type: Examples
-    url: examples/umami-session-example.json
-  - type: Examples
-    url: examples/umami-session-stats-example.json
-  - type: Examples
-    url: examples/umami-user-example.json
-  - type: Examples
-    url: examples/umami-team-example.json
-  - type: Examples
-    url: examples/umami-active-visitors-example.json
-- aid: umami:umami-events-api
-  name: Umami Events API
-  description: Custom event tracking
-  humanURL: https://umami.is
-  baseURL: https://api.umami.is/v1
-  tags:
-  - Event
-  tags_raw:
-  - Events
-  properties:
-  - type: OpenAPI
-    url: openapi/umami-events-api-openapi.yml
-  - type: Overlay
-    url: overlays/umami-events-api-overlay.yaml
-  - type: Postman
-    url: postman/umami-events-api.postman_collection.json
-  - type: OpenCollection
-    url: collections/umami-events-api.opencollection.json
-  - type: Documentation
-    url: https://docs.umami.is
-  - type: GettingStarted
-    url: https://docs.umami.is/docs/collect-data
-  - type: APIDocumentation
-    url: https://docs.umami.is/docs/api
-  - type: GitHubOrg
-    url: https://github.com/umami-software/umami
-  - type: JSONSchema
-    url: json-schema/umami-website-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-stats-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-pageview-data-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-metric-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-active-visitors-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-stats-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-user-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-member-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-login-response-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-ok-response-schema.json
-  - type: JSONStructure
-    url: json-structure/umami-website-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-website-list-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-website-stats-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-session-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-session-list-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-metric-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-user-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-team-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-team-member-structure.json
-  - type: JSONLDContext
-    url: json-ld/umami-context.jsonld
-  - type: Examples
-    url: examples/umami-website-example.json
-  - type: Examples
-    url: examples/umami-website-stats-example.json
-  - type: Examples
-    url: examples/umami-pageview-data-example.json
-  - type: Examples
-    url: examples/umami-metric-example.json
-  - type: Examples
-    url: examples/umami-session-example.json
-  - type: Examples
-    url: examples/umami-session-stats-example.json
-  - type: Examples
-    url: examples/umami-user-example.json
-  - type: Examples
-    url: examples/umami-team-example.json
-  - type: Examples
-    url: examples/umami-active-visitors-example.json
-- aid: umami:umami-sessions-api
-  name: Umami Sessions API
-  description: Visitor session data
-  humanURL: https://umami.is
-  baseURL: https://api.umami.is/v1
-  tags:
-  - Sessions
-  properties:
-  - type: OpenAPI
-    url: openapi/umami-sessions-api-openapi.yml
-  - type: Overlay
-    url: overlays/umami-sessions-api-overlay.yaml
-  - type: Postman
-    url: postman/umami-sessions-api.postman_collection.json
-  - type: OpenCollection
-    url: collections/umami-sessions-api.opencollection.json
   - type: Documentation
     url: https://docs.umami.is
   - type: GettingStarted
@@ -589,106 +571,6 @@ apis:
     url: examples/umami-team-example.json
   - type: Examples
     url: examples/umami-active-visitors-example.json
-- aid: umami:umami-website-statistics-api
-  name: Umami Website Statistics API
-  description: Analytics metrics, pageviews, and statistics
-  humanURL: https://umami.is
-  baseURL: https://api.umami.is/v1
-  tags:
-  - Website Statistics
-  properties:
-  - type: OpenAPI
-    url: openapi/umami-website-statistics-api-openapi.yml
-  - type: Overlay
-    url: overlays/umami-website-statistics-api-overlay.yaml
-  - type: Postman
-    url: postman/umami-website-statistics-api.postman_collection.json
-  - type: OpenCollection
-    url: collections/umami-website-statistics-api.opencollection.json
-  - type: Documentation
-    url: https://docs.umami.is
-  - type: GettingStarted
-    url: https://docs.umami.is/docs/collect-data
-  - type: APIDocumentation
-    url: https://docs.umami.is/docs/api
-  - type: GitHubOrg
-    url: https://github.com/umami-software/umami
-  - type: JSONSchema
-    url: json-schema/umami-website-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-website-stats-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-pageview-data-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-metric-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-active-visitors-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-session-stats-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-user-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-list-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-member-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-team-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-login-response-schema.json
-  - type: JSONSchema
-    url: json-schema/umami-ok-response-schema.json
-  - type: JSONStructure
-    url: json-structure/umami-website-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-website-list-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-website-stats-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-session-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-session-list-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-metric-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-user-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-team-structure.json
-  - type: JSONStructure
-    url: json-structure/umami-team-member-structure.json
-  - type: JSONLDContext
-    url: json-ld/umami-context.jsonld
-  - type: Examples
-    url: examples/umami-website-example.json
-  - type: Examples
-    url: examples/umami-website-stats-example.json
-  - type: Examples
-    url: examples/umami-pageview-data-example.json
-  - type: Examples
-    url: examples/umami-metric-example.json
-  - type: Examples
-    url: examples/umami-session-example.json
-  - type: Examples
-    url: examples/umami-session-stats-example.json
-  - type: Examples
-    url: examples/umami-user-example.json
-  - type: Examples
-    url: examples/umami-team-example.json
-  - type: Examples
-    url: examples/umami-active-visitors-example.json
 - aid: umami:umami-websites-api
   name: Umami Websites API
   description: Website management and configuration
@@ -789,154 +671,1401 @@ apis:
     url: examples/umami-team-example.json
   - type: Examples
     url: examples/umami-active-visitors-example.json
-common:
-  - type: TrustCenter
-    url: security/umami-trust-center.yml
-  - type: VulnerabilityDisclosure
-    url: security/umami-vulnerability-disclosure.yml
-  - type: PostmanWorkspace
-    url: https://www.postman.com/kinlaneapi/umami/overview
-  - type: AgenticAccess
-    url: agentic-access/umami-agentic-access.yml
-  - type: DomainSecurity
-    url: security/umami-domain-security.yml
-  - type: Authentication
-    url: authentication/umami-authentication.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/umami-software
-  - type: Website
-    url: https://umami.is
-  - type: Documentation
-    url: https://docs.umami.is
-  - type: Blog
-    url: https://umami.is/blog
-  - type: Pricing
-    url: https://umami.is/pricing
-  - type: GitHub
-    url: https://github.com/umami-software/umami
-  - type: Login
-    url: https://cloud.umami.is
-  - type: Signup
-    url: https://cloud.umami.is
-  - type: SelfHosting
-    url: https://umami.is/docs/install
-  - type: Support
-    url: https://umami.is/contact
-  - type: SpectralRules
-    url: rules/umami-spectral-rules.yml
-  - type: Packages
-    url: packages/umami-packages.yml
-  - type: SDKs
-    url: packages/umami-packages.yml
-  - type: CLI
-    url: cli/umami-cli.yml
-  - type: Components
-    url: components/umami-components.yml
-  - type: Conventions
-    url: conventions/umami-conventions.yml
-  - type: DataModel
-    url: data-model/umami-data-model.yml
-  - type: ErrorCatalog
-    url: errors/umami-problem-types.yml
-  - type: Lifecycle
-    url: lifecycle/umami-lifecycle.yml
-  - type: StatusPage
-    url: https://umami.statuspage.io
-  - type: ChangeLog
-    url: changelog/umami-changelog.yml
-  - type: Conformance
-    url: conformance/umami-conformance.yml
-  - type: Compliance
-    url: security/umami-trust-center.yml
-  - type: Security
-    url: security/umami-vulnerability-disclosure.yml
-  - type: Plans
-    url: plans/umami-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/umami-rate-limits.yml
-  - type: FinOps
-    url: finops/umami-finops.yml
-  - type: LLMsTxt
-    url: llms/umami-llms.txt
-  - type: AgentSkill
-    url: skills/_index.yml
+- aid: umami:umami-account-api
+  name: Umami Account API
+  description: The Account API from Umami — 6 operation(s) for account.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-account-api-openapi.yml
   - type: APIReference
     url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
   - type: GettingStarted
     url: https://docs.umami.is/docs/collect-data
-  - type: GitHubOrganization
-    url: https://github.com/umami-software
-  - type: ChangeLogPage
-    url: https://docs.umami.is/docs/cloud/changelog
-  - type: TermsOfService
-    url: https://umami.is/terms
-  - type: PrivacyPolicy
-    url: https://umami.is/privacy
-  - type: DataProcessingAgreement
-    url: https://umami.is/dpa
-  - type: SecurityPage
-    url: https://umami.is/security
-  - type: Contact
-    url: https://umami.is/contact
-  - type: Guides
-    url: https://docs.umami.is/docs/guides
-  - type: Vocabulary
-    url: vocabulary/umami-vocabulary.yaml
-  - type: Features
-    data:
-      - name: Privacy-First Analytics
-        description: Tracks website traffic without cookies or personal data, fully GDPR compliant without consent banners.
-      - name: Real-Time Data
-        description: Live visitor counts and real-time pageview tracking for immediate traffic insights.
-      - name: Custom Events
-        description: Track custom user interactions and conversions with a simple JavaScript API.
-      - name: Team Collaboration
-        description: Share analytics access across teams with role-based access control.
-      - name: Self-Hosting Support
-        description: Deploy on your own infrastructure for complete data ownership and control.
-      - name: Open Source
-        description: MIT-licensed open source software with active community development and full transparency.
-      - name: Multi-Site Support
-        description: Manage and analyze multiple websites from a single Umami instance.
-      - name: API Access
-        description: Full REST API for programmatic access to all analytics data and management functions.
-  - type: UseCases
-    data:
-      - name: Website Performance Monitoring
-        description: Track pageviews, unique visitors, bounce rates, and session duration for website optimization.
-      - name: Privacy-Compliant Analytics
-        description: Replace Google Analytics with a cookieless solution that requires no consent banners under GDPR.
-      - name: Marketing Analytics
-        description: Analyze traffic sources, referrers, and UTM campaign data to measure marketing effectiveness.
-      - name: Custom Event Tracking
-        description: Track button clicks, form submissions, and custom conversions using the Umami event API.
-      - name: Developer Dashboards
-        description: Build custom analytics dashboards using the REST API to display site metrics in your own apps.
-      - name: Multi-Tenant Analytics
-        description: Provide analytics access to multiple clients or teams with shared infrastructure and access controls.
-  - type: Integrations
-    data:
-      - name: Next.js
-        description: First-class integration with Next.js via the @umami/nextjs package for page view tracking.
-      - name: WordPress
-        description: Track WordPress sites by adding the Umami tracking script via plugin or manual installation.
-      - name: Vercel
-        description: Deploy Umami on Vercel with a one-click deployment for managed self-hosting.
-      - name: Docker
-        description: Run Umami in any environment using the official Docker container image.
-      - name: Cloudflare
-        description: Deploy tracking scripts behind Cloudflare for performance and abuse prevention.
-  - type: Solutions
-    data:
-      - name: Umami Cloud
-        description: Hosted Umami instance at cloud.umami.is with managed infrastructure and API key authentication.
-      - name: Umami Self-Hosted
-        description: Run your own Umami instance on any infrastructure with full data ownership and JWT authentication.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-administration-api
+  name: Umami Administration API
+  description: The Administration API from Umami — 6 operation(s) for administration.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Administration
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-administration-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-boards-api
+  name: Umami Boards API
+  description: The Boards API from Umami — 4 operation(s) for boards.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Boards
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-boards-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-collection-api
+  name: Umami Collection API
+  description: The Collection API from Umami — 3 operation(s) for collection.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Collection
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-collection-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-dashboard-api
+  name: Umami Dashboard API
+  description: The Dashboard API from Umami — 1 operation(s) for dashboard.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-dashboard-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-links-api
+  name: Umami Links API
+  description: The Links API from Umami — 4 operation(s) for links.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Links
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-links-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-pixels-api
+  name: Umami Pixels API
+  description: The Pixels API from Umami — 4 operation(s) for pixels.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Pixels
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-pixels-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-realtime-api
+  name: Umami Realtime API
+  description: The Realtime API from Umami — 1 operation(s) for realtime.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Realtime
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-realtime-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-scripts-api
+  name: Umami Scripts API
+  description: The Scripts API from Umami — 1 operation(s) for scripts.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Scripts
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-scripts-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-shares-api
+  name: Umami Shares API
+  description: The Shares API from Umami — 3 operation(s) for shares.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Shares
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-shares-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-system-api
+  name: Umami System API
+  description: The System API from Umami — 1 operation(s) for system.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-system-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
+- aid: umami:umami-two-factor-authentication-api
+  name: Umami Two-factor authentication API
+  description: >-
+    The Two-factor authentication API from Umami — 6 operation(s) for two-factor authentication.
+  humanURL: https://docs.umami.is/docs/api
+  baseURL: https://api.umami.is/v1
+  tags:
+  - Two-factor authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/umami-two-factor-authentication-api-openapi.yml
+  - type: APIReference
+    url: https://docs.umami.is/docs/api
+  - type: JSONSchema
+    url: json-schema/umami-website-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-pageviews-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-create-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-page-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-session-page-schema.json
+  - type: Postman
+    url: postman/umami-events-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-events-api.opencollection.json
+  - type: Documentation
+    url: https://docs.umami.is
+  - type: GettingStarted
+    url: https://docs.umami.is/docs/collect-data
+  - type: APIDocumentation
+    url: https://docs.umami.is/docs/api
+  - type: GitHubOrg
+    url: https://github.com/umami-software/umami
+  - type: JSONSchema
+    url: json-schema/umami-website-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-website-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-pageview-data-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-active-visitors-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-session-stats-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-list-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-member-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-login-response-schema.json
+  - type: JSONSchema
+    url: json-schema/umami-ok-response-schema.json
+  - type: JSONStructure
+    url: json-structure/umami-website-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-website-stats-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-session-list-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-metric-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-user-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-structure.json
+  - type: JSONStructure
+    url: json-structure/umami-team-member-structure.json
+  - type: JSONLDContext
+    url: json-ld/umami-context.jsonld
+  - type: Examples
+    url: examples/umami-website-example.json
+  - type: Examples
+    url: examples/umami-website-stats-example.json
+  - type: Examples
+    url: examples/umami-pageview-data-example.json
+  - type: Examples
+    url: examples/umami-metric-example.json
+  - type: Examples
+    url: examples/umami-session-example.json
+  - type: Examples
+    url: examples/umami-session-stats-example.json
+  - type: Examples
+    url: examples/umami-user-example.json
+  - type: Examples
+    url: examples/umami-team-example.json
+  - type: Examples
+    url: examples/umami-active-visitors-example.json
+  - type: Postman
+    url: postman/umami-sessions-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-sessions-api.opencollection.json
+  - type: Postman
+    url: postman/umami-website-statistics-api.postman_collection.json
+  - type: OpenCollection
+    url: collections/umami-website-statistics-api.opencollection.json
 x-enrichment:
-  date: '2026-08-13'
+  date: '2026-10-20'
   status: enriched
-  artifacts_added: 26
-  pass: local-v1
+  artifacts_added: 4
+  pass: local-v5

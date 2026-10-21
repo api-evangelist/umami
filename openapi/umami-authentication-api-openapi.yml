@@ -1,163 +1,429 @@
 openapi: 3.2.0
 info:
-  title: Umami Analytics Authentication API
-  description: The Umami Analytics API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics.
-  version: '1.0'
-  contact:
-    name: Umami Support
-    url: https://umami.is/docs/support
-  termsOfService: https://umami.is/terms
-  x-generated-from: documentation
+  title: Umami Authentication API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Authentication across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.umami.is
-  description: Umami Cloud API
-- url: http://localhost:3000
-  description: Self-hosted Umami instance
-security:
-- bearerAuth: []
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
 tags:
 - name: Authentication
-  description: Login and token verification
 paths:
   /api/auth/login:
     post:
+      description: Authenticates a user with a username and password. Users with two-factor authentication receive a short-lived partial token to complete sign-in.
       operationId: login
-      summary: Umami Login
-      description: Obtain a JWT bearer token for API authentication on self-hosted instances.
-      tags:
-      - Authentication
       requestBody:
-        required: true
-        description: Login credentials
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/LoginRequest'
-            examples:
-              loginRequestExample:
-                summary: Default login request
-                x-microcks-default: true
-                value:
-                  username: admin
-                  password: umami
+        required: true
       responses:
         '200':
-          description: Login successful
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
-              examples:
-                login200Example:
-                  summary: Default login 200 response
-                  x-microcks-default: true
-                  value:
-                    token: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
-                    user:
-                      id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                      username: admin
-                      role: admin
-                      createdAt: '2026-01-15T10:00:00.000Z'
-                      isAdmin: true
+          description: Authenticated successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
         '401':
-          description: Invalid credentials
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-  /api/auth/verify:
-    post:
-      operationId: verifyToken
-      summary: Umami Verify Token
-      description: Validate that a JWT bearer token is still active and retrieve current user info.
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '503':
+          content:
+            application/json:
+              example:
+                error:
+                  code: service-unavailable
+                  message: Service unavailable.
+                  status: 503
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Service unavailable.
+      security: []
+      summary: Log in
       tags:
       - Authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/auth/login/contract.ts
+  /api/auth/logout:
+    post:
+      description: Ends the current authentication session by removing its stored token when Redis-backed sessions are enabled.
+      operationId: logout
       responses:
         '200':
-          description: Token is valid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                verifyToken200Example:
-                  summary: Default verifyToken 200 response
-                  x-microcks-default: true
-                  value:
-                    id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                    username: admin
-                    role: admin
-                    createdAt: '2026-01-15T10:00:00.000Z'
-                    isAdmin: true
-                    teams: []
+                properties:
+                  ok:
+                    const: true
+                    description: Whether the operation succeeded.
+                required:
+                - ok
+                type: object
+          description: The operation completed successfully.
         '401':
-          description: Unauthorized
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Log out
+      tags:
+      - Authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/auth/logout/contract.generated.ts
+  /api/auth/sso:
+    post:
+      description: Returns the authenticated user and a new token valid for 24 hours. Requires Redis-backed authentication.
+      operationId: sso
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  token:
+                    type: string
+                  user:
+                    description: User associated with the resource.
+                required:
+                - user
+                - token
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '500':
+          content:
+            application/json:
+              example:
+                error:
+                  code: server-error
+                  message: Server error.
+                  status: 500
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Server error.
+      security:
+      - bearerAuth: []
+      summary: Create a single sign-on token
+      tags:
+      - Authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/auth/sso/contract.generated.ts
+  /api/auth/subscription:
+    get:
+      description: Returns subscription and feature availability for the current user or a specified team the user can access.
+      operationId: getSubscription
+      parameters:
+      - description: ID of the associated team.
+        in: query
+        name: teamId
+        required: false
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - properties:
+                    error:
+                      description: Error details returned when the operation fails.
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          description: Human-readable explanation of the result.
+                          type: string
+                        status:
+                          type: number
+                      required:
+                      - message
+                      - code
+                      - status
+                      type: object
+                  required:
+                  - error
+                  type: object
+                - properties:
+                    hasSubscription:
+                      type: boolean
+                    isBusiness:
+                      type: boolean
+                    isNoBilling:
+                      type: boolean
+                    isPro:
+                      type: boolean
+                    unlimitedWebsites:
+                      type: boolean
+                  required:
+                  - isPro
+                  - isBusiness
+                  - isNoBilling
+                  - hasSubscription
+                  - unlimitedWebsites
+                  type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: Get subscription details
+      tags:
+      - Authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/auth/subscription/contract.generated.ts
+  /api/auth/verify:
+    post:
+      description: Validates the current authentication credentials and returns the user and their team memberships.
+      operationId: verify
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  teams:
+                    description: Teams associated with the user.
+                required:
+                - teams
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Verify the current sign-in
+      tags:
+      - Authentication
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/auth/verify/contract.generated.ts
 components:
   schemas:
-    User:
+    LoginResponse:
+      anyOf:
+      - additionalProperties: false
+        properties:
+          partialToken:
+            description: Temporary login token used to complete two-factor authentication.
+            type: string
+          requiresTwoFactor:
+            const: true
+            description: Whether login requires a second authentication factor.
+            type: boolean
+        required:
+        - requiresTwoFactor
+        - partialToken
+        type: object
+      - additionalProperties: false
+        properties:
+          token:
+            type: string
+          user:
+            $ref: '#/components/schemas/LoginUser'
+            description: User associated with the resource.
+        required:
+        - token
+        - user
+        type: object
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
+      properties:
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
+      required:
+      - error
       type: object
-      description: Umami user account
+    LoginUser:
+      additionalProperties: false
+      properties:
+        createdAt:
+          anyOf:
+          - format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z))$
+            type: string
+          - type: 'null'
+          description: Date and time the record was created.
+        id:
+          description: Unique identifier of the resource.
+          format: uuid
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+          type: string
+        isAdmin:
+          description: Whether the user has administrator privileges.
+          type: boolean
+        role:
+          description: Permission role assigned to the user.
+          type: string
+        teams:
+          description: Teams associated with the user.
+          items:
+            $ref: '#/components/schemas/LoginTeam'
+          type: array
+        username:
+          description: Username of the account.
+          type: string
+      required:
+      - id
+      - username
+      - role
+      - createdAt
+      - isAdmin
+      - teams
+      type: object
+    LoginTeam:
+      additionalProperties: false
       properties:
         id:
-          type: string
+          description: Unique identifier of the resource.
           format: uuid
-          description: User identifier
-          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        username:
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
           type: string
-          description: Username
-          example: admin
-        role:
+        logoUrl:
+          description: URL of the logo image.
+          type:
+          - string
+          - 'null'
+        name:
+          description: Display name of the resource.
           type: string
-          description: User role
-          example: admin
-          enum:
-          - admin
-          - user
-          - view-only
-        createdAt:
-          type: string
-          format: date-time
-          description: Account creation timestamp
-          example: '2026-01-15T10:00:00.000Z'
-        isAdmin:
-          type: boolean
-          description: Whether the user has admin privileges
-          example: true
-        teams:
-          type: array
-          description: Teams the user belongs to
-          items:
-            type: object
-    LoginResponse:
+      required:
+      - id
+      - name
+      - logoUrl
       type: object
-      description: Successful login response with token and user info
-      properties:
-        token:
-          type: string
-          description: JWT bearer token for API authentication
-          example: eyTMjU2IiwiY...4Q0JDLUhWxnIjoiUE_A
-        user:
-          $ref: '#/components/schemas/User'
     LoginRequest:
-      type: object
-      description: Login credentials for authentication
+      properties:
+        password:
+          description: Umami password.
+          type: string
+        username:
+          description: Umami username.
+          type: string
       required:
       - username
       - password
-      properties:
-        username:
-          type: string
-          description: Umami username
-          example: admin
-        password:
-          type: string
-          description: Umami password
-          example: umami
+      type: object
   securitySchemes:
     bearerAuth:
-      type: http
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
       scheme: bearer
-      description: JWT token obtained from POST /api/auth/login or Umami Cloud API key
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

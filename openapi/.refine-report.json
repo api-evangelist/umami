@@ -1,26 +1,59 @@
 {
   "provider": "umami",
   "sources": [
-    "_ae-authored/umami-openapi.yml"
+    "_original/umami-openapi.json",
+    "umami-openapi.yml"
   ],
   "outputs": [
+    "umami-account-api-openapi.yml",
+    "umami-administration-api-openapi.yml",
     "umami-authentication-api-openapi.yml",
-    "umami-events-api-openapi.yml",
-    "umami-sessions-api-openapi.yml",
+    "umami-boards-api-openapi.yml",
+    "umami-collection-api-openapi.yml",
+    "umami-dashboard-api-openapi.yml",
+    "umami-links-api-openapi.yml",
+    "umami-pixels-api-openapi.yml",
+    "umami-realtime-api-openapi.yml",
+    "umami-scripts-api-openapi.yml",
+    "umami-shares-api-openapi.yml",
+    "umami-system-api-openapi.yml",
     "umami-teams-api-openapi.yml",
+    "umami-two-factor-authentication-api-openapi.yml",
     "umami-users-api-openapi.yml",
-    "umami-website-statistics-api-openapi.yml",
     "umami-websites-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 3 superseded output(s) from the previous generation",
+    "archived openapi/umami-openapi.yml"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "umami-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "umami-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "umami-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Account' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Administration' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Authentication' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Boards' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Collection' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Dashboard' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Links' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Pixels' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Realtime' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Scripts' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Shares' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'System' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Teams' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Two-factor authentication' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Users' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "tag 'Websites' spans 2 source specs (umami-openapi.json, umami-openapi.yml): per-path servers applied",
+    "superseded outputs removed: umami-events-api-openapi.yml, umami-sessions-api-openapi.yml, umami-website-statistics-api-openapi.yml",
+    "apis.yml register: written (+12 apis, 17 total)"
   ],
   "skipped": [
+    "_ae-authored/umami-openapi.yml: archived document superseded by a larger archived document",
     "umami-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "umami-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "umami-sessions-api-openapi.yml: previously refined output, superseded by openapi/_original/",

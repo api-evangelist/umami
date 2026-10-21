@@ -1,0 +1,492 @@
+openapi: 3.2.0
+info:
+  title: Umami Collection API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Collection across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
+tags:
+- name: Collection
+paths:
+  /api/batch:
+    post:
+      description: Processes up to 500 tracking payloads and returns processed and failed counts, individual error details, and a tracking cache token.
+      operationId: batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                additionalProperties: true
+                type: object
+              maxItems: 500
+              type: array
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  cache: {}
+                  details:
+                    items: {}
+                    type: array
+                  errors:
+                    type: number
+                  processed:
+                    type: number
+                  size: {}
+                required:
+                - size
+                - processed
+                - errors
+                - details
+                - cache
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '500':
+          content:
+            application/json:
+              example:
+                error:
+                  code: server-error
+                  message: Server error.
+                  status: 500
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Server error.
+      security: []
+      summary: Send a batch of tracking requests
+      tags:
+      - Collection
+      x-umami-audience: collect
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/batch/contract.generated.ts
+  /api/record:
+    post:
+      description: Stores session replay events or heatmap clicks and scrolls for a website, using a valid tracking cache token to identify the session and visit.
+      operationId: record
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - properties:
+                  payload:
+                    properties:
+                      events:
+                        items: {}
+                        maxItems: 200
+                        type: array
+                      timestamp:
+                        type: integer
+                      website:
+                        format: uuid
+                        type: string
+                    required:
+                    - website
+                    - events
+                    type: object
+                  type:
+                    const: record
+                required:
+                - type
+                - payload
+                type: object
+              - properties:
+                  payload:
+                    properties:
+                      events:
+                        items:
+                          anyOf:
+                          - properties:
+                              pageH:
+                                description: Page height in pixels.
+                                type: number
+                              pageW:
+                                description: Page width in pixels.
+                                type: number
+                              pageX:
+                                description: Horizontal position on the page in pixels.
+                                type: number
+                              pageY:
+                                description: Vertical position on the page in pixels.
+                                type: number
+                              timestamp:
+                                type: integer
+                              type:
+                                const: click
+                              url:
+                                description: URL associated with the resource.
+                                type: string
+                              viewportH:
+                                description: Viewport height in pixels.
+                                type: number
+                              viewportW:
+                                description: Viewport width in pixels.
+                                type: number
+                              x:
+                                type: number
+                              y:
+                                type: number
+                            required:
+                            - type
+                            - url
+                            type: object
+                          - properties:
+                              pageH:
+                                description: Page height in pixels.
+                                type: number
+                              pageW:
+                                description: Page width in pixels.
+                                type: number
+                              scrollPct:
+                                type: number
+                              timestamp:
+                                type: integer
+                              type:
+                                const: scroll
+                              url:
+                                description: URL associated with the resource.
+                                type: string
+                              viewportH:
+                                description: Viewport height in pixels.
+                                type: number
+                              viewportW:
+                                description: Viewport width in pixels.
+                                type: number
+                            required:
+                            - type
+                            - url
+                            type: object
+                        maxItems: 200
+                        type: array
+                      timestamp:
+                        type: integer
+                      website:
+                        format: uuid
+                        type: string
+                    required:
+                    - website
+                    - events
+                    type: object
+                  type:
+                    const: heatmap
+                required:
+                - type
+                - payload
+                type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - properties:
+                    ok:
+                      description: Whether the operation succeeded.
+                      type: boolean
+                  required:
+                  - ok
+                  type: object
+                - properties:
+                    ok:
+                      description: Whether the operation succeeded.
+                      type: boolean
+                    reason:
+                      type: string
+                  required:
+                  - ok
+                  - reason
+                  type: object
+                - properties:
+                    beep:
+                      type: string
+                  required:
+                  - beep
+                  type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '403':
+          content:
+            application/json:
+              example:
+                error:
+                  code: forbidden
+                  message: Forbidden.
+                  status: 403
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Forbidden.
+        '413':
+          content:
+            application/json:
+              example:
+                error:
+                  code: payload-too-large
+                  message: Payload too large.
+                  status: 413
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Payload too large.
+        '500':
+          content:
+            application/json:
+              example:
+                error:
+                  code: server-error
+                  message: Server error.
+                  status: 500
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Server error.
+      security: []
+      summary: Send session recordings or heatmap data
+      tags:
+      - Collection
+      x-umami-audience: collect
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/record/contract.generated.ts
+  /api/send:
+    post:
+      description: Collects a pageview, custom event, visitor identification, or performance payload and returns session information and a tracking cache token when accepted.
+      operationId: send
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                payload:
+                  properties:
+                    browser:
+                      description: Browser used by the visitor.
+                      type: string
+                    cls:
+                      maximum: 100
+                      minimum: 0
+                      type: number
+                    data:
+                      additionalProperties: true
+                      description: Custom event data.
+                      type: object
+                    device:
+                      description: Device category used by the visitor.
+                      type: string
+                    fcp:
+                      maximum: 60000
+                      minimum: 0
+                      type: number
+                    hostname:
+                      description: Hostname on which the activity occurred.
+                      type: string
+                    id:
+                      description: Distinct ID of the visitor.
+                      type: string
+                    inp:
+                      maximum: 60000
+                      minimum: 0
+                      type: number
+                    ip:
+                      type: string
+                    language:
+                      description: Preferred language reported by the visitor browser.
+                      type: string
+                    lcp:
+                      maximum: 60000
+                      minimum: 0
+                      type: number
+                    link:
+                      format: uuid
+                      type: string
+                    name:
+                      description: Name of the custom event.
+                      type: string
+                    os:
+                      description: Operating system used by the visitor.
+                      type: string
+                    pixel:
+                      format: uuid
+                      type: string
+                    referrer:
+                      description: URL of the referring page.
+                      type: string
+                    screen:
+                      description: Screen resolution of the visitor device.
+                      type: string
+                    tag:
+                      description: Tag attached to the tracked activity.
+                      type: string
+                    timestamp:
+                      type: integer
+                    title:
+                      description: Title of the page.
+                      type: string
+                    ttfb:
+                      maximum: 60000
+                      minimum: 0
+                      type: number
+                    url:
+                      description: URL of the page.
+                      type: string
+                    userAgent:
+                      type: string
+                    website:
+                      format: uuid
+                      type: string
+                  type: object
+                type:
+                  enum:
+                  - event
+                  - identify
+                  - performance
+                  type: string
+              required:
+              - type
+              - payload
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - properties:
+                    beep:
+                      type: string
+                  required:
+                  - beep
+                  type: object
+                - properties:
+                    cache: {}
+                    sessionId:
+                      description: ID of the visitor session.
+                    visitId:
+                      description: ID of the visit.
+                  required:
+                  - cache
+                  - sessionId
+                  - visitId
+                  type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '403':
+          content:
+            application/json:
+              example:
+                error:
+                  code: forbidden
+                  message: Forbidden.
+                  status: 403
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Forbidden.
+        '500':
+          content:
+            application/json:
+              example:
+                error:
+                  code: server-error
+                  message: Server error.
+                  status: 500
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Server error.
+      security: []
+      summary: Send tracking data
+      tags:
+      - Collection
+      x-umami-audience: collect
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/send/contract.generated.ts
+components:
+  schemas:
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
+      properties:
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
+      required:
+      - error
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
+      scheme: bearer
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

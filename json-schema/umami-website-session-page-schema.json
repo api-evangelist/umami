@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/main/json-schema/umami-website-session-page-schema.json",
+  "title": "WebsiteSessionPage",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/umami-openapi.yml#/components/schemas/WebsiteSessionPage",
+  "additionalProperties": false,
+  "properties": {
+    "count": {
+      "description": "Number of matching records.",
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "data": {
+      "description": "Data returned by the operation.",
+      "items": {
+        "$ref": "#/$defs/WebsiteSession"
+      },
+      "type": "array"
+    },
+    "isCapped": {
+      "description": "Whether the results were truncated by the maximum result limit.",
+      "type": "boolean"
+    },
+    "page": {
+      "description": "Page number, starting at 1.",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "pageSize": {
+      "description": "Number of results per page.",
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "data",
+    "count",
+    "page",
+    "pageSize"
+  ],
+  "type": "object",
+  "$defs": {
+    "WebsiteSession": {
+      "additionalProperties": {},
+      "properties": {
+        "browser": {
+          "description": "Browser used by the visitor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "city": {
+          "description": "City of the visitor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "country": {
+          "description": "Country code of the visitor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "description": "Date and time the record was created.",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+          "type": "string"
+        },
+        "device": {
+          "description": "Device category used by the visitor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "distinctId": {
+          "description": "Custom identifier assigned to the visitor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "events": {
+          "type": "number"
+        },
+        "firstAt": {
+          "description": "Date and time of the first recorded activity.",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+          "type": "string"
+        },
+        "hostname": {
+          "description": "Hostname on which the activity occurred.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "description": "Unique identifier of the resource.",
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        "language": {
+          "description": "Preferred language reported by the visitor browser.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastAt": {
+          "description": "Date and time of the most recent recorded activity.",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+          "type": "string"
+        },
+        "os": {
+          "description": "Operating system used by the visitor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "region": {
+          "description": "Region or subdivision of the visitor.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "screen": {
+          "description": "Screen resolution of the visitor device.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "views": {
+          "description": "Pageview counts for the selected period.",
+          "type": "number"
+        },
+        "visits": {
+          "description": "Visit counts for the selected period.",
+          "type": "number"
+        },
+        "websiteId": {
+          "description": "ID of the website.",
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "websiteId",
+        "hostname",
+        "browser",
+        "os",
+        "device",
+        "screen",
+        "language",
+        "country",
+        "region",
+        "city",
+        "firstAt",
+        "lastAt",
+        "visits",
+        "views",
+        "createdAt"
+      ],
+      "type": "object"
+    }
+  }
+}

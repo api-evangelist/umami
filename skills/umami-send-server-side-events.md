@@ -6,8 +6,8 @@ generated: '2026-08-13'
 method: generated
 source: https://docs.umami.is/docs/api/sending-stats + https://docs.umami.is/docs/guides/send-server-side-events + https://docs.umami.is/docs/api/node-client
 operations:
-  - sendEvent
-  - sendBatch
+  - send
+  - batch
 ---
 
 # Send events to Umami server-side
@@ -28,8 +28,8 @@ Host:
   `https://cloud.umami.is/api/send`.
 - **Self-hosted** — `http://<instance>/api/send`.
 
-These operations are not present in `openapi/`, which captures the authenticated
-analytics surface only. They are documented at
+These operations are `send` (POST /api/send) and `batch` (POST /api/batch) in the provider
+OpenAPI `openapi/umami-openapi.yml` (audience: collect). They are documented at
 <https://docs.umami.is/docs/api/sending-stats>.
 
 ## Two non-obvious requirements

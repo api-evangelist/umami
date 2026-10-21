@@ -1,0 +1,1114 @@
+openapi: 3.2.0
+info:
+  title: Umami Links API
+  version: 3.3.1
+  license:
+    identifier: MIT
+    name: MIT
+  x-refined-note:
+  - x-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Links across 2 of this provider''s published API definitions: umami-openapi.json, umami-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{instance}
+  description: Self-hosted Umami instance (paths begin with /api). Umami Cloud serves the same API at https://api.umami.is/v1 per docs.umami.is/docs/api.
+  variables:
+    instance:
+      default: your-umami-instance.example.com
+tags:
+- name: Links
+paths:
+  /api/links:
+    get:
+      description: Returns a paginated list of the current user's tracked links, with search and sorting options.
+      operationId: getLinks
+      parameters:
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Search text used to filter results.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Field to sort the results by.
+        in: query
+        name: orderBy
+        required: false
+        schema:
+          type: string
+      - description: Whether to sort results in descending order.
+        in: query
+        name: sortDescending
+        required: false
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        deletedAt:
+                          description: Date and time the record was deleted, if applicable.
+                          format: date-time
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        slug:
+                          description: URL slug used to access the resource.
+                          type: string
+                        teamId:
+                          description: ID of the associated team.
+                          type: string
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                        url:
+                          description: URL associated with the resource.
+                          type: string
+                        userId:
+                          description: ID of the associated user.
+                          type: string
+                      required:
+                      - id
+                      - userId
+                      - createdAt
+                      - updatedAt
+                      - deletedAt
+                      - name
+                      - teamId
+                      - url
+                      - slug
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: List my links
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/contract.generated.ts
+    post:
+      description: Creates a tracked link with a name, destination URL, and slug, optionally assigned to a team.
+      operationId: createLink
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  anyOf:
+                  - format: uuid
+                    type: string
+                  - type: 'null'
+                  description: Unique identifier of the resource.
+                name:
+                  description: Display name of the resource.
+                  maxLength: 100
+                  type: string
+                slug:
+                  description: URL slug used to access the resource.
+                  maxLength: 100
+                  minLength: 8
+                  type: string
+                teamId:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  description: ID of the associated team.
+                url:
+                  description: URL associated with the resource.
+                  maxLength: 500
+                  type: string
+              required:
+              - name
+              - url
+              - slug
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  deletedAt:
+                    description: Date and time the record was deleted, if applicable.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  name:
+                    description: Display name of the resource.
+                    type: string
+                  slug:
+                    description: URL slug used to access the resource.
+                    type: string
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  url:
+                    description: URL associated with the resource.
+                    type: string
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - deletedAt
+                - name
+                - teamId
+                - url
+                - slug
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Create a tracked link
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/contract.generated.ts
+  /api/links/{linkId}:
+    delete:
+      description: Deletes the specified tracked link after checking the caller's permission to remove it.
+      operationId: deleteLink
+      parameters:
+      - description: ID of the tracked link.
+        in: path
+        name: linkId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: true
+                    description: Whether the operation succeeded.
+                required:
+                - ok
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Delete a tracked link
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/[linkId]/contract.generated.ts
+    get:
+      description: Returns the specified tracked link, including its destination URL and slug.
+      operationId: getLink
+      parameters:
+      - description: ID of the tracked link.
+        in: path
+        name: linkId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  deletedAt:
+                    description: Date and time the record was deleted, if applicable.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  name:
+                    description: Display name of the resource.
+                    type: string
+                  slug:
+                    description: URL slug used to access the resource.
+                    type: string
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  url:
+                    description: URL associated with the resource.
+                    type: string
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - deletedAt
+                - name
+                - teamId
+                - url
+                - slug
+                type: object
+          description: The operation completed successfully.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: Get a tracked link
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/[linkId]/contract.generated.ts
+    post:
+      description: Updates a tracked link's name, destination URL, or slug.
+      operationId: updateLink
+      parameters:
+      - description: ID of the tracked link.
+        in: path
+        name: linkId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: Display name of the resource.
+                  maxLength: 100
+                  type: string
+                slug:
+                  description: URL slug used to access the resource.
+                  maxLength: 100
+                  minLength: 8
+                  type: string
+                url:
+                  description: URL associated with the resource.
+                  maxLength: 500
+                  type: string
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  deletedAt:
+                    description: Date and time the record was deleted, if applicable.
+                    format: date-time
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  name:
+                    description: Display name of the resource.
+                    type: string
+                  slug:
+                    description: URL slug used to access the resource.
+                    type: string
+                  teamId:
+                    description: ID of the associated team.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                  url:
+                    description: URL associated with the resource.
+                    type: string
+                  userId:
+                    description: ID of the associated user.
+                    type: string
+                required:
+                - id
+                - userId
+                - createdAt
+                - updatedAt
+                - deletedAt
+                - name
+                - teamId
+                - url
+                - slug
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+        '500':
+          content:
+            application/json:
+              example:
+                error:
+                  code: server-error
+                  message: Server error.
+                  status: 500
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Server error.
+      security:
+      - bearerAuth: []
+      summary: Update a tracked link
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/[linkId]/contract.generated.ts
+  /api/links/{linkId}/shares:
+    get:
+      description: Returns a paginated list of shares for the specified link.
+      operationId: getLinkShares
+      parameters:
+      - description: ID of the tracked link.
+        in: path
+        name: linkId
+        required: true
+        schema:
+          type: string
+      - description: Filter by page URL path.
+        in: query
+        name: path
+        required: false
+        schema:
+          type: string
+      - description: Filter by referring URL.
+        in: query
+        name: referrer
+        required: false
+        schema:
+          type: string
+      - description: Filter by page title.
+        in: query
+        name: title
+        required: false
+        schema:
+          type: string
+      - description: Filter by page URL query string.
+        in: query
+        name: query
+        required: false
+        schema:
+          type: string
+      - description: Operating system used by the visitor.
+        in: query
+        name: os
+        required: false
+        schema:
+          type: string
+      - description: Browser used by the visitor.
+        in: query
+        name: browser
+        required: false
+        schema:
+          type: string
+      - description: Device category used by the visitor.
+        in: query
+        name: device
+        required: false
+        schema:
+          type: string
+      - description: Country code of the visitor.
+        in: query
+        name: country
+        required: false
+        schema:
+          type: string
+      - description: Region or subdivision of the visitor.
+        in: query
+        name: region
+        required: false
+        schema:
+          type: string
+      - description: City of the visitor.
+        in: query
+        name: city
+        required: false
+        schema:
+          type: string
+      - description: Tag attached to the tracked activity.
+        in: query
+        name: tag
+        required: false
+        schema:
+          type: string
+      - description: Hostname on which the activity occurred.
+        in: query
+        name: hostname
+        required: false
+        schema:
+          type: string
+      - description: Custom identifier assigned to the visitor.
+        in: query
+        name: distinctId
+        required: false
+        schema:
+          type: string
+      - description: Preferred language reported by the visitor browser.
+        in: query
+        name: language
+        required: false
+        schema:
+          type: string
+      - description: Filter by custom event name.
+        in: query
+        name: event
+        required: false
+        schema:
+          type: string
+      - description: UTM campaign source.
+        in: query
+        name: utmSource
+        required: false
+        schema:
+          type: string
+      - description: UTM campaign medium.
+        in: query
+        name: utmMedium
+        required: false
+        schema:
+          type: string
+      - description: UTM campaign name.
+        in: query
+        name: utmCampaign
+        required: false
+        schema:
+          type: string
+      - description: UTM campaign content.
+        in: query
+        name: utmContent
+        required: false
+        schema:
+          type: string
+      - description: UTM campaign search term.
+        in: query
+        name: utmTerm
+        required: false
+        schema:
+          type: string
+      - description: Set a non-empty value to exclude visits with only one pageview.
+        in: query
+        name: excludeBounce
+        required: false
+        schema:
+          type: string
+      - description: ID of a saved segment used to filter results.
+        in: query
+        name: segment
+        required: false
+        schema:
+          format: uuid
+          type: string
+      - description: ID of a saved cohort used to filter visitors.
+        in: query
+        name: cohort
+        required: false
+        schema:
+          format: uuid
+          type: string
+      - description: 'Event type: 1 for a pageview or 2 for a custom event.'
+        in: query
+        name: eventType
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Whether records must match all filters or any filter.
+        in: query
+        name: match
+        required: false
+        schema:
+          enum:
+          - all
+          - any
+          type: string
+      - description: Page number, starting at 1.
+        in: query
+        name: page
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Number of results per page.
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      - description: Maximum number of results to include.
+        in: query
+        name: maxResults
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    description: Number of matching records.
+                    type: number
+                  data:
+                    description: Data returned by the operation.
+                    items:
+                      properties:
+                        createdAt:
+                          description: Date and time the record was created.
+                          format: date-time
+                          type: string
+                        entityId:
+                          description: ID of the resource being shared.
+                          type: string
+                        id:
+                          description: Unique identifier of the resource.
+                          type: string
+                        name:
+                          description: Display name of the resource.
+                          type: string
+                        parameters:
+                          anyOf:
+                          - type: string
+                          - type: number
+                          - const: false
+                          - const: true
+                          - additionalProperties:
+                              anyOf:
+                              - type: string
+                              - type: number
+                              - const: false
+                              - const: true
+                              - {}
+                              - properties:
+                                  length:
+                                    type: number
+                                required:
+                                - length
+                                type: object
+                            properties: {}
+                            type: object
+                          - properties:
+                              length:
+                                type: number
+                            required:
+                            - length
+                            type: object
+                          description: Configuration parameters for the resource.
+                        shareType:
+                          description: Type of resource made available by the share.
+                          type: number
+                        slug:
+                          description: URL slug used to access the resource.
+                          type: string
+                        updatedAt:
+                          description: Date and time the record was last updated.
+                          format: date-time
+                          type: string
+                      required:
+                      - id
+                      - createdAt
+                      - updatedAt
+                      - name
+                      - slug
+                      - parameters
+                      - entityId
+                      - shareType
+                      type: object
+                    type: array
+                  isCapped:
+                    description: Whether the results were truncated by the maximum result limit.
+                    type: boolean
+                  orderBy:
+                    description: Field to sort the results by.
+                    type: string
+                  page:
+                    description: Page number, starting at 1.
+                    type: number
+                  pageSize:
+                    description: Number of results per page.
+                    type: number
+                  search:
+                    description: Search text used to filter results.
+                    type: string
+                  sortDescending:
+                    description: Whether to sort results in descending order.
+                    type: boolean
+                required:
+                - data
+                - count
+                - page
+                - pageSize
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: List shares for a link
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/[linkId]/shares/contract.generated.ts
+    post:
+      description: Creates a named share for the specified link with optional parameters.
+      operationId: createLinkShare
+      parameters:
+      - description: ID of the tracked link.
+        in: path
+        name: linkId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: Display name of the resource.
+                  maxLength: 200
+                  type: string
+                parameters:
+                  additionalProperties: true
+                  description: Configuration parameters for the resource.
+                  type: object
+              required:
+              - name
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  createdAt:
+                    description: Date and time the record was created.
+                    format: date-time
+                    type: string
+                  entityId:
+                    description: ID of the resource being shared.
+                    type: string
+                  id:
+                    description: Unique identifier of the resource.
+                    type: string
+                  name:
+                    description: Display name of the resource.
+                    type: string
+                  parameters:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - const: false
+                    - const: true
+                    - additionalProperties:
+                        anyOf:
+                        - type: string
+                        - type: number
+                        - const: false
+                        - const: true
+                        - {}
+                        - properties:
+                            length:
+                              type: number
+                          required:
+                          - length
+                          type: object
+                      properties: {}
+                      type: object
+                    - properties:
+                        length:
+                          type: number
+                      required:
+                      - length
+                      type: object
+                    description: Configuration parameters for the resource.
+                  shareType:
+                    description: Type of resource made available by the share.
+                    type: number
+                  slug:
+                    description: URL slug used to access the resource.
+                    type: string
+                  updatedAt:
+                    description: Date and time the record was last updated.
+                    format: date-time
+                    type: string
+                required:
+                - id
+                - createdAt
+                - updatedAt
+                - name
+                - slug
+                - parameters
+                - entityId
+                - shareType
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      summary: Create a share for a link
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/[linkId]/shares/contract.generated.ts
+  /api/links/charts:
+    get:
+      description: Returns visitor totals and chart data for the requested links the caller can view, within the selected date range.
+      operationId: getLinksCharts
+      parameters:
+      - description: Comma-separated resource IDs. Provide between 1 and 20 IDs.
+        in: query
+        name: ids
+        required: true
+        schema:
+          type: string
+      - description: Start of the date range as a Unix timestamp in milliseconds.
+        in: query
+        name: startAt
+        required: false
+        schema:
+          type: integer
+      - description: End of the date range as a Unix timestamp in milliseconds.
+        in: query
+        name: endAt
+        required: false
+        schema:
+          type: integer
+      - description: IANA time zone used to interpret dates and group results, for example America/New_York.
+        in: query
+        name: timezone
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    additionalProperties:
+                      properties:
+                        total:
+                          type: number
+                        values:
+                          items:
+                            type: number
+                          type: array
+                      required:
+                      - values
+                      - total
+                      type: object
+                    description: Data returned by the operation.
+                    properties: {}
+                    type: object
+                required:
+                - data
+                type: object
+          description: The operation completed successfully.
+        '400':
+          content:
+            application/json:
+              example:
+                error:
+                  code: bad-request
+                  message: Bad request.
+                  status: 400
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request.
+        '401':
+          content:
+            application/json:
+              example:
+                error:
+                  code: unauthorized
+                  message: Unauthorized.
+                  status: 401
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Unauthorized.
+      security:
+      - bearerAuth: []
+      - shareContext: []
+        shareToken: []
+      summary: Get visitor charts for links
+      tags:
+      - Links
+      x-umami-audience: public
+      x-umami-contract: explicit
+      x-umami-source: src/app/api/links/charts/contract.generated.ts
+components:
+  schemas:
+    ApiError:
+      additionalProperties: false
+      description: Standard Umami API error response.
+      properties:
+        error:
+          additionalProperties: {}
+          description: Error details returned when the operation fails.
+          properties:
+            code:
+              type: string
+            message:
+              description: Human-readable explanation of the result.
+              type: string
+            status:
+              maximum: 9007199254740991
+              minimum: -9007199254740991
+              type: integer
+          required:
+          - message
+          - code
+          - status
+          type: object
+      required:
+      - error
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: Token returned by POST /api/auth/login, or an API key (`umami_…`) created under Settings → API keys (self-hosted only).
+      scheme: bearer
+      type: http
+    shareContext:
+      description: Required context header when authenticating with a share token.
+      in: header
+      name: x-umami-share-context
+      type: apiKey
+    shareToken:
+      description: Signed token returned by a share endpoint.
+      in: header
+      name: x-umami-share-token
+      type: apiKey
+externalDocs:
+  description: Umami API documentation
+  url: https://docs.umami.is/docs/api
+x-refined-from:
+- umami-openapi.json
+- umami-openapi.yml

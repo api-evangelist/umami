@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/umami/main/json-schema/umami-create-website-request-schema.json",
+  "title": "CreateWebsiteRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/umami-openapi.yml#/components/schemas/CreateWebsiteRequest",
+  "properties": {
+    "domain": {
+      "description": "Domain name associated with the resource.",
+      "maxLength": 500,
+      "pattern": "^(localhost(:[1-9]\\d{0,4})?|((?=[a-z0-9-_]{1,63}\\.)(xn--)?[a-z0-9-_]+(-[a-z0-9-_]+)*\\.)+(xn--)?[a-z0-9-_]{2,63})$",
+      "type": "string"
+    },
+    "id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Unique identifier of the resource."
+    },
+    "name": {
+      "description": "Display name of the resource.",
+      "maxLength": 100,
+      "minLength": 1,
+      "type": "string"
+    },
+    "shareId": {
+      "anyOf": [
+        {
+          "maxLength": 50,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Identifier used to access a shared resource."
+    },
+    "teamId": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "ID of the associated team."
+    }
+  },
+  "required": [
+    "name",
+    "domain"
+  ],
+  "type": "object"
+}

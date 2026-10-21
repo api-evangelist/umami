@@ -1,0 +1,140 @@
+generated: '2026-10-20'
+method: derived
+source: mcp/umami-mcp.yml (tools documented at https://docs.umami.is/docs/mcp) + openapi/umami-openapi.yml
+name: Umami MCP tool crosswalk
+note: Live tools/list is gated (401 without an API key), so bindings are by documented tool name and purpose against the provider OpenAPI; confidence reflects that. Docs state the MCP server calls the same
+  Cloud API as the dashboard.
+surfaces:
+  openapi: openapi/umami-openapi.yml
+  mcp: https://cloud.umami.is/mcp
+  mcp_gated: true
+crosswalk:
+- tool: list_websites
+  rest:
+  - listWebsites
+  binding: name-and-semantics
+  confidence: high
+- tool: get_website_daterange
+  rest:
+  - getWebsiteDateRange
+  binding: name-and-semantics
+  confidence: high
+- tool: get_website_stats
+  rest:
+  - getWebsiteStats
+  binding: name-and-semantics
+  confidence: high
+- tool: get_website_traffic
+  rest:
+  - getWebsitePageviews
+  binding: name-and-semantics
+  confidence: medium
+- tool: get_website_metrics
+  rest:
+  - getWebsiteMetrics
+  binding: name-and-semantics
+  confidence: high
+- tool: get_realtime
+  rest:
+  - getRealtime
+  binding: name-and-semantics
+  confidence: high
+- tool: get_events
+  rest:
+  - getWebsiteEvents
+  binding: name-and-semantics
+  confidence: high
+- tool: get_event_stats
+  rest:
+  - getWebsiteEventStats
+  binding: name-and-semantics
+  confidence: high
+- tool: get_event_series
+  rest:
+  - getWebsiteEventSeries
+  binding: name-and-semantics
+  confidence: high
+- tool: get_event_properties
+  rest:
+  - getEventDataProperties
+  - getEventDataValues
+  binding: name-and-semantics
+  confidence: medium
+- tool: get_sessions
+  rest:
+  - getWebsiteSessions
+  binding: name-and-semantics
+  confidence: high
+- tool: get_session
+  rest:
+  - getWebsiteSession
+  - getWebsiteSessionActivity
+  - getWebsiteSessionProperties
+  binding: name-and-semantics
+  confidence: medium
+- tool: get_session_stats
+  rest:
+  - getWebsiteSessionStats
+  binding: name-and-semantics
+  confidence: high
+- tool: get_annotations
+  rest:
+  - getWebsiteAnnotations
+  binding: name-and-semantics
+  confidence: high
+- tool: list_segments
+  rest:
+  - getWebsiteSegments
+  binding: name-and-semantics
+  confidence: medium
+- tool: list_funnels
+  rest:
+  - getWebsiteFunnels
+  binding: name-and-semantics
+  confidence: high
+- tool: run_funnel
+  rest:
+  - getWebsiteSavedFunnelStats
+  - getWebsiteFunnelStats
+  binding: name-and-semantics
+  confidence: medium
+- tool: get_goals
+  rest:
+  - getWebsiteGoals
+  - getWebsiteGoalStats
+  binding: name-and-semantics
+  confidence: medium
+- tool: run_journey
+  rest:
+  - getWebsiteJourneys
+  binding: name-and-semantics
+  confidence: high
+- tool: run_retention
+  rest:
+  - getWebsiteRetention
+  binding: name-and-semantics
+  confidence: high
+- tool: run_attribution
+  rest:
+  - getWebsiteAttribution
+  binding: name-and-semantics
+  confidence: high
+- tool: get_revenue
+  rest:
+  - getWebsiteRevenueStats
+  - getWebsiteRevenueChart
+  - getWebsiteRevenueMetrics
+  binding: name-and-semantics
+  confidence: medium
+- tool: get_performance
+  rest:
+  - getWebsitePerformanceStats
+  - getWebsitePerformanceChart
+  - getWebsitePerformanceMetrics
+  binding: name-and-semantics
+  confidence: medium
+mcp_only: []
+coverage:
+  tools: 23
+  bound: 23
+  operations_bound: 32
