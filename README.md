@@ -1,4 +1,4 @@
-# Umami (umami)
+# Umami
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,109 +66,271 @@
 
 Umami is an open source, privacy-first web analytics platform that provides website traffic insights without cookies or personal data collection, serving as a simple and fast alternative to Google Analytics. The Umami API provides full programmatic access to analytics data, website management, session tracking, event data, and team collaboration features for both self-hosted and cloud instances.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/umami/refs/heads/main/apis.yml)
+**Areas:** Cookieless Tracking · Open Source · Privacy · Web Analytics · Website Analytics · Product Analytics · Event Tracking · Self-Hosted · GDPR · Session Replay · Heatmaps · Marketing Attribution
 
-## Scope
+## Umami on APIs.io
 
-- **Type:** Index
+Everything profiled for Umami is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/umami/](https://apis.io/providers/umami/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (17)
 
-- Cookieless Tracking
-- Open Source
-- Privacy
-- Web Analytics
-- Website Analytics
+- [Umami MCP Server](https://apis.io/apis/umami/umami-mcp-server/) — Remote Model Context Protocol server for Umami Cloud at https://cloud.umami.is/mcp (Bearer api_ Cloud API key, Pro plan and above), also available on…
+- [Umami Authentication API](https://apis.io/apis/umami/umami-authentication-api/) — Login and token verification
+- [Umami Teams API](https://apis.io/apis/umami/umami-teams-api/) — Team and access management
+- [Umami Users API](https://apis.io/apis/umami/umami-users-api/) — User account management
+- [Umami Websites API](https://apis.io/apis/umami/umami-websites-api/) — Website management and configuration
+- [Umami Account API](https://apis.io/apis/umami/umami-account-api/) — The Account API from Umami — 6 operation(s) for account.
+- [Umami Administration API](https://apis.io/apis/umami/umami-administration-api/) — The Administration API from Umami — 6 operation(s) for administration.
+- [Umami Boards API](https://apis.io/apis/umami/umami-boards-api/) — The Boards API from Umami — 4 operation(s) for boards.
+- [Umami Collection API](https://apis.io/apis/umami/umami-collection-api/) — The Collection API from Umami — 3 operation(s) for collection.
+- [Umami Dashboard API](https://apis.io/apis/umami/umami-dashboard-api/) — The Dashboard API from Umami — 1 operation(s) for dashboard.
+- [Umami Links API](https://apis.io/apis/umami/umami-links-api/) — The Links API from Umami — 4 operation(s) for links.
+- [Umami Pixels API](https://apis.io/apis/umami/umami-pixels-api/) — The Pixels API from Umami — 4 operation(s) for pixels.
+- [Umami Realtime API](https://apis.io/apis/umami/umami-realtime-api/) — The Realtime API from Umami — 1 operation(s) for realtime.
+- [Umami Scripts API](https://apis.io/apis/umami/umami-scripts-api/) — The Scripts API from Umami — 1 operation(s) for scripts.
+- [Umami Shares API](https://apis.io/apis/umami/umami-shares-api/) — The Shares API from Umami — 3 operation(s) for shares.
+- [Umami System API](https://apis.io/apis/umami/umami-system-api/) — The System API from Umami — 1 operation(s) for system.
+- [Umami Two-factor authentication API](https://apis.io/apis/umami/umami-two-factor-authentication-api/) — The Two-factor authentication API from Umami — 6 operation(s) for two-factor authentication.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-26
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Umami API
+Model Context Protocol servers that expose the API to agents.
 
-The Umami API provides programmatic access to website analytics data including pageviews, sessions, events, and metrics, allowing developers to collect tracking data and retrieve analytics reports. Self-hosted instances use JWT bearer tokens; Umami Cloud uses API key authentication.
+- [umami-mcp.yml](https://apis.io/servers/umami/umami-mcp-yml/)
 
-- **Human URL:** [https://umami.is](https://umami.is)
-- **Base URL:** `https://api.umami.is`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Open Source
-- Privacy
-- Tracking API
-- Web Analytics
+- [Umami Agentic Access](https://apis.io/agentic-access/umami/umami-agentic-access/)
 
-#### Properties
+#### JSON Schema (23)
 
-- [Documentation](https://umami.is/docs)
-- [Getting Started](https://umami.is/docs/getting-started)
-- [A P I Documentation](https://umami.is/docs/api)
-- [Git Hub Org](https://github.com/umami-software/umami)
-- [OpenAPI](openapi/umami-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/umami.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/umami.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/umami-website-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-website-list-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-website-request-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-website-stats-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-pageview-data-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-metric-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-active-visitors-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-session-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-session-list-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-session-stats-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-user-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-user-request-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-team-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-team-list-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-team-member-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-team-request-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-login-request-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-login-response-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/umami-ok-response-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/umami-website-structure.json)
-- [JSON Structure](json-structure/umami-website-list-structure.json)
-- [JSON Structure](json-structure/umami-website-stats-structure.json)
-- [JSON Structure](json-structure/umami-session-structure.json)
-- [JSON Structure](json-structure/umami-session-list-structure.json)
-- [JSON Structure](json-structure/umami-metric-structure.json)
-- [JSON Structure](json-structure/umami-user-structure.json)
-- [JSON Structure](json-structure/umami-team-structure.json)
-- [JSON Structure](json-structure/umami-team-member-structure.json)
-- [J S O N L D Context](json-ld/umami-context.jsonld)
-- [Example](examples/umami-website-example.json)
-- [Example](examples/umami-website-stats-example.json)
-- [Example](examples/umami-pageview-data-example.json)
-- [Example](examples/umami-metric-example.json)
-- [Example](examples/umami-session-example.json)
-- [Example](examples/umami-session-stats-example.json)
-- [Example](examples/umami-user-example.json)
-- [Example](examples/umami-team-example.json)
-- [Example](examples/umami-active-visitors-example.json)
+The data models the API reads and writes.
 
-## Common Properties
+- [ActiveVisitors](https://apis.io/schemas/umami/umami-active-visitors/)
+- [CreateWebsiteRequest](https://apis.io/schemas/umami/umami-create-website-request/)
+- [LoginRequest](https://apis.io/schemas/umami/umami-login-request/)
+- [LoginResponse](https://apis.io/schemas/umami/umami-login-response/)
+- [Metric](https://apis.io/schemas/umami/umami-metric/)
+- [OkResponse](https://apis.io/schemas/umami/umami-ok-response/)
+- [PageviewData](https://apis.io/schemas/umami/umami-pageview-data/)
+- [Session](https://apis.io/schemas/umami/umami-session/)
+- [SessionList](https://apis.io/schemas/umami/umami-session-list/)
+- [SessionStats](https://apis.io/schemas/umami/umami-session-stats/)
+- [Team](https://apis.io/schemas/umami/umami-team/)
+- [TeamList](https://apis.io/schemas/umami/umami-team-list/)
+- [TeamMember](https://apis.io/schemas/umami/umami-team-member/)
+- [TeamRequest](https://apis.io/schemas/umami/umami-team-request/)
+- [User](https://apis.io/schemas/umami/umami-user/)
+- [UserRequest](https://apis.io/schemas/umami/umami-user-request/)
+- [Website](https://apis.io/schemas/umami/umami-website/)
+- [WebsiteList](https://apis.io/schemas/umami/umami-website-list/)
+- [WebsitePage](https://apis.io/schemas/umami/umami-website-page/)
+- [WebsitePageviews](https://apis.io/schemas/umami/umami-website-pageviews/)
+- [WebsiteRequest](https://apis.io/schemas/umami/umami-website-request/)
+- [WebsiteSessionPage](https://apis.io/schemas/umami/umami-website-session-page/)
+- [WebsiteStats](https://apis.io/schemas/umami/umami-website-stats/)
 
-- [LinkedIn](https://www.linkedin.com/company/umami-software)
+#### JSON Structure (19)
+
+Data models expressed in JSON Structure.
+
+- [Umami Active Visitors Structure](https://apis.io/json-structure/umami/umami-active-visitors-structure/)
+- [Umami Login Request Structure](https://apis.io/json-structure/umami/umami-login-request-structure/)
+- [Umami Login Response Structure](https://apis.io/json-structure/umami/umami-login-response-structure/)
+- [Umami Metric Structure](https://apis.io/json-structure/umami/umami-metric-structure/)
+- [Umami Ok Response Structure](https://apis.io/json-structure/umami/umami-ok-response-structure/)
+- [Umami Pageview Data Structure](https://apis.io/json-structure/umami/umami-pageview-data-structure/)
+- [Umami Session List Structure](https://apis.io/json-structure/umami/umami-session-list-structure/)
+- [Umami Session Stats Structure](https://apis.io/json-structure/umami/umami-session-stats-structure/)
+- [Umami Session Structure](https://apis.io/json-structure/umami/umami-session-structure/)
+- [Umami Team List Structure](https://apis.io/json-structure/umami/umami-team-list-structure/)
+- [Umami Team Member Structure](https://apis.io/json-structure/umami/umami-team-member-structure/)
+- [Umami Team Request Structure](https://apis.io/json-structure/umami/umami-team-request-structure/)
+- [Umami Team Structure](https://apis.io/json-structure/umami/umami-team-structure/)
+- [Umami User Request Structure](https://apis.io/json-structure/umami/umami-user-request-structure/)
+- [Umami User Structure](https://apis.io/json-structure/umami/umami-user-structure/)
+- [Umami Website List Structure](https://apis.io/json-structure/umami/umami-website-list-structure/)
+- [Umami Website Request Structure](https://apis.io/json-structure/umami/umami-website-request-structure/)
+- [Umami Website Stats Structure](https://apis.io/json-structure/umami/umami-website-stats-structure/)
+- [Umami Website Structure](https://apis.io/json-structure/umami/umami-website-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Umami Context](https://apis.io/jsonld/umami/umami-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Umami Vocabulary](https://apis.io/vocabularies/umami/umami-vocabulary/)
+
+#### Examples (19)
+
+Example requests and responses.
+
+- [Umami Active Visitors Example](https://apis.io/examples/umami/umami-active-visitors-example/)
+- [Umami Login Request Example](https://apis.io/examples/umami/umami-login-request-example/)
+- [Umami Login Response Example](https://apis.io/examples/umami/umami-login-response-example/)
+- [Umami Metric Example](https://apis.io/examples/umami/umami-metric-example/)
+- [Umami Ok Response Example](https://apis.io/examples/umami/umami-ok-response-example/)
+- [Umami Pageview Data Example](https://apis.io/examples/umami/umami-pageview-data-example/)
+- [Umami Session Example](https://apis.io/examples/umami/umami-session-example/)
+- [Umami Session List Example](https://apis.io/examples/umami/umami-session-list-example/)
+- [Umami Session Stats Example](https://apis.io/examples/umami/umami-session-stats-example/)
+- [Umami Team Example](https://apis.io/examples/umami/umami-team-example/)
+- [Umami Team List Example](https://apis.io/examples/umami/umami-team-list-example/)
+- [Umami Team Member Example](https://apis.io/examples/umami/umami-team-member-example/)
+- [Umami Team Request Example](https://apis.io/examples/umami/umami-team-request-example/)
+- [Umami User Example](https://apis.io/examples/umami/umami-user-example/)
+- [Umami User Request Example](https://apis.io/examples/umami/umami-user-request-example/)
+- [Umami Website Example](https://apis.io/examples/umami/umami-website-example/)
+- [Umami Website List Example](https://apis.io/examples/umami/umami-website-list-example/)
+- [Umami Website Request Example](https://apis.io/examples/umami/umami-website-request-example/)
+- [Umami Website Stats Example](https://apis.io/examples/umami/umami-website-stats-example/)
+
+#### Collections (15)
+
+Postman and Open Collection request collections.
+
+- [Umami Analytics API](https://apis.io/collections/umami/open-umami/)
+- [Umami Analytics Authentication API](https://apis.io/collections/umami/open-umami-authentication-api/)
+- [Umami Analytics Authentication Events API](https://apis.io/collections/umami/open-umami-events-api/)
+- [Umami Analytics Authentication Sessions API](https://apis.io/collections/umami/open-umami-sessions-api/)
+- [Umami Analytics Authentication Teams API](https://apis.io/collections/umami/open-umami-teams-api/)
+- [Umami Analytics Authentication Users API](https://apis.io/collections/umami/open-umami-users-api/)
+- [Umami Analytics Authentication Website Statistics API](https://apis.io/collections/umami/open-umami-website-statistics-api/)
+- [Umami Analytics Authentication Websites API](https://apis.io/collections/umami/open-umami-websites-api/)
+- [Umami Analytics Authentication API](https://apis.io/collections/umami/postman-umami-authentication-api/)
+- [Umami Analytics Authentication Events API](https://apis.io/collections/umami/postman-umami-events-api/)
+- [Umami Analytics Authentication Sessions API](https://apis.io/collections/umami/postman-umami-sessions-api/)
+- [Umami Analytics Authentication Teams API](https://apis.io/collections/umami/postman-umami-teams-api/)
+- [Umami Analytics Authentication Users API](https://apis.io/collections/umami/postman-umami-users-api/)
+- [Umami Analytics Authentication Website Statistics API](https://apis.io/collections/umami/postman-umami-website-statistics-api/)
+- [Umami Analytics Authentication Websites API](https://apis.io/collections/umami/postman-umami-websites-api/)
+
+#### Overlays (8)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Umami Api Overlay](https://apis.io/overlays/umami/umami-api-overlay/)
+- [Umami Authentication Api Overlay](https://apis.io/overlays/umami/umami-authentication-api-overlay/)
+- [Umami Events Api Overlay](https://apis.io/overlays/umami/umami-events-api-overlay/)
+- [Umami Sessions Api Overlay](https://apis.io/overlays/umami/umami-sessions-api-overlay/)
+- [Umami Teams Api Overlay](https://apis.io/overlays/umami/umami-teams-api-overlay/)
+- [Umami Users Api Overlay](https://apis.io/overlays/umami/umami-users-api-overlay/)
+- [Umami Website Statistics Api Overlay](https://apis.io/overlays/umami/umami-website-statistics-api-overlay/)
+- [Umami Websites Api Overlay](https://apis.io/overlays/umami/umami-websites-api-overlay/)
+
+#### Governance rules (3)
+
+Spectral rulesets for the provider's contracts.
+
+- [Umami — jsonschema rules](https://apis.io/rules/umami/umami-jsonschema-spectral-rules/)
+- [Umami API Rules](https://apis.io/rules/umami/umami-rules/)
+- [Umami API Rules](https://apis.io/rules/umami/umami-spectral-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Umami Authentication](https://apis.io/security/umami/umami-authentication/)
+- [Umami Domain Security](https://apis.io/security/umami/umami-domain-security/)
+- [Umami Trust Center](https://apis.io/security/umami/umami-trust-center/)
+- [Umami Vulnerability Disclosure](https://apis.io/security/umami/umami-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Umami Plans Pricing](https://apis.io/plans/umami/umami-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Umami Rate Limits](https://apis.io/rate-limits/umami/umami-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Umami Finops](https://apis.io/finops/umami/umami-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://umami.is)
-- [Documentation](https://umami.is/docs)
-- [Blog](https://umami.is/blog)
+- [Documentation](https://docs.umami.is)
+- [Getting started](https://docs.umami.is/docs/collect-data)
+- [API reference](https://docs.umami.is/docs/api)
 - [Pricing](https://umami.is/pricing)
-- [Git Hub](https://github.com/umami-software/umami)
-- [Login](https://cloud.umami.is)
-- [Sign Up](https://cloud.umami.is)
-- [Self Hosting](https://umami.is/docs/install)
-- [Support](https://umami.is/docs/support)
-- [Spectral Rules](rules/umami-spectral-rules.yml)
-- [Vocabulary](vocabulary/umami-vocabulary.yaml)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
-- [Solutions](undefined)
+- [Support](https://umami.is/contact)
+- [Blog](https://umami.is/blog)
+- [Terms of service](https://umami.is/terms)
+- [Privacy policy](https://umami.is/privacy)
+- [GitHub](https://github.com/umami-software)
+- [Status](https://umami.statuspage.io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 71.7** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 57.5 |
+| Contract governance | 45.5 |
+| Operational transparency | 73.7 |
+| Developer ergonomics | 74.4 |
+| Access clarity | 92.1 |
+
+**Agent readiness 33.5** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/umami/](https://apis.io/providers/umami/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Umami: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/umami/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
